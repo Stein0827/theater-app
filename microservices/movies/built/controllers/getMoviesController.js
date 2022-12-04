@@ -7,26 +7,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import * as dbe from '../data/dbCommsSingleton.js';
+import { MovieModel } from '../models/movieModel.js';
 export const getMovies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const data = req.body;
-    let list = [];
+    let resList = [];
     try {
+        const data = req.body;
         data.forEach(id => {
-            if (id === undefined || id === "" || typeof id !== "string") {
-                list.push('Error: Invalid Movie ID');
-            }
-            else if (dbe.hasMovie(id)) {
-                list.push(dbe.getMovie(id));
-            }
-            else {
-                list.push('Error: Movie doesnt exists');
-            }
+            let data_input = { movie_id: id };
+            const movieModel = new MovieModel(data_input);
+            const movie = movieModel.getMovie();
+            resList.push(movie);
         });
-        // return list of entities or errors if entity doesnt exists
-        res.status(200).send(list);
     }
     catch (err) {
-        res.status(400).send("Error: database error");
+        resList.push(err);
     }
+    res.status(202).send(resList);
 });
