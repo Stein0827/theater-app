@@ -2,10 +2,10 @@
   "name": "moderator",
   "version": "1.0.0",
   "description": "",
-  "main": "./built/index.cjs",
+  "main": "./built/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "npx tsc && nodemon index.js"
   },
   "keywords": [],
   "author": "",

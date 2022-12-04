@@ -1,37 +1,17 @@
 import express, {Express, Request, Response} from 'express';
 import cors from 'cors';
-import axios from 'axios';
-
-interface RequestBody {
-    type: String;
-    data: {
-      id: String;
-      content: String;
-      postId: String;
-    }
-}
-
-interface Data {
-    id: String;
-    content: String;
-    postId: String;
-    status: String;
-}
-
-interface NewEvent {
-    type: String;
-    data: Data;
-}
+import { router } from './routes/routes.js';
+import { startupDB } from './data/dbInit.js'
 
 const app: Express = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(router)
 
-app.post('/api/v1/payment', async (req: Request, res: Response) => {
-    res.send({});
-});
+// TODO: init DB
+startupDB();
 
 app.listen(4005, () => {
-  console.log('Listening on 4005');
+  console.log('Listening on 4004');
 });
