@@ -12,6 +12,7 @@ export const deleteTheaters = (req, res) => __awaiter(void 0, void 0, void 0, fu
     try {
         const data = req.body;
         const theaterModel = new TheaterModel(data);
+        console.log(theaterModel);
         theaterModel.deleteTheater();
         res.status(200).send("Success: Movie Deleted");
     }

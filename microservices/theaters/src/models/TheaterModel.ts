@@ -58,8 +58,8 @@ function validateCreateRequest(data: TheaterModel) {
 }
 
 function validateTheaterRequest(data: TheaterModel) {
-    if (data.id !== undefined && data.id as string !== "" && typeof data.id === "string") {
-        throw new TheaterException("Error: Invalid ID", [data.id]);
+    if (data.id === undefined || data.id as string === "") {
+        throw new TheaterException("Error: Invalid ID", [data.id as string]);
     }
 }
 
