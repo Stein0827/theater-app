@@ -1,5 +1,4 @@
 // These will be the querying functions
-import { db } from '../data/dbInit.js';
 import { OperationsModel } from '../models/operationsModel';
 
 export function createOperations(data: OperationsModel) {
