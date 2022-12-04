@@ -1,5 +1,5 @@
 // These will be the querying functions
-import { db } from '../data/dbInit.js';
+import { db } from './dbInit.js';
 import { MovieModel } from '../models/movieModel.js';
 
 // These functions will contain actual queries in them

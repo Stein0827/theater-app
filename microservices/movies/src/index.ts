@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(cors());
 app.use(router)
 
-// TODO: init DB
 startupDB();
 
 app.listen(4004, () => {
