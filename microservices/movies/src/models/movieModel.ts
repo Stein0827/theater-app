@@ -49,12 +49,12 @@ function validateCreateRequest(data: MovieModel) {
     let invalidAttributes: string[] = [];
     const required_attributes = new Set(["name", "desc", "length", "rating", "trailer"]);
     required_attributes.forEach(attribute => {
-        if (!(attribute in data) || data[attribute as keyof typeof data] === "") {
+        if (!(attribute in data) || data[attribute as keyof typeof data] === "" || data[attribute as keyof typeof data] === undefined) {
             invalidAttributes.push(attribute);
         }
     });
 
-    if (invalidAttributes.length === 0) {
+    if (invalidAttributes.length !== 0) {
         throw new MovieException("Error: Invalid Attributes", invalidAttributes);
     }
 }
@@ -70,11 +70,14 @@ function validateMovieExists(data: MovieModel) {
         throw new MovieException("Error: Movie does not exists", [data.id as string]);
     }
 }
-class MovieException extends Error {
+class MovieException{
     list: string[];
+    name: string;
+    message: string;
 
     constructor (message:string, errorList: string[]) {
-        super(message);
+        this.name = "Movie Exception";
+        this.message = message;
         this.list = errorList;
     }
 }

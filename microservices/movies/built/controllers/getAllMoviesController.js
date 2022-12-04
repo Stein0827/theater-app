@@ -7,12 +7,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { getallMovies } from "../data/dbCommsSingleton.js";
+import * as dbe from "../data/dbComms.js";
 export const getAllMovies = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        res.status(200).send(getallMovies());
+        res.status(200).send(dbe.getallMovies());
     }
     catch (err) {
-        res.status(400).send("Error: database error");
+        res.status(400).send(err);
     }
 });
