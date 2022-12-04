@@ -60,8 +60,8 @@ function validateCreateRequest(data: MovieModel) {
 }
 
 function validateMovieRequest(data: MovieModel) {
-    if (data.id !== undefined && data.id as string !== "" && typeof data.id === "string") {
-        throw new MovieException("Error: Invalid ID", [data.id]);
+    if (data.id === undefined || typeof data.id !== "string" || data.id as string === "") {
+        throw new MovieException("Error: Invalid ID", [data.id as string]);
     }
 }
 
