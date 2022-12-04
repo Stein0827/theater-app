@@ -69,11 +69,14 @@ function validateTheaterExists(data: TheaterModel) {
     }
 }
 
-class TheaterException extends Error {
+class TheaterException{
     list: string[];
+    name: string;
+    message: string;
 
     constructor (message:string, errorList: string[]) {
-        super(message);
+        this.name = "Movie Exception";
+        this.message = message;
         this.list = errorList;
     }
 }
