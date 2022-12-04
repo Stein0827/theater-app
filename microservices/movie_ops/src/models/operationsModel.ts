@@ -40,7 +40,7 @@ function validateRequest(data: OperationsModel, requiredAttributes: string[]) {
     let invalidAttributes: string[] = [];
     const required_attributes = new Set(requiredAttributes);
     required_attributes.forEach(attribute => {
-        if (!(attribute in data) || data[attribute as keyof typeof data] === "") {
+        if (!(attribute in data) || data[attribute as keyof typeof data] === "" || data[attribute as keyof typeof data] === undefined) {
             invalidAttributes.push(attribute);
         }
     });
@@ -53,11 +53,14 @@ function validateRequest(data: OperationsModel, requiredAttributes: string[]) {
 function validateOperationsExists(data: OperationsModel) {
     dbe.hasOperations(data.movie_id as string, data.theater_id as string);
 }
-class OperationsException extends Error {
+class OperationsException{
     list: string[];
+    name: string;
+    message: string;
 
-    constructor (message:string, errorList: string[]) {
-        super(message);
+    constructor (message: string, errorList: string[]) {
+        this.name = "Movie Exception";
+        this.message = message;
         this.list = errorList;
     }
 }
