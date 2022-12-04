@@ -1,25 +1,22 @@
 import express, {Express, Request, Response} from 'express';
 import {MovieGetBatchRequest } from '../types.js';
-import * as dbe from '../data/dbCommsSingleton.js';
+import * as dbe from '../data/dbComms.js';
+import { MovieModel } from '../models/movieModel.js';
 
 export const getMovies = async (req: Request, res: Response) => {
-    const data: MovieGetBatchRequest = req.body;
-    let list: Array<Object | string > = [];
+    let resList: Array<Object | string > = [];
 
     try {
+        const data: MovieGetBatchRequest = req.body;
         data.forEach(id => {
-        
-            if (id === undefined || id as string === "" || typeof id !== "string") {
-                list.push('Error: Invalid Movie ID');
-            } else if (dbe.hasMovie(id)) {
-                list.push(dbe.getMovie(id));
-            } else {
-                list.push('Error: Movie doesnt exists');
-            }
+            let data_input = {movie_id: id};
+            const movieModel = new MovieModel(data_input);
+            const movie = movieModel.getMovie();
+            resList.push(movie)
         })
-        // return list of entities or errors if entity doesnt exists
-        res.status(200).send(list);  
-    } catch (err) {
-        res.status(400).send("Error: database error");  
+    } catch (err: any) {
+        resList.push(err);  
     }
+
+    res.status(202).send(resList);  
   }
