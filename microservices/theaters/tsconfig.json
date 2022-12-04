@@ -7,7 +7,7 @@
 	  "strict": true,                                      /* Enable all strict type-checking options. */
 	  "skipLibCheck": true,
 	  "allowJs": true,
-	  "outDir": "./built"                                 /* Skip type checking all .d.ts files. */
+	  "outDir": "./built",                                 /* Skip type checking all .d.ts files. */
 	},
-	"include": ["./src/*"]
-  }
+	"include": ["./src/*/"]
+}
