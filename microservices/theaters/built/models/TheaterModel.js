@@ -33,7 +33,7 @@ function validateCreateRequest(data) {
     let invalidAttributes = [];
     const required_attributes = new Set(["name", "address", "description"]);
     required_attributes.forEach(attribute => {
-        if (!(attribute in data) || data[attribute] === "") {
+        if (!(attribute in data) || data[attribute] === "" || data[attribute] === undefined) {
             invalidAttributes.push(attribute);
         }
     });
@@ -42,7 +42,7 @@ function validateCreateRequest(data) {
     }
 }
 function validateTheaterRequest(data) {
-    if (data.id !== undefined && data.id !== "" && typeof data.id === "string") {
+    if (data.id === undefined || data.id === "") {
         throw new TheaterException("Error: Invalid ID", [data.id]);
     }
 }
@@ -51,9 +51,10 @@ function validateTheaterExists(data) {
         throw new TheaterException("Error: Theater does not exists", [data.id]);
     }
 }
-class TheaterException extends Error {
+class TheaterException {
     constructor(message, errorList) {
-        super(message);
+        this.name = "Movie Exception";
+        this.message = message;
         this.list = errorList;
     }
 }
