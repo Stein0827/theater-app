@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "95dabd36-3c42-437e-a9dd-c75aef0b3851",
+		"_postman_id": "5bb5436a-647d-4ef4-99c1-5fe14df514bd",
 		"name": "497s Milestone - theaters",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "22927573"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -109,7 +108,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:4009/api/v1/movie",
+					"raw": "localhost:4004/api/v1/movie",
 					"host": [
 						"localhost"
 					],
@@ -125,7 +124,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:4004/api/v1/movies",
+			"name": "localhost:4009/api/v1/theaters",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -158,20 +157,20 @@
 			"response": []
 		},
 		{
-			"name": "localhost:4004/api/v1/movies/all",
+			"name": "localhost:4009/api/v1/theaters/all",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:4004/api/v1/movies/all",
+					"raw": "localhost:4009/api/v1/theaters/all",
 					"host": [
 						"localhost"
 					],
-					"port": "4004",
+					"port": "4009",
 					"path": [
 						"api",
 						"v1",
-						"movies",
+						"theaters",
 						"all"
 					]
 				}
@@ -179,13 +178,13 @@
 			"response": []
 		},
 		{
-			"name": "localhost:4004/api/v1/movie",
+			"name": "localhost:4009/api/v1/movie",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"movie_id\": \"2\"\n}",
+					"raw": "{\n    \"theaterId\": \"2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -193,15 +192,15 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:4004/api/v1/movie",
+					"raw": "localhost:4009/api/v1/theater",
 					"host": [
 						"localhost"
 					],
-					"port": "4004",
+					"port": "4009",
 					"path": [
 						"api",
 						"v1",
-						"movie"
+						"theater"
 					]
 				}
 			},
