@@ -8,7 +8,7 @@ export const deleteConcession = async (req: Request, res: Response) => {
         const data: ConcessionRequest = req.body;
         const concessionModel = new ConcessionModel(data);
         concessionModel.deleteConcession();
-        res.status(200).send("Success: Movie Deleted");
+        res.status(200).send("Success: concession Deleted");
     } catch (err) {
         res.status(400).send(err);
     }           

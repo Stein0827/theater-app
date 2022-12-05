@@ -73,7 +73,7 @@ class ConcessionException{
     message: string;
 
     constructor (message:string, errorList: string[]) {
-        this.name = "Movie Exception";
+        this.name = "Concession Exception";
         this.message = message;
         this.list = errorList;
     }
