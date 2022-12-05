@@ -47,12 +47,12 @@ function validateConcessionRequest(data) {
 }
 function validateConcessionExists(data) {
     if (!(dbe.hasConcession(data.id))) {
-        throw new ConcessionException("Error: Theater does not exists", [data.id]);
+        throw new ConcessionException("Error: Concession does not exists", [data.id]);
     }
 }
 class ConcessionException {
     constructor(message, errorList) {
-        this.name = "Movie Exception";
+        this.name = "Concession Exception";
         this.message = message;
         this.list = errorList;
     }
