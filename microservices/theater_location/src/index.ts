@@ -12,6 +12,6 @@ app.use(router);
 // TODO: init DB
 startupDB();
 
-app.listen(4004, () => {
-  console.log('Listening on 4004');
+app.listen(4008, () => {
+  console.log('Listening on 4008');
 });
