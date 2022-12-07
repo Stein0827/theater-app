@@ -3,20 +3,19 @@ import {TheaterGetBatchRequest } from '../types.js';
 import * as dbe from '../data/dbComms.js';
 import { TheaterModel } from '../models/TheaterModel.js';
 
-export const getTheaters = async (req: Request, res: Response) => {
-    let resList: Array<Object | string > = [];
-
-    try {
-        const data: TheaterGetBatchRequest = req.body;
-        data.forEach(id => {
+export async function getTheaters (req: Request, res: Response) {
+    const resList: Array<Object | string > = [];
+    const data: TheaterGetBatchRequest = req.body;
+    for (const id of data) {
+        try {
             let data_input = {theaterId: id};
-            const movieModel = new TheaterModel(data_input);
-            const movie = movieModel.getTheater();
-            resList.push(movie)
-        })
-    } catch (err: any) {
-        resList.push(err);  
+            const theaterModel = new TheaterModel(data_input);
+            const theater = await theaterModel.getTheater();
+            resList.push(theater as object);
+        }
+        catch (err: any) {
+            resList.push(err);
+        }
     }
-
     res.status(202).send(resList);  
-  }
+}
