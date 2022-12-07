@@ -1,0 +1,67 @@
+{
+	"info": {
+		"_postman_id": "267bae5f-f455-4b27-ba1e-7ee708120650",
+		"name": "497s Milestone - confirmation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fail: Create confirmation - Doesn't include required attributes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\",\n    \"address\": \"55 lka street\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4002/api/v1/confirmation",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"api",
+						"v1",
+						"confirmation"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Success: Create confirmation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{    \n    \"movieId\": \"asdfa\",\n    \"theaterId\": \"asdfdf\",\n    \"creditCard\": \"asdfdfd\",\n    \"billingAddr\": \"aslkdjfasdf\",\n    \"price\": 24,\n    \"email\": \"shixiuquanpaul@gmail.com\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4002/api/v1/confirmation",
+					"host": [
+						"localhost"
+					],
+					"port": "4002",
+					"path": [
+						"api",
+						"v1",
+						"confirmation"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
