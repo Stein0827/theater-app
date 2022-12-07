@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.router = void 0;
 const express_1 = require("express");
 const loginController_1 = require("../controllers/loginController");
+const registrationController_1 = require("../controllers/registrationController");
 const router = (0, express_1.Router)();
 exports.router = router;
 router.get('/api/login', loginController_1.login);
+router.post('/api/register', registrationController_1.registerUser);

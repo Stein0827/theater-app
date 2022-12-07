@@ -37,6 +37,11 @@ class LoginModel {
         this.theaterId = dbe.login(this.username, this.password);
         return this.theaterId;
     }
+    register() {
+        this.validateRequest();
+        const user = dbe.register(this.username, this.password);
+        return user;
+    }
     validateRequest() {
         const username = this.username, password = this.password;
         if (!username || typeof username !== 'string' || username === "" ||

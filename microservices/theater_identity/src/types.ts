@@ -3,7 +3,7 @@ export interface LoginRequest {
     password: string
 }
 
-export interface Registration {
+export interface RegistrationRequest {
     username: string,
     password: string
 }
@@ -11,5 +11,5 @@ export interface Registration {
 export interface User {
     username: string,
     password: string,
-    theaterId: string
+    theaterId?: string
 }

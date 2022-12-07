@@ -19,6 +19,12 @@ export class LoginModel {
         return this.theaterId;
     }
 
+    register() {
+        this.validateRequest();
+        const user = dbe.register(this.username, this.password);
+        return user;
+    }
+
     validateRequest() {
         const username = this.username,
               password = this.password;

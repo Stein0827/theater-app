@@ -2,7 +2,7 @@ import {Request, Response} from 'express';
 import { LoginModel } from '../models/loginModel';
 import { LoginRequest } from '../types';
 
-export const login = async (req: Request, res: Response) => {
+export const login = (req: Request, res: Response) => {
     try {
         const data: LoginRequest = req.body;
         const loginModel = new LoginModel(data);
