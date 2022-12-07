@@ -14,6 +14,7 @@ function registerUser(req, res) {
         const username = user.username;
         const password = user.password;
         const maxAge = 60 * 60; // 1 hour in seconds
+        //TODO: take out ternary after docker compose created
         const jwtSecret = process.env.jwtSecret ?
             process.env.jwtSecret :
             '45fa5fc4668a2414a0fdea8a4cb4bbd47eb41cfecb80f7aca1a84376d9ed1e478b9824fd';
