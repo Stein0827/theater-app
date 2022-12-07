@@ -94,13 +94,13 @@
 			"response": []
 		},
 		{
-			"name": "Success: Update Theater",
+			"name": "Success: Update concessions",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"theaterId\": \"1\",\n    \"name\": \"should fail update\"\n}\n",
+					"raw": "{\n    \"snackId\": \"1670275130072\",\n    \"price\": 3.99\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"

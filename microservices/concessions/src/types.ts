@@ -3,7 +3,7 @@ type ConcessionRequest = {
     name?: string;
     type?: string; 
     price?: number;
-    image?: File;
+    image?: string;
 }
   
 type ConcessionGetBatchRequest = string[];

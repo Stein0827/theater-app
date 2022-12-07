@@ -6,7 +6,7 @@ export class ConcessionModel {
     name: string | undefined;
     type: string | undefined;
     price: number | undefined;
-    image: File | undefined;
+    image: string | undefined;
 
     constructor(data: ConcessionRequest) {
         this.id = data.snackId;
@@ -16,28 +16,28 @@ export class ConcessionModel {
         this.image = data.image;
     }
 
-    createConcession() {
+    async createConcession() {
         validateCreateRequest(this);
-        this.id = dbe.getNewID();
-        return dbe.createConcession(this);
+        const id = await dbe.createConcession(this);
+        return id.insertedId;
     }
 
-    getConcession() {
+    async getConcession() {
         validateConcessionRequest(this);
         validateConcessionExists(this);
-        return dbe.getConcession(this.id as string);
+        return await dbe.getConcession(this.id as string);
     }
 
-    updateConcession() {
+    async updateConcession() {
         validateConcessionRequest(this);
         validateConcessionExists(this);
-        return dbe.updateConcession(this);
+        return await dbe.updateConcession(this);
     }
 
-    deleteConcession() {
+    async deleteConcession() {
         validateConcessionRequest(this);
-        validateConcessionExists(this);
-        return dbe.deleteConcession(this.id as string);
+        await validateConcessionExists(this);
+        return await dbe.deleteConcession(this.id as string);
     }
 }
 
@@ -55,9 +55,11 @@ function validateCreateRequest(data: ConcessionModel) {
     }
 }
 
-function validateConcessionRequest(data: ConcessionModel) {
-    if (data.id === undefined || data.id as string === "") {
-        throw new ConcessionException("Error: Invalid ID", [data.id as string]);
+async function validateConcessionRequest(data: ConcessionModel) {
+    const test = await dbe.hasConcession(data.id as string);
+    console.log(test);
+    if (!test) {
+        throw new ConcessionException("Error: Concession does not exists", [data.id as string]);
     }
 }
 
