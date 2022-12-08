@@ -1,0 +1,72 @@
+{
+	"info": {
+		"_postman_id": "30340444-417e-422b-b945-b428740281d5",
+		"name": "497s Milestone - Theater Admin",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24761108"
+	},
+	"item": [
+		{
+			"name": "Success: Get Theater Revenue",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theaterId\": \"abc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4006/api/revenue",
+					"host": [
+						"localhost"
+					],
+					"port": "4006",
+					"path": [
+						"api",
+						"revenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fail: Get Theater Revenue",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theaterId\": \"fff\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4006/api/revenue",
+					"host": [
+						"localhost"
+					],
+					"port": "4006",
+					"path": [
+						"api",
+						"revenue"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
