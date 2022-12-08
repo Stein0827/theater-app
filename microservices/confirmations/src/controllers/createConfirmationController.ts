@@ -7,7 +7,7 @@ export const createConfirmation = async (req: Request, res: Response) => {
   try {
     const data: ConfirmationRequest = req.body;
     const confirmationModel = new ConfirmationModel(data);
-    const newConfirmation = confirmationModel.createConfirmation();
+    const newConfirmation = await confirmationModel.createConfirmation();
     res.status(200).send(newConfirmation);
   } catch (err) {
     res.status(400).send(err);

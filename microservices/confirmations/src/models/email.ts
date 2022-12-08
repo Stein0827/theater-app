@@ -20,7 +20,7 @@ export async function sendEmail(emailAddr: string | undefined, id: string | unde
     text: 'im a barbie girl',
   };
 
-  await transporter.sendMail(mailOptions, function(error: any, info: any){
+  transporter.sendMail(mailOptions, function(error: any, info: any){
     if (error) {
    console.log(error);
     } else {
