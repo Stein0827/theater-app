@@ -8,6 +8,7 @@ export async function createTheater(model: TheaterModel) {
     const theaters = db.collection('theaters');
     const obj = {"name": model.name, "address": model.address, "zip": model.zip, "description": model.description, "movies": model.movies};
     const res = await theaters.insertOne(obj);
+    await mongo.close();
     return res;
 }
 
@@ -25,6 +26,7 @@ export async function updateTheater(model: TheaterModel) {
     }
 
     await theaters.updateOne(_id, {'$set': obj});
+    await mongo.close();
     return model;
 }
 
@@ -43,6 +45,7 @@ export async function getTheater(id: string) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const res = await theaters.findOne({"_id": objectId});
+    await mongo.close();
     return res;
 }
 
@@ -55,6 +58,7 @@ export async function getAllTheaters() {
     await cursor.forEach( mydoc => {
         res.push(mydoc);
     });
+    await mongo.close();
     return res;
 }
 
@@ -65,9 +69,11 @@ export async function hasTheater(id: string): Promise<boolean> {
     try {
         const objectId = new ObjectId(id);
         const result = await theaters.findOne({ _id: objectId });
+        await mongo.close();
         return result !== null;
     } catch (err) {
         console.log(err);
+        await mongo.close();
         return false;
     }
 }

@@ -8,6 +8,7 @@ export async function createConcession(model: ConcessionModel) {
     const concessions = db.collection('concessions');
     const obj = {"name": model.name, "type": model.type, "price": model.price, "image": model.image};
     const res = await concessions.insertOne(obj);
+    await mongo.close();
     return res;
 }
 
@@ -25,6 +26,7 @@ export async function updateConcession(model: ConcessionModel) {
     }
 
     await concessions.updateOne(_id, {'$set': obj});
+    await mongo.close();
     return model;
 }
 
@@ -43,6 +45,7 @@ export async function getConcession(id: string) {
     const db = mongo.db();
     const concessions = db.collection('concessions');
     const res = await concessions.findOne({"_id": objectId});
+    await mongo.close();
     return res;
 }
 
@@ -55,6 +58,7 @@ export async function getAllConcessions() {
     await cursor.forEach( mydoc => {
         res.push(mydoc);
     });
+    await mongo.close();
     return res;
 }
 
@@ -65,9 +69,11 @@ export async function hasConcession(id: string): Promise<boolean> {
     try {
         const objectId = new ObjectId(id);
         const result = await concessions.findOne({ _id: objectId });
+        await mongo.close();
         return result !== null;
     } catch (err) {
         console.log(err);
+        await mongo.close();
         return false;
     }
 }
