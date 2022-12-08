@@ -1,10 +1,7 @@
-// These will be the querying functions
 import { connectDB } from './dbInit.js';
 import { ConcessionModel } from '../models/ConcessionModel';
 import { MongoClient, ObjectId } from 'mongodb';
-// import { db } from './dbInit.js';
 
-// These functions will contain actual queries in them
 export async function createConcession(model: ConcessionModel) {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
@@ -29,8 +26,6 @@ export async function updateConcession(model: ConcessionModel) {
 
     await concessions.updateOne(_id, {'$set': obj});
     return model;
-    // This will look different with sql in how to update 
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
 }
 
 export async function deleteConcession(id: string) {
@@ -40,7 +35,6 @@ export async function deleteConcession(id: string) {
     const concessions = db.collection('concessions');
     const res = await concessions.deleteOne({"_id": objectId});
     return res;
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
 }
 
 export async function getConcession(id: string) {
@@ -73,7 +67,6 @@ export async function hasConcession(id: string): Promise<boolean> {
         const result = await concessions.findOne({ _id: objectId });
         return result !== null;
     } catch (err) {
-        // ObjectId.isValid() will return false for invalid ID strings
         console.log(err);
         return false;
     }
