@@ -36,6 +36,7 @@ export async function deleteConcession(id: string) {
     const db = mongo.db();
     const concessions = db.collection('concessions');
     const res = await concessions.deleteOne({"_id": objectId});
+    await mongo.close();
     return res;
 }
 

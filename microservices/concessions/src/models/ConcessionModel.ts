@@ -63,8 +63,8 @@ async function validateConcessionRequest(data: ConcessionModel) {
     }
 }
 
-function validateConcessionExists(data: ConcessionModel) {
-    if (!(dbe.hasConcession(data.id as string))) {
+async function validateConcessionExists(data: ConcessionModel) {
+    if (!await dbe.hasConcession(data.id as string)) {
         throw new ConcessionException("Error: Concession does not exists", [data.id as string]);
     }
 }

@@ -8,7 +8,6 @@ export const createConcession = async (req: Request, res: Response) => {
     const data: ConcessionRequest = req.body;
     const concessionModel = new ConcessionModel(data);
     const newConcession = await concessionModel.createConcession();
-    console.log("this is in create theater: " + newConcession);
     res.status(200).send(newConcession);
   } catch (err) {
     res.status(400).send(err);

@@ -36,6 +36,7 @@ export async function deleteTheater(id: string) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const res = await theaters.deleteOne({"_id": objectId});
+    await mongo.close();
     return res;
 }
 
