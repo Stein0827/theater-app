@@ -26,7 +26,7 @@ export class MovieModel {
 
         try {
             const movie = await dbe.createMovie(this);
-            return movie
+            return movie;
         } catch (err) {
             throw err;
         }
