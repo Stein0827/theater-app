@@ -3,23 +3,19 @@ import * as dbe from '../data/dbComms.js';
 
 export class TheaterLocationModel {
     zipcode: string
-    localTheatersList: theaterList
 
     constructor(data: MovieLocationRequest) {
         this.zipcode = data.zipcode;
-        this.localTheatersList = [];
     }
 
-    getLocalTheaters() {
+    async getLocalTheaters() {
         this.validateRequest()
         // if the zipcode is not in the database, then ask the theater service for the theaters with that zipcode
-        if (!this.validateZipCodeExists()) {
+        if (!(await this.validateZipCodeExists())) {
             //TODO: send event to theater service to get local theaters and update dbe
             throw new TheaterLocateException("zipcode does not exist", [this.zipcode as string]); 
-        } else {
-            this.localTheatersList = dbe.getTheaters(this.zipcode);
         }
-        return this;
+        return await dbe.getTheaters(this.zipcode);
     }
 
     validateRequest() {
@@ -28,8 +24,8 @@ export class TheaterLocationModel {
         }
     }
 
-    validateZipCodeExists() {
-        return dbe.hasZipCode(this.zipcode);
+    async validateZipCodeExists() {
+        return await dbe.hasZipCode(this.zipcode);
     }
 }
 
