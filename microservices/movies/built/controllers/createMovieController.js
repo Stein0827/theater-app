@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,11 +8,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { MovieModel } from '../models/movieModel.js';
-export const createMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.createMovie = void 0;
+const movieModel_js_1 = require("../models/movieModel.js");
+const createMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
-        const movieModel = new MovieModel(data);
+        const movieModel = new movieModel_js_1.MovieModel(data);
         const newMovie = movieModel.createMovie();
         res.status(200).send(newMovie);
     }
@@ -19,3 +22,4 @@ export const createMovie = (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(400).send(err);
     }
 });
+exports.createMovie = createMovie;

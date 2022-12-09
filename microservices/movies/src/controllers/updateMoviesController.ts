@@ -7,8 +7,8 @@ export const updateMovie = async (req: Request, res: Response) => {
     try {
         const data: MovieRequest = req.body;
         const movieModel = new MovieModel(data);
-        const newMovie = movieModel.updateMovie();
-        res.status(200).send(newMovie);
+        const result = await movieModel.updateMovie();
+        res.status(200).send(result);
     } catch (err) {
         res.status(400).send(err);
     }
