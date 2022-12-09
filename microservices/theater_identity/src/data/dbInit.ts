@@ -22,8 +22,8 @@ export async function initDB() {
     return;
   }
 
-  const theaters = db.collection('theaterLogin');
-  const result = await theaters.insertMany([
+  const theaterLogin = db.collection('theaterLogin');
+  const result = await theaterLogin.insertMany([
     { username: "ilya", password: "$2a$10$wN1d.QZzEUV08jymXs.Am.V/l5g0Lpa8r5J4BZXRxCJmLUgmXjxJ2", theaterId: "abcdefg"},
     { username: "bob", password: "$2a$10$yoxw/adZkv5prX3VkWimveVVzHQ3SNj5jkHFbrV7Tzk5urtpDmG62", theaterId: "123456"},
   ]);

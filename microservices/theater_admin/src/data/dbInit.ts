@@ -22,8 +22,8 @@ export async function initDB() {
     return;
   }
 
-  const theaters = db.collection('theaterAdmin');
-  const result = await theaters.insertMany([
+  const theaterAdmin = db.collection('theaterAdmin');
+  const result = await theaterAdmin.insertMany([
     { theaterId: "abc", revenue: [
         {ticketRevenue: 10000, concessionsRevenue: 20000, date: new Date()},
         {ticketRevenue: 30000, concessionsRevenue: 40000, date: new Date()}
