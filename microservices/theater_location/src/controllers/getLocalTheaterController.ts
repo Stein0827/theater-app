@@ -4,15 +4,13 @@ import {MovieLocationRequest } from '../types.js';
 import { TheaterLocationModel} from '../models/theaterLocationModel.js'
 
 export const getLocalTheaters = async (req: Request, res: Response) => {
-  let resList: TheaterLocationModel
-
-  try {
-    const data: MovieLocationRequest = req.body;
-    const theaterLocationModel = new TheaterLocationModel(data);
-    resList = theaterLocationModel.getLocalTheaters();
-    res.status(200).send(resList.localTheatersList);
-  } catch (err: any) {
-    res.status(400).send(`${err.name}: ${err.message} with zipcode: ${err.list[0]}`);
-  }
+    try {
+        const data: MovieLocationRequest = req.body;
+        const theaterLocationModel = new TheaterLocationModel(data);
+        let resList = await theaterLocationModel.getLocalTheaters();
+        res.status(200).send(resList);
+    } catch (err: any) {
+        res.status(400).send(`${err.name}: ${err.message} with zipcode: ${err.list[0]}`);
+    }
 }
 
