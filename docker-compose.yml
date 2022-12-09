@@ -41,6 +41,15 @@ services:
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
       
+  theater_admin:
+    build: ./microservices/theater_admin
+    ports:
+      - "4006:4006"
+    depends_on:
+      - mongodb_container
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+  
   theater_location:
     build: ./microservices/theater_location
     ports:

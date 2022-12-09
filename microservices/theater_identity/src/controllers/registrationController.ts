@@ -12,11 +12,11 @@ export const registerUser = async (req: Request, res: Response) => {
 
         const userId = user.insertedId;
         const maxAge = 60 * 60; // 1 hour in seconds
-        const jwtSecret = process.env.jwtSecret;
+        const jwtSecret = process.env.jwtSecret || "";
         // generate token for cookie 
         const token = jwt.sign(
             { userId },
-            jwtSecret!,
+            jwtSecret,
             {
               expiresIn: maxAge, // 1hrs in sec
             }

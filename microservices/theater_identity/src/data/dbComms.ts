@@ -11,7 +11,6 @@ export async function findUser(username: string) {
     const theaterLogin = db.collection('theaterLogin');
 
     const user = await theaterLogin.findOne({username: username});
-    console.log(JSON.stringify(user));
     await mongo.close();
     return user;
 }

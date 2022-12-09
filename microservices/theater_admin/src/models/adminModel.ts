@@ -1,5 +1,6 @@
 import { SalesRequest } from '../types';
 import * as dbe from '../data/dbComms';
+import { TheaterRevenue } from '../types'
 
 export class AdminModel {
     theaterId: string;
@@ -8,26 +9,43 @@ export class AdminModel {
         this.theaterId = data.theaterId;
     }
 
-    getRevenue() {
+    async getRevenue() {
         this.validateRequest();
-        this.validateTheaterExists();
-        const theaterRevenue = dbe.getRevenue(this.theaterId);
-        return theaterRevenue;
+        const revObj = await dbe.getRevenue(this.theaterId);
+        return this.#processRevenue(revObj);
     }
 
     validateRequest() {
         const theaterId = this.theaterId;
-
         if (!theaterId || typeof theaterId !== 'string' || theaterId === "") {
             throw new AdminException("Invalid theater id", [theaterId as string])
         }
     }
 
-    validateTheaterExists() {
-        const theaterExists: boolean = dbe.theaterExists(this.theaterId);
-        if (!theaterExists) {
-            throw new AdminException("Theater does not exist", [this.theaterId as string]);
+    #processRevenue(revObj: TheaterRevenue[]) {
+        if (revObj.length === 0) {
+            return revObj;
         }
+
+        //convert the dates from ISO to a Date object
+        revObj = this.#convertDates(revObj);
+
+        const totalTicketRevenue = revObj.reduce((acc, e) => acc += e.ticketRevenue, 0);
+        const totalConcessionRevenue = revObj.reduce((acc, e) => acc += e.concessionsRevenue, 0);
+
+        const totalRev = {
+            revObj,
+            totalTicketRevenue,
+            totalConcessionRevenue
+        }
+        return totalRev;
+    }
+
+    #convertDates(revObj: TheaterRevenue[]) {
+        for (const rev of revObj) {
+            rev.date = new Date(rev.date);
+        }
+        return revObj;
     }
 }
 
