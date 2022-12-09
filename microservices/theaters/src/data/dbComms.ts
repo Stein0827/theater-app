@@ -1,16 +1,14 @@
-// These will be the querying functions
 import { connectDB } from './dbInit.js';
 import { TheaterModel } from '../models/TheaterModel.js';
 import { MongoClient, ObjectId } from 'mongodb';
-// import { db } from './dbInit.js';
 
-// These functions will contain actual queries in them
 export async function createTheater(model: TheaterModel) {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const obj = {"name": model.name, "address": model.address, "zip": model.zip, "description": model.description, "movies": model.movies};
     const res = await theaters.insertOne(obj);
+    await mongo.close();
     return res;
 }
 
@@ -28,9 +26,8 @@ export async function updateTheater(model: TheaterModel) {
     }
 
     await theaters.updateOne(_id, {'$set': obj});
+    await mongo.close();
     return model;
-    // This will look different with sql in how to update 
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
 }
 
 export async function deleteTheater(id: string) {
@@ -39,8 +36,8 @@ export async function deleteTheater(id: string) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const res = await theaters.deleteOne({"_id": objectId});
+    await mongo.close();
     return res;
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
 }
 
 export async function getTheater(id: string) {
@@ -49,6 +46,7 @@ export async function getTheater(id: string) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const res = await theaters.findOne({"_id": objectId});
+    await mongo.close();
     return res;
 }
 
@@ -61,6 +59,7 @@ export async function getAllTheaters() {
     await cursor.forEach( mydoc => {
         res.push(mydoc);
     });
+    await mongo.close();
     return res;
 }
 
@@ -71,10 +70,11 @@ export async function hasTheater(id: string): Promise<boolean> {
     try {
         const objectId = new ObjectId(id);
         const result = await theaters.findOne({ _id: objectId });
+        await mongo.close();
         return result !== null;
     } catch (err) {
-        // ObjectId.isValid() will return false for invalid ID strings
         console.log(err);
+        await mongo.close();
         return false;
     }
 }

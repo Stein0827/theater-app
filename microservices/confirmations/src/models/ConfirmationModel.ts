@@ -23,21 +23,20 @@ export class ConfirmationModel {
 
     async createConfirmation() {
         validateCreateRequest(this);
-        this.id = dbe.getNewID();
-        await sendEmail(this.email, this.id, this.price, this.address);
-        return dbe.createConfirmation(this);
+        const id = await dbe.createConfirmation(this);
+        return id;
     }
 
-    getConfirmation() {
+    async getConfirmation() {
         validateConfirmationRequest(this);
-        validateConfirmationExists(this);
-        return dbe.getConfirmation(this.id as string);
+        await validateConfirmationExists(this);
+        return await dbe.getConfirmation(this.id as string);
     }
 
-    deleteConfirmation() {
+    async deleteConfirmation() {
         validateConfirmationRequest(this);
-        validateConfirmationExists(this);
-        return dbe.deleteConfirmation(this.id as string);
+        await validateConfirmationExists(this);
+        return await dbe.deleteConfirmation(this.id as string);
     }
 }
 
@@ -55,9 +54,9 @@ function validateCreateRequest(data: ConfirmationModel) {
     }
 }
 
-function validateConfirmationRequest(data: ConfirmationModel) {
-    if (data.id === undefined || data.id as string === "") {
-        throw new ConfirmationException("Error: Invalid ID", [data.id as string]);
+async function validateConfirmationRequest(data: ConfirmationModel) {
+    if (!await dbe.hasConfirmation(data.id as string)) {
+        throw new ConfirmationException("Error: Confirmation does not exists", [data.id as string]);
     }
 }
 

@@ -59,10 +59,8 @@ function validateCreateRequest(data: TheaterModel) {
     }
 }
 
-async function validateTheaterExists(data: TheaterModel) {
-    const test = await dbe.hasTheater(data.id as string);
-    console.log(test);
-    if (!test) {
+async function validateTheaterExists(data: TheaterModel) { 
+    if (!await dbe.hasTheater(data.id as string)) {
         throw new TheaterException("Error: Theater does not exists", [data.id as string]);
     }
 }

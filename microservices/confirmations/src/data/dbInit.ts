@@ -1,27 +1,38 @@
-export let db: {[key: string]: string | object} = {};
+import { MongoClient } from 'mongodb';
 
-function initDB() {
-    db["1"] = {
-        id: "1",
-        movieId: "1231925sdfs",
-        theaterId: "alwekjkalset12",
-        creditCard: "91231ksdlg",
-        address: "123dlfjkads",
-        price: "44",
-        email: "xiuquanshi@umass.edu",
-    };
-    db["2"] = {
-        id: "2",
-        movieId: "asdfsdfasd",
-        theaterId: "dfdfdfdfd",
-        creditCard: "12321ass",
-        address: "xzcvzxcvzxcv",
-        price: "555",
-        email: "xiuquanshi@umass.edu"
-    };
+export async function connectDB(): Promise<MongoClient> {
+  const uri = process.env.DATABASE_URL;
+
+  if (uri === undefined) {
+    throw Error('DATABASE_URL environment variable is not specified');
+  }
+
+  const mongo = new MongoClient(uri);
+  await mongo.connect();
+  return await Promise.resolve(mongo);
 }
 
-export function startupDB() {
-    // connect to db
-    initDB();
+export async function initDB() {
+  console.log("initing db");
+  const mongo: MongoClient = await connectDB();
+  const db = mongo.db();
+
+  if (await db.listCollections({ name: 'confirmations' }).hasNext()) {
+    console.log('Collection already exists. Skipping initialization.');
+    return;
+  }
+
+  const confirmations = db.collection('confirmations');
+  const result = await confirmations.insertMany([
+    { name: 'bruh', type: 'ehhhasdfklas', price: 22, image: "asdgkjsdg" },
+    { name: 'ddd', type: 'dddd', price: 11, image: "asdfdf" },
+    { name: '12312sa', type: 'zxcvdf', price: 224, image: "asdggkk" },
+  ]);
+
+  console.log(`Initialized ${result.insertedCount} products`);
+  console.log(`Initialized:`);
+
+  for (let key in result.insertedIds) {
+    console.log(`  Inserted product with ID ${result.insertedIds[key]}`);
+  }
 }
