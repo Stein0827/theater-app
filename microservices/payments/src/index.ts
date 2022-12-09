@@ -9,8 +9,7 @@ app.use(express.json());
 app.use(cors());
 app.use(router)
 
-// TODO: init DB
-startupDB();
+export const db = startupDB();
 
 app.listen(4005, () => {
   console.log('Listening on 4004');
