@@ -9,6 +9,15 @@ services:
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
       
+  theater_location:
+    build: ./microservices/theater_location
+    ports:
+      - "4008:4008"
+    depends_on:
+      - mongodb_container
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+  
   concessions:
     build: ./microservices/concessions
     ports:
