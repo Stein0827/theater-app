@@ -7,7 +7,7 @@ export const createMovie = async (req: Request, res: Response) => {
   try {
     const data: MovieRequest = req.body;
     const movieModel = new MovieModel(data);
-    const newMovie = movieModel.createMovie();
+    const newMovie = await movieModel.createMovie().catch((err)=> {throw err});
     res.status(200).send(newMovie);
   } catch (err) {
     res.status(400).send(err);

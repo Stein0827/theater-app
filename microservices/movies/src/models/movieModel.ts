@@ -1,16 +1,17 @@
-import { MovieRequest } from '../types.js';
+import { IMovie, MovieRequest } from '../types.js';
 import * as dbe from '../data/dbComms.js';
 
 export class MovieModel {
-    id: string | undefined;
+    
+    id: number | undefined;
     name: string | undefined;
     desc: string | undefined;
     length: string | undefined;
     rating: string | undefined;
-    thumbnail: File | undefined;
+    thumbnail: string | undefined;
     trailer: string | undefined;
 
-    constructor(data: MovieRequest) {
+    constructor(data: MovieRequest | IMovie) {
         this.id = data.movie_id;
         this.name = data.name;
         this.desc = data.desc;
@@ -20,28 +21,81 @@ export class MovieModel {
         this.trailer = data.trailer;
     }
 
-    createMovie() {
+    async createMovie() {
         validateCreateRequest(this);
-        this.id = dbe.getNewID();
-        return dbe.createMovie(this);
+
+        try {
+            const movie = await dbe.createMovie(this);
+            return movie
+        } catch (err) {
+            throw err;
+        }
     }
 
-    getMovie() {
+    async getMovie() {
         validateMovieRequest(this);
-        validateMovieExists(this);
-        return dbe.getMovie(this.id as string);
+
+        try {
+            await validateMovieExists(this);
+        } catch (err) {
+            throw err;
+        }
+
+        try {
+            const movie = await dbe.getMovie(this.id as number);
+            return movie;
+        } catch (err) {
+            throw err;
+        }
     }
 
-    updateMovie() {
+    async updateMovie() {
         validateMovieRequest(this);
-        validateMovieExists(this);
-        return dbe.updateMovie(this);
+        try {
+            await validateMovieExists(this);
+        } catch (err) {
+            throw err;
+        }
+
+        return await dbe.updateMovie(this);
     }
 
-    deleteMovie() {
+    async deleteMovie() {
         validateMovieRequest(this);
-        validateMovieExists(this);
-        return dbe.deleteMovie(this.id as string);
+        try {
+            await validateMovieExists(this);
+        } catch (err) {
+            throw err;
+        }
+
+        return await dbe.deleteMovie(this.id as number);
+    }
+
+    getUpdateString() {
+        let updateString = "";
+        const fields  = Object.keys(this);
+        console.log("fields", fields);
+        
+
+        fields.forEach((field) => {
+            console.log("field", field);
+            console.log("value", this[field as keyof typeof this])
+            if (this[field as keyof typeof this] !== undefined) {
+                let value:any = this[field as keyof typeof this];
+                console.log("value", value);
+                
+                if (field === "id") field = "movie_id";
+                if (field !== "id") value = "'" + value + "'";
+
+                if (updateString === "") {
+                    updateString += field + "=" + value;
+                } else  {
+                    updateString += ", " + field + "=" + value;
+                }
+            }
+        });
+        console.log("update string", updateString)
+        return updateString;
     }
 }
 
@@ -60,14 +114,19 @@ function validateCreateRequest(data: MovieModel) {
 }
 
 function validateMovieRequest(data: MovieModel) {
-    if (data.id === undefined || typeof data.id !== "string" || data.id as string === "") {
-        throw new MovieException("Error: Invalid ID", [data.id as string]);
+    if (data.id === undefined || typeof data.id !== "number") {
+        throw new MovieException("Error: Invalid ID", [(data.id as unknown as number).toString()]);
     }
 }
 
-function validateMovieExists(data: MovieModel) {
-    if (!(dbe.hasMovie(data.id as string))) {
-        throw new MovieException("Error: Movie does not exists", [data.id as string]);
+async function validateMovieExists(data: MovieModel) {
+    try {
+        const hasMovie = await dbe.hasMovie(data.id as number);
+        if (!(hasMovie)) {
+            throw new MovieException("Error: Movie does not exists", [(data.id as unknown as number).toString()]);
+        }
+    } catch (err) {
+        throw err;
     }
 }
 class MovieException{
