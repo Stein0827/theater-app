@@ -28,13 +28,13 @@ export class ConfirmationModel {
     }
 
     async getConfirmation() {
-        validateConfirmationRequest(this);
+        await validateConfirmationRequest(this);
         await validateConfirmationExists(this);
         return await dbe.getConfirmation(this.id as string);
     }
 
     async deleteConfirmation() {
-        validateConfirmationRequest(this);
+        await validateConfirmationRequest(this);
         await validateConfirmationExists(this);
         return await dbe.deleteConfirmation(this.id as string);
     }
@@ -60,8 +60,8 @@ async function validateConfirmationRequest(data: ConfirmationModel) {
     }
 }
 
-function validateConfirmationExists(data: ConfirmationModel) {
-    if (!(dbe.hasConfirmation(data.id as string))) {
+async function validateConfirmationExists(data: ConfirmationModel) {
+    if (!await dbe.hasConfirmation(data.id as string)) {
         throw new ConfirmationException("Error: Confirmation does not exists", [data.id as string]);
     }
 }

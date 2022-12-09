@@ -23,19 +23,19 @@ export class ConcessionModel {
     }
 
     async getConcession() {
-        validateConcessionRequest(this);
-        validateConcessionExists(this);
+        await validateConcessionRequest(this);
+        await validateConcessionExists(this);
         return await dbe.getConcession(this.id as string);
     }
 
     async updateConcession() {
-        validateConcessionRequest(this);
-        validateConcessionExists(this);
+        await validateConcessionRequest(this);
+        await validateConcessionExists(this);
         return await dbe.updateConcession(this);
     }
 
     async deleteConcession() {
-        validateConcessionRequest(this);
+        await validateConcessionRequest(this);
         await validateConcessionExists(this);
         return await dbe.deleteConcession(this.id as string);
     }
