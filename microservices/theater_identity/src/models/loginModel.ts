@@ -12,17 +12,22 @@ export class LoginModel {
         this.theaterId = "";
     }
 
-    login() {
+    async login() {
         this.validateRequest();
-        this.validateUserExists();
-        this.theaterId = dbe.login(this.username, this.password);
-        return this.theaterId;
+        const user = await dbe.login(this.username, this.password);
+        return user;
     }
 
-    register() {
+    async register() {
         this.validateRequest();
-        const user = dbe.register(this.username, this.password);
+        const user = await dbe.register(this.username, this.password);
         return user;
+    }
+
+    async delete() {
+        this.validateDelete();
+        const deleteAck = await dbe.deleteUser(this.username);
+        return deleteAck;
     }
 
     validateRequest() {
@@ -36,10 +41,10 @@ export class LoginModel {
         }
     }
 
-    validateUserExists() {
-        const userExists: boolean = dbe.userExists(this.username);
-        if (!userExists) {
-            throw new LoginException("User does not exist", [this.username, this.password])
+    validateDelete() {
+        const username = this.username;
+        if (!username || typeof username !== 'string' || username === "") {
+            throw new LoginException("Username is invalid", [username])
         }
     }
 }

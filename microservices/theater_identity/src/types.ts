@@ -8,6 +8,10 @@ export interface RegistrationRequest {
     password: string
 }
 
+export interface DeletionRequest {
+    username: string
+}
+
 export interface User {
     username: string,
     password: string,
