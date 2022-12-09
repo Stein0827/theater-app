@@ -1,7 +1,8 @@
 type TheaterRequest = {
     theaterId?: string;
     name?: string;
-    address?: string; 
+    address?: string;
+    zip?: number;
     description?: string;
     theaterImage?: File;
     movies?: string[];

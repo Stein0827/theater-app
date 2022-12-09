@@ -5,6 +5,7 @@ export class TheaterModel {
     id: string | undefined;
     name: string | undefined;
     address: string | undefined;
+    zip: number | undefined;
     description: string | undefined;
     image: File | undefined;
     movies: string[] | undefined;
@@ -13,33 +14,34 @@ export class TheaterModel {
         this.id = data.theaterId;
         this.name = data.name;
         this.address = data.address;
+        this.zip = data.zip;
         this.description = data.description;
         this.image = data.theaterImage;
         this.movies = data.movies;
     }
 
-    createTheater() {
+    async createTheater() {
         validateCreateRequest(this);
-        this.id = dbe.getNewID();
-        return dbe.createTheater(this);
+        const id = await dbe.createTheater(this);
+        return id.insertedId;
     }
 
-    getTheater() {
+    async getTheater() {
         validateTheaterRequest(this);
-        validateTheaterExists(this);
-        return dbe.getTheater(this.id as string);
+        await validateTheaterExists(this);
+        return await dbe.getTheater(this.id as string);
     }
 
-    updateTheater() {
+    async updateTheater() {
         validateTheaterRequest(this);
-        validateTheaterExists(this);
-        return dbe.updateTheater(this);
+        await validateTheaterExists(this);
+        return await dbe.updateTheater(this);
     }
 
-    deleteTheater() {
+    async deleteTheater() {
         validateTheaterRequest(this);
-        validateTheaterExists(this);
-        return dbe.deleteTheater(this.id as string);
+        await validateTheaterExists(this);
+        return await dbe.deleteTheater(this.id as string);
     }
 }
 
@@ -57,15 +59,15 @@ function validateCreateRequest(data: TheaterModel) {
     }
 }
 
-function validateTheaterRequest(data: TheaterModel) {
-    if (data.id !== undefined && data.id as string !== "" && typeof data.id === "string") {
-        throw new TheaterException("Error: Invalid ID", [data.id]);
+async function validateTheaterExists(data: TheaterModel) { 
+    if (!await dbe.hasTheater(data.id as string)) {
+        throw new TheaterException("Error: Theater does not exists", [data.id as string]);
     }
 }
 
-function validateTheaterExists(data: TheaterModel) {
-    if (!(dbe.hasTheater(data.id as string))) {
-        throw new TheaterException("Error: Theater does not exists", [data.id as string]);
+function validateTheaterRequest(data: TheaterModel) {
+    if (data.id === undefined || data.id as string === "") {
+        throw new TheaterException("Error: Invalid ID", [data.id as string]);
     }
 }
 
@@ -75,8 +77,9 @@ class TheaterException{
     message: string;
 
     constructor (message:string, errorList: string[]) {
-        this.name = "Movie Exception";
+        this.name = "Theater Exception";
         this.message = message;
         this.list = errorList;
     }
 }
+

@@ -7,8 +7,9 @@ export const deleteTheaters = async (req: Request, res: Response) => {
     try {
         const data: TheaterRequest = req.body;
         const theaterModel = new TheaterModel(data);
-        theaterModel.deleteTheater();
-        res.status(200).send("Success: Movie Deleted");
+        console.log(theaterModel);
+        const ack = await theaterModel.deleteTheater();
+        res.status(200).send(ack);
     } catch (err) {
         res.status(400).send(err);
     }           

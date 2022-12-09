@@ -1,0 +1,210 @@
+{
+	"info": {
+		"_postman_id": "9d7302f2-e7d8-4891-8b21-ccce60bdbbeb",
+		"name": "497s Milestone - concessions",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Fail: Create concession - Doesn't include required attributes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"test\",\n    \"address\": \"55 lka street\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/v1/concession",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"concession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Success: Create concession",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"success create theater\",\n    \"address\": \"was theater created successfuly?\",\n    \"desciption\": \"bruh\",\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/v1/concession",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"concession"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fail: Update concession",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theaterId\": \"300\",\n    \"name\": \"should fail update\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/v1/concession",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"concession"
+					]
+				},
+				"description": "test: theater id doesnt exist, is empty string, is num. and doesn't exists in database"
+			},
+			"response": []
+		},
+		{
+			"name": "Success: Update concessions",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"snackId\": \"1670275130072\",\n    \"price\": 3.99\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/v1/Concession",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"Concession"
+					]
+				},
+				"description": "test: movie id doesnt exist, is empty string, is num. and doesn't exists in database"
+			},
+			"response": []
+		},
+		{
+			"name": "get from concession",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"1\", 3, \"300\"\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/v1/concessions",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"concessions"
+					]
+				},
+				"description": "This requests includes successful movie id objects, invalid movies ids, and movie ids that dont exists."
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4001/api/v1/concessions/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4001/api/v1/concessions/all",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"concessions",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4009/api/v1/concession",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"snackId\": \"1\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4001/api/v1/concession",
+					"host": [
+						"localhost"
+					],
+					"port": "4001",
+					"path": [
+						"api",
+						"v1",
+						"concession"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

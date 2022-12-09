@@ -7,7 +7,7 @@ export const updateTheater = async (req: Request, res: Response) => {
     try {
         const data: TheaterRequest = req.body;
         const theaterModel = new TheaterModel(data);
-        const newTheater = theaterModel.updateTheater();
+        const newTheater = await theaterModel.updateTheater();
         res.status(200).send(newTheater);
     } catch (err) {
         res.status(400).send(err);
