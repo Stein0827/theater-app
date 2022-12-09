@@ -14,10 +14,10 @@ export const login = async (req: Request, res: Response) => {
         const maxAge = 60 * 60; // 1 hour in secs
         const userId = user?._id;
         
-        const jwtSecret = process.env.jwtSecret;
+        const jwtSecret = process.env.jwtSecret || "";
         const token = jwt.sign(
             { userId },
-            jwtSecret!,
+            jwtSecret,
             {
                 expiresIn: maxAge, // 1hrs in sec
             }
