@@ -1,36 +1,42 @@
-import { TheaterRevenue } from "../types";
-export let db: { [key: string]: TheaterRevenue[] } = {};
+import { MongoClient } from 'mongodb';
 
-function initDB() {
-    db["abc"] = [
-        {
-            "theaterId": "abc",
-            "ticketRevenue": 10000,
-            "concessionsRevenue": 20000,
-            "date": new Date()
-        }
-    ];
+export async function connectDB(): Promise<MongoClient> {
+  const uri = process.env.DATABASE_URL;
 
-    db["abc"].push(
-        {
-            "theaterId": "abc",
-            "ticketRevenue": 30000,
-            "concessionsRevenue": 40000,
-            "date": new Date()
-        }
-    );
-    
-    db["def"] = [
-        {
-            "theaterId": "def",
-            "ticketRevenue": 50000,
-            "concessionsRevenue": 60000,
-            "date": new Date()
-        }
-    ];
+  if (uri === undefined) {
+    throw Error('DATABASE_URL environment variable is not specified');
+  }
+
+  const mongo = new MongoClient(uri);
+  await mongo.connect();
+  return await Promise.resolve(mongo);
 }
 
-export function startupDB() {
-    // connect to db
-    initDB();
+export async function initDB() {
+  console.log("Initializing database");
+  const mongo: MongoClient = await connectDB();
+  const db = mongo.db();
+
+  if (await db.listCollections({ name: 'theaterAdmin' }).hasNext()) {
+    console.log('Collection already exists. Skipping initialization.');
+    return;
+  }
+
+  const theaters = db.collection('theaterAdmin');
+  const result = await theaters.insertMany([
+    { theaterId: "abc", revenue: [
+        {ticketRevenue: 10000, concessionsRevenue: 20000, date: new Date()},
+        {ticketRevenue: 30000, concessionsRevenue: 40000, date: new Date()}
+    ]},
+    { theaterId: "def", revenue: [
+        {ticketRevenue: 50000, concessionsRevenue: 60000, date: new Date()}
+    ]},
+  ]);
+
+  console.log(`Initialized ${result.insertedCount} products`);
+  console.log(`Initialized:`);
+
+  for (let key in result.insertedIds) {
+    console.log(`  Inserted product with ID ${result.insertedIds[key]}`);
+  }
 }
