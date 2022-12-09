@@ -19,7 +19,6 @@ export async function hasZipCode(zipcode: string) {
     const theaterLocations = db.collection('theaterLocations');
     
     const hasZipCode = await theaterLocations.find({zipcode: zipcode}).hasNext();
-    console.log(`false inside of hasZIP: ${hasZipCode}`);
     await mongo.close();
     return hasZipCode;
 }
