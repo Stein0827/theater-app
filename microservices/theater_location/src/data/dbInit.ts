@@ -35,6 +35,4 @@ export async function initDB() {
   for (let key in result.insertedIds) {
     console.log(`  Inserted product with ID ${result.insertedIds[key]}`);
   }
-
-  return db;
 }
