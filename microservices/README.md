@@ -1,6 +1,6 @@
 # Controller Folder
 Focuses on 
-# Ports
+# Microservice Ports
 - 4000: eventbust
 - 4001: concessions
 - 4002: confirmations
@@ -11,6 +11,17 @@ Focuses on
 - 4007: theater-identity
 - 4008: theater-location
 - 4009: theaters
+
+# DB Ports
+- 5001: concessions
+- 5002: confirmations
+- 5003: movie-ops
+- 5004: movies
+- 5005: payments
+- 5006: theater-admin
+- 5007: theater-identity
+- 5008: theater-location
+- 5009: theaters
 
 # Notes on TypeScript and Modules!
 Make sure that when you import a local file into your current working file use the `.js` extension. TS wont complain if you don't but it will not

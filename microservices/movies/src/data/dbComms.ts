@@ -1,42 +1,104 @@
-// These will be the querying functions
-import { db } from './dbInit.js';
+import { OkPacket } from 'mysql2';
+import Connection from 'mysql2/typings/mysql/lib/Connection';
+import { db } from '../index.js';
 import { MovieModel } from '../models/movieModel.js';
+import { IMovie } from '../types.js';
+import { insert } from './queries.js'
 
-// These functions will contain actual queries in them
 export function createMovie(model: MovieModel) {
-    db[model.id as string] = model;
-    return model;
+    const values: string[] = [model.name as string, model.desc as string, model.length as string, model.rating as string, model.thumbnail as string, model.trailer as string];
+    console.log("values", values);
+    return new Promise((resolve, reject) => {
+        (db as Connection).query<OkPacket>(
+        "INSERT INTO Movies (name,`desc`,length,rating,thumbnail,trailer) VALUES (?);", 
+        [values], (error, result) => {                
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            
+            model.id = result.insertId;
+            resolve(model);
+        });        
+    });
 }
 
 export function updateMovie(model: MovieModel) {
-    db[model.id as string] = model;
-    return model;
-    // This will look different with sql in how to update 
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
+    const updateVariablesString = model.getUpdateString();
+    return new Promise((resolve, reject) => {
+        (db as Connection).query<OkPacket>(
+            "UPDATE Movies SET " + updateVariablesString + " WHERE movie_id = " + model.id + ";",
+            (error, result) => {
+            console.log(error);
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(result);
+        });
+    });
 }
 
-export function deleteMovie(id: string) {
-    delete db[id];
-    return true;
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
+export function deleteMovie(id: number) {
+    return new Promise((resolve, reject) => {
+        (db as Connection).query<OkPacket>(
+            "DELETE FROM Movies WHERE movie_id=?;", [id],
+            (error) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(true);
+        });
+    });
 }
 
-export function getMovie(id: string) {
-    return db[id];
-}
-
-export function getNewID() {
-    const newid: string = Date.now().toString();
-    return newid;
+export function getMovie(id: number): any {
+    return new Promise((resolve, reject) => {
+        (db as Connection).query<IMovie[]>(
+            "SELECT * FROM Movies WHERE movie_id=?;", [id],
+            (error, results) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(results[0]);
+        });
+    });
 }
 
 export function getallMovies() {
-    return db;
+    return new Promise((resolve, reject) => {
+        (db as Connection).query<IMovie[]>(
+            "SELECT * FROM Movies;",
+            (error, results) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(results);
+        });
+    });
 }
 
-export function hasMovie(id: string) {
-    if (id in db) {
-        return true;
+export function hasMovie(id: number) {
+    return new Promise<boolean>((resolve, reject) => {
+        (db as Connection).query<IMovie[]>(
+            "SELECT * FROM Movies WHERE movie_id=?;", [id],
+            (error, results) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            if (results.length === 0) {
+                resolve(false);
+            } else {
+                resolve(true);
+            }
+        });
+    });  
+}
+
+class DatabaseException{
+    name: string;
+    message: string;
+
+    constructor (message:string) {
+        this.name = "Database Exception";
+        this.message = message;
     }
-    return false;
 }
