@@ -17,13 +17,13 @@ export async function initDB() {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
 
-    if (await db.listCollections({ name: 'confirmations' }).hasNext()) {
+    if (await db.listCollections({ name: 'concessions' }).hasNext()) {
         console.log('Collection already exists. Skipping initialization.');
         return;
     }
 
-    const confirmations = db.collection('confirmations');
-    const result = await confirmations.insertMany([
+    const concessions = db.collection('concessions');
+    const result = await concessions.insertMany([
         { name: 'bruh', type: 'ehhhasdfklas', price: 22, image: "asdgkjsdg" },
         { name: 'ddd', type: 'dddd', price: 11, image: "asdfdf" },
         { name: '12312sa', type: 'zxcvdf', price: 224, image: "asdggkk" },
