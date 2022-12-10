@@ -31,6 +31,15 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: db
+
+  movie_ops:
+    build: ./microservices/movie_ops
+    ports:
+      - "4003:4003"
+    depends_on:
+      - mongodb_container
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
       
   theaters:
     build: ./microservices/theaters

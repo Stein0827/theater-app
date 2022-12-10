@@ -27,7 +27,6 @@ function initDB(db: mysql.Connection | undefined) {
         if (error) {
             return console.log("Create Table Error:", error.message);
         }
-        console.log("Create Table:", results);
     });
 }
 
