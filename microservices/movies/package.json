@@ -2,6 +2,7 @@
   "name": "moderator",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "./built/index.js",
   "scripts": {
     "start": "npx tsc && nodemon index.js"

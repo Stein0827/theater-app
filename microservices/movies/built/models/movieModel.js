@@ -1,31 +1,5 @@
-"use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MovieModel = void 0;
-const dbe = __importStar(require("../data/dbComms.js"));
-class MovieModel {
+import * as dbe from '../data/dbComms.js';
+export class MovieModel {
     constructor(data) {
         this.id = data.movie_id;
         this.name = data.name;
@@ -35,28 +9,78 @@ class MovieModel {
         this.thumbnail = data.thumbnail;
         this.trailer = data.trailer;
     }
-    createMovie() {
+    async createMovie() {
         validateCreateRequest(this);
-        this.id = dbe.getNewID();
-        return dbe.createMovie(this);
+        try {
+            const movie = await dbe.createMovie(this);
+            return movie;
+        }
+        catch (err) {
+            throw err;
+        }
     }
-    getMovie() {
+    async getMovie() {
         validateMovieRequest(this);
-        validateMovieExists(this);
-        return dbe.getMovie(this.id);
+        try {
+            await validateMovieExists(this);
+        }
+        catch (err) {
+            throw err;
+        }
+        try {
+            const movie = await dbe.getMovie(this.id);
+            return movie;
+        }
+        catch (err) {
+            throw err;
+        }
     }
-    updateMovie() {
+    async updateMovie() {
         validateMovieRequest(this);
-        validateMovieExists(this);
-        return dbe.updateMovie(this);
+        try {
+            await validateMovieExists(this);
+        }
+        catch (err) {
+            throw err;
+        }
+        return await dbe.updateMovie(this);
     }
-    deleteMovie() {
+    async deleteMovie() {
         validateMovieRequest(this);
-        validateMovieExists(this);
-        return dbe.deleteMovie(this.id);
+        try {
+            await validateMovieExists(this);
+        }
+        catch (err) {
+            throw err;
+        }
+        return await dbe.deleteMovie(this.id);
+    }
+    getUpdateString() {
+        let updateString = "";
+        const fields = Object.keys(this);
+        console.log("fields", fields);
+        fields.forEach((field) => {
+            console.log("field", field);
+            console.log("value", this[field]);
+            if (this[field] !== undefined) {
+                let value = this[field];
+                console.log("value", value);
+                if (field === "id")
+                    field = "movie_id";
+                if (field !== "id")
+                    value = "'" + value + "'";
+                if (updateString === "") {
+                    updateString += field + "=" + value;
+                }
+                else {
+                    updateString += ", " + field + "=" + value;
+                }
+            }
+        });
+        console.log("update string", updateString);
+        return updateString;
     }
 }
-exports.MovieModel = MovieModel;
 function validateCreateRequest(data) {
     let invalidAttributes = [];
     const required_attributes = new Set(["name", "desc", "length", "rating", "trailer"]);
@@ -70,13 +94,19 @@ function validateCreateRequest(data) {
     }
 }
 function validateMovieRequest(data) {
-    if (data.id === undefined || typeof data.id !== "string" || data.id === "") {
-        throw new MovieException("Error: Invalid ID", [data.id]);
+    if (data.id === undefined || typeof data.id !== "number") {
+        throw new MovieException("Error: Invalid ID", [data.id.toString()]);
     }
 }
-function validateMovieExists(data) {
-    if (!(dbe.hasMovie(data.id))) {
-        throw new MovieException("Error: Movie does not exists", [data.id]);
+async function validateMovieExists(data) {
+    try {
+        const hasMovie = await dbe.hasMovie(data.id);
+        if (!(hasMovie)) {
+            throw new MovieException("Error: Movie does not exists", [data.id.toString()]);
+        }
+    }
+    catch (err) {
+        throw err;
     }
 }
 class MovieException {

@@ -30,7 +30,7 @@ class EventBusModel {
               this.eventbus[event] = [url];
             }
         }
-        console.log(JSON.stringify(this.eventbus));
+        console.log("***TEMP*** Current Eventbus", JSON.stringify(this.eventbus));
     }
 
     async publishEvent(data: PublishRequest) {
