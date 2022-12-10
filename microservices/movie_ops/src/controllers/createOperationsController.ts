@@ -6,7 +6,7 @@ export const createOperations = async (req: Request, res: Response) => {
   try {
     const data: OperationsRequest = req.body;
     const operationsModel = new OperationsModel(data);
-    const newOperations = operationsModel.createOperations();
+    const newOperations = await operationsModel.createOperations();
     res.status(200).send(newOperations);
   } catch (err) {
     res.status(400).send(err);

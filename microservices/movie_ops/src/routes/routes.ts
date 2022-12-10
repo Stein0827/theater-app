@@ -10,7 +10,7 @@ const router = Router();
 router.post('/api/v1/operations', createOperations);
 router.put('/api/v1/operations', updateOperations);
 router.get('/api/v1/operations', getOperations);
-router.get('/api/v1/operations', getAllOperations);
+router.get('/api/v1/operations/all', getAllOperations);
 router.delete('/api/v1/operations', deleteOperations);
 
 export {router};
