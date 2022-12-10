@@ -1,5 +1,10 @@
 version: '3.9'
 services:
+  eventbus:
+    build: ./microservices/eventbus
+    ports:
+      - "4000:4000"
+  
   movies_app:
     ports:
       - "4004:4004"
@@ -57,6 +62,7 @@ services:
       - "4008:4008"
     depends_on:
       - mongodb_container
+      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
   
