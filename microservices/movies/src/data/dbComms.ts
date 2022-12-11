@@ -5,7 +5,7 @@ import { MovieModel } from '../models/movieModel.js';
 import { IMovie } from '../types.js';
 import { insert } from './queries.js'
 
-export function createMovie(model: MovieModel) {
+export function createMovie(model: MovieModel): Promise<MovieModel> {
     const values: string[] = [model.name as string, model.desc as string, model.length as string, model.rating as string, model.thumbnail as string, model.trailer as string];
     return new Promise((resolve, reject) => {
         (db as Connection).query<OkPacket>(

@@ -21,11 +21,11 @@ export class MovieModel {
         this.trailer = data.trailer;
     }
 
-    async createMovie() {
+    async createMovie(): Promise<MovieModel> {
         validateCreateRequest(this);
 
         try {
-            const movie = await dbe.createMovie(this);
+            const movie: MovieModel = await dbe.createMovie(this);
             return movie;
         } catch (err) {
             throw err;
