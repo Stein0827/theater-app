@@ -1,7 +1,8 @@
 import express, {Express, Request, Response} from 'express';
 import * as dbe from "../data/dbComms.js"
 
-export const getAllTheaters = async (req: Request, res: Response) => {
+
+export const getTheatersByZip = async (req: Request, res: Response) => {
     try {
         const data = req.body;
         res.status(200).send(await dbe.getTheatersByZip(data.zip));

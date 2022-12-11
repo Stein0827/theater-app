@@ -82,6 +82,35 @@ export async function getAllTheaters() {
     return res;
 }
 
+export async function updateMoviesOfTheater(model: TheaterModel) {
+    const objectId = new ObjectId(model.id);
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const theaters = db.collection('theaters');
+    const _id = {"_id": objectId};
+    const curr_movie = await getTheater(model.id as string);
+    const res = {"movieAdded": false, "id": 0};
+    let iterable = new Set(curr_movie!.movies as number[]);
+    let comparable = new Set(model!.movies as number[]);
+
+    if (curr_movie!.movies.length < model.movies!.length) {
+        res.movieAdded = true;
+        iterable = new Set(model!.movies as number[]);
+        comparable = new Set(curr_movie!.movies as number[]);
+    }
+    
+    iterable.forEach((movie) => {
+        if (!comparable.has(movie)) {
+            res.id = movie;
+        }
+    });
+
+    const obj = {"movies": model.movies};
+    await theaters.updateOne(_id, {'$set': obj});
+    await mongo.close();
+    return res;
+}
+
 export async function hasTheater(id: string): Promise<boolean> {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
