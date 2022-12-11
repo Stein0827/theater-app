@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: theater-identity
+  name: theater-identity
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: theater-identity
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.27.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: theater-identity
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_URL
+              value: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+          image: theater-identity
+          name: theater-identity
+          ports:
+            - containerPort: 4007
+          resources: {}
+      restartPolicy: Always
+status: {}

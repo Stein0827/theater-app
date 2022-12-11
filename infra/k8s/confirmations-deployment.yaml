@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: confirmations
+  name: confirmations
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: confirmations
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.27.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: confirmations
+    spec:
+      containers:
+        - env:
+            - name: DATABASE_URL
+              value: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+            - name: EMAIL
+              value: ts5588881@gmail.com
+            - name: PASS
+              value: eluthowaiqrpsazk
+          image: confirmations
+          name: confirmations
+          ports:
+            - containerPort: 4002
+          resources: {}
+      restartPolicy: Always
+status: {}
