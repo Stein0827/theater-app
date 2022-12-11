@@ -5,7 +5,6 @@ services:
     ports:
       - "4000:4000"
   
-  movies_app:
   movies:
     build: ./microservices/movies
     ports:

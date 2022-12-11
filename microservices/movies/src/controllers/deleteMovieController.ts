@@ -9,7 +9,7 @@ export const deleteMovie = async (req: Request, res: Response) => {
         const movieModel = new MovieModel(data);
         await movieModel.deleteMovie();
 
-        await publishEvent("movieDeleted", movieModel);
+        await publishEvent("movieDeleted", {movie_id: movieModel.id});
 
         res.status(200).send("Success: Movie Deleted");
     } catch (err) {

@@ -5,8 +5,9 @@ export class PaymentModel {
     payment_id: number | undefined;
     movie_id: number | undefined;
     theater_id: string | undefined;
-    time: string | undefined;
-    price: string | undefined;
+    date: Date | undefined;
+    concession: number | undefined;
+    tickets: number | undefined;
     email: string | undefined;
     fname: string | undefined;
     lname: string | undefined;
@@ -23,8 +24,9 @@ export class PaymentModel {
         this.payment_id = data.payment_id;
         this.movie_id = data.movie_id;
         this.theater_id = data.theater_id;
-        this.time = data.time;
-        this.price = data.price;
+        this.date = data.date;
+        this.concession = data.concessions
+        this.tickets = data.tickets;
         this.fname = data.fname;
         this.lname = data.lname;
         this.email = data.email;
@@ -38,7 +40,7 @@ export class PaymentModel {
         this.zip = data.zip;
     }
 
-    async createPayment() {
+    async createPayment(): Promise<PaymentModel> {
         validateCreateRequest(this);
 
         try {

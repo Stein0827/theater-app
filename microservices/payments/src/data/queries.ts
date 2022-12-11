@@ -2,8 +2,9 @@ export const create_table = "CREATE TABLE IF NOT EXISTS Payments (" +
     "payment_id int NOT NULL AUTO_INCREMENT," +
     "movie_id int NOT NULL," +
     "theater_id varchar(80) NOT NULL," +
-    "time varchar(20) NOT NULL," +
-    "price varchar(20) NOT NULL," +
+    "date DATE NOT NULL," +
+    "concessions decimal(5,2) NOT NULL," +
+    "tickets decimal(5,2) NOT NULL," +
     "email varchar(20) NOT NULL," +
     "fname varchar(20) NOT NULL," +
     "lname varchar(20) NOT NULL," +
@@ -18,6 +19,6 @@ export const create_table = "CREATE TABLE IF NOT EXISTS Payments (" +
     "PRIMARY KEY (payment_id));";
 
 export const insert = "INSERT INTO Payments (" +
-"movie_id, theater_id, time, price,email,fname, lname," +
+"movie_id, theater_id, date, concessions, tickets, email,fname, lname," +
 "cardnum, seccode, cardexp, bstreet, bunit, bstate, bcountry,zip) " +
 "VALUES (?);";

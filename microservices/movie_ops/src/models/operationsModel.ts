@@ -2,6 +2,7 @@ import { OperationsRequest, Operations } from '../types.js';
 import * as dbe from '../data/dbComms.js';
 
 export class OperationsModel {
+    
     movie_id: number | undefined;
     theater_id: string | undefined;
     operations: Operations | undefined;
@@ -13,13 +14,13 @@ export class OperationsModel {
     }
 
     async createOperations() { // should be easy to insert
-        validateRequest(this, ["theater_id", "movie_id", "operations"]);
+        validateRequest(this, ["theater_id"]);
         const res = await dbe.createMovieops(this);
         return res;
     }
 
     async updateOperations() {
-        validateRequest(this, ["movie_id", "theater_id", "operations"]);
+        validateRequest(this, ["movie_id", "theater_id"]);
         await validateOperationsExists(this).catch((err) => {throw err});
         const doc = await dbe.getOperations(this);
 
@@ -42,6 +43,10 @@ export class OperationsModel {
         })
 
         if (!hasMovie) {
+            if (this.operations === undefined) {
+                this.operations === {};
+            }
+            
             docoperations.push({movie_id: this.movie_id, logistics: this.operations})
         }
 
@@ -61,6 +66,11 @@ export class OperationsModel {
     async deleteOperations() {
         validateRequest(this, ["movie_id", "theater_id"]);
         return await dbe.deleteOperations(this.movie_id as number, this.theater_id as string);
+    }
+
+    async deleteTheaterOperations() {
+        validateRequest(this, ["theater_id"]);
+        return await dbe.deleteTheaterOperations(this.theater_id as string);
     }
 }
 

@@ -4,8 +4,9 @@ export interface IPayment extends RowDataPacket {
     payment_id?: number;
     movie_id?: number;
     theater_id?: string;
-    time?: string;
-    price?: string;
+    date?: Date;
+    concessions?: number;
+    tickets?: number;
     email?: string;
     fname?: string;
     lname?: string;
@@ -23,8 +24,9 @@ export type PaymentRequest = {
     payment_id?: number;
     movie_id?: number;
     theater_id?: string;
-    time?: string;
-    price?: string;
+    date?: Date;
+    concessions?: number;
+    tickets?: number;
     email?: string;
     fname?: string;
     lname?: string;
