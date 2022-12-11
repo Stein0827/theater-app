@@ -30,24 +30,19 @@ class EventBusModel {
               this.eventbus[event] = [url];
             }
         }
-        console.log("***TEMP*** Current Eventbus", JSON.stringify(this.eventbus));
     }
 
     async publishEvent(data: PublishRequest) {
-        let success = true;
         const eventType = data.eventType;
-        const eventData = data.eventData;
         const urlList = this.eventbus[eventType];
 
         for(const url of urlList) {
-            console.log(`URL: ${url}`);
-            console.log(`DATA: ${JSON.stringify(eventData)}`);
-            await axios.post(url, eventData).catch((err: Error) => {
-                console.log(`Error sending event: ${eventType}. ${err.message}`);
-                success = false;
+            await axios.post(url, data).catch((err: Error) => {
+                throw new EventBusException("Error: could not publish events to subscribers", [eventType, urlList ,err.message])
             });
         }
-        return success;
+
+        return urlList;
     }
     
     validatePublishRequest(data: PublishRequest) {
@@ -79,11 +74,11 @@ class EventBusModel {
 }
 
 export class EventBusException {
-    list: string[];
+    list: any[];
     name: string;
     message: string;
 
-    constructor(message: string, errorList: string[]) {
+    constructor(message: string, errorList: any[]) {
         this.name = "Eventbus Exception";
         this.message = message;
         this.list = errorList;
