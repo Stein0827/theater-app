@@ -1,33 +1,37 @@
-export let db: {[key: string]: string | object} = {};
+import mysql from 'mysql2';
+import 'dotenv/config';
+import * as query from './queries';
 
-/*
-confirmationId {
-    movie_id: string | undefined;
-    theater_id: string | undefined;
-    time: string | undefined;
-    price: string | undefined;
-    email: string | undefined;
-    fname: string | undefined;
-    lname: string | undefined;
-    cardnum: string | undefined;
-    seccode: string | undefined;
-    cardexp: string | undefined;
-    bstreet: string | undefined;
-    bunit: string | undefined;
-    bstate: string | undefined;
-    bcountry: string | undefined;
-    zip: string | undefined;
-}
-*/
 function connectDB() {
-    throw new Error('Function not implemented.');
+    try {
+        const database = mysql.createConnection({
+            host: process.env.MYSQL_URL,
+            port: Number(process.env.MYSQL_PORT),
+            user: process.env.MYSQL_USER,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DATABASE
+        });
+        console.log("SUCCESS: DB CONNECTION CREATED")
+        return database;
+    } catch (err) {
+        console.log("Error: Issue connecting to the database");
+    }
 }
 
-function initDB() {
-    throw new Error('Function not implemented.');
+function initDB(db: mysql.Connection | undefined) {
+    if (db === undefined) {
+        throw console.log("ERROR: DB UNDEFINED");    
+    }
+
+    db.query(query.create_table, (error, results) => {
+        if (error) {
+            return console.log("Create Table Error:", error.message);
+        }
+    });
 }
 
 export function startupDB() {
-    connectDB();
-    initDB();
+    const db = connectDB();
+    initDB(db);
+    return db;
 }
