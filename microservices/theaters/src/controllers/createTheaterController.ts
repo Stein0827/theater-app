@@ -8,6 +8,7 @@ export const createTheater = async (req: Request, res: Response) => {
   try {
     const data: TheaterRequest = req.body;
     const theaterModel = new TheaterModel(data);
+
     const theaterId = await theaterModel.createTheater();
     
     await publishEvent("theaterCreated", {theater_id: theaterId});
