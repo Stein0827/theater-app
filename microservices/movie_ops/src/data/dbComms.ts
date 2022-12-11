@@ -8,7 +8,7 @@ export async function createMovieops(model: OperationsModel) { //create operatio
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
     const movieops = db.collection('movieops');
-    const obj = { "theater_id": model.theater_id, "operations": [{movie_id: model.movie_id, logistics: model.operations}]};
+    const obj = { "theater_id": model.theater_id, "operations": []};
     const res = await movieops.insertOne(obj);
     await mongo.close();
     return res;
@@ -30,16 +30,6 @@ export async function addOperation(model: OperationsModel) {
     const movieops = db.collection('movieops');
     const obj = { "movie_id": model.movie_id, "logistics": model.operations };
     const res = await movieops.updateOne({"theater_id": model.theater_id}, {'$push': { "operations" : obj}});
-    await mongo.close();
-    return res;
-}
-
-
-export async function deleteOperations(movie_id: number, theater_id: string) { // deletes a movie operation from theater
-    const mongo: MongoClient = await connectDB();
-    const db = mongo.db();
-    const movieops = db.collection('movieops');
-    const res = await movieops.deleteOne({"theater_id": theater_id, "operations.movie_id": movie_id});
     await mongo.close();
     return res;
 }
@@ -76,6 +66,24 @@ export async function getAllOperations() {
     await cursor.forEach( mydoc => {
         res.push(mydoc);
     });
+    await mongo.close();
+    return res;
+}
+
+export async function deleteOperations(movie_id: number, theater_id: string) { // deletes a movie operation from theater
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const movieops = db.collection('movieops');
+    const res = await movieops.deleteOne({"theater_id": theater_id, "operations.movie_id": movie_id});
+    await mongo.close();
+    return res;
+}
+
+export async function deleteTheaterOperations(theaterId: string) {
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const movieops = db.collection('movieops');
+    const res = await movieops.deleteOne({"theater_id": theaterId});
     await mongo.close();
     return res;
 }

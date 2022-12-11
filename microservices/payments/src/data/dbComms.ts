@@ -5,7 +5,7 @@ import { PaymentModel } from "../models/paymentModel";
 import { IPayment } from '../types.js';
 import { insert } from './queries.js'
 
-export function createPayment(model: PaymentModel) {
+export function createPayment(model: PaymentModel): Promise<PaymentModel> {
     const values: string[] = Object.values(model);
     values.shift();
 
