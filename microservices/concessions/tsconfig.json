@@ -9,5 +9,5 @@
 	  "allowJs": true,
 	  "outDir": "./built",                                 /* Skip type checking all .d.ts files. */
 	},
-	"include": ["./src/*/"]
+	"include": ["./src/*"]
 }

@@ -15,8 +15,8 @@ const deleteConfirmation = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const data = req.body;
         const confirmationModel = new ConfirmationModel_js_1.ConfirmationModel(data);
-        confirmationModel.deleteConfirmation();
-        res.status(200).send("Success: confirmation Deleted");
+        const ack = yield confirmationModel.deleteConfirmation();
+        res.status(200).send(ack);
     }
     catch (err) {
         res.status(400).send(err);

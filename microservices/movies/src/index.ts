@@ -2,7 +2,6 @@ import express, {Express, Request, Response} from 'express';
 import cors from 'cors';
 import { router } from './routes/routes.js';
 import { startupDB } from './data/dbInit.js';
-import { subscribeToEventbus} from './events/subscribeToEB.js'
 
 const app: Express = express();
 
@@ -12,11 +11,6 @@ app.use(router)
 
 export const db = startupDB();
 
-// Movies doesn't receive any events but it does publish
-// await subscribeToEventbus().catch((err) => {throw err}); 
-
 app.listen(4004, () => {
   console.log('Listening on 4004');
 });
-
-export {};
