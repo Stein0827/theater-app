@@ -2,6 +2,7 @@ import { OperationsRequest, Operations } from '../types.js';
 import * as dbe from '../data/dbComms.js';
 
 export class OperationsModel {
+    
     movie_id: number | undefined;
     theater_id: string | undefined;
     operations: Operations | undefined;
@@ -65,6 +66,11 @@ export class OperationsModel {
     async deleteOperations() {
         validateRequest(this, ["movie_id", "theater_id"]);
         return await dbe.deleteOperations(this.movie_id as number, this.theater_id as string);
+    }
+
+    async deleteTheaterOperations() {
+        validateRequest(this, ["theater_id"]);
+        return await dbe.deleteTheaterOperations(this.theater_id as string);
     }
 }
 

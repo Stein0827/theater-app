@@ -18,6 +18,11 @@ export async function updateTheater(model: TheaterModel) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const _id = {"_id": objectId}
+    /*
+    get original doc including original movie ids array
+    find movie that has been added or deleted to the original movies array
+    publish event for either delete or update
+    */
     const obj = {"name": model.name, "address": model.address, "zip": model.zip, "description": model.description, "movies": model.movies};
     for (const property in obj) {
         if (obj[property as keyof typeof obj] === undefined) {

@@ -1,12 +1,16 @@
 import express, {Express, Request, Response} from 'express';
-import { theaterAddedMovie, theaterRemovedMovie, theaterCreated } from '../../../eventTypes.js';
+import { theaterAddedMovie, theaterRemovedMovie, theaterCreated, theaterDeleted } from '../../../eventTypes.js';
 import { OperationsModel } from '../models/operationsModel.js';
 
 export const respondToEvent = async (req: Request, res: Response) => {
   try {
-    const event: theaterAddedMovie | theaterRemovedMovie | theaterCreated = req.body;
+    const event: theaterAddedMovie | theaterRemovedMovie | theaterCreated | theaterDeleted= req.body;
     const model = new OperationsModel(event.eventData);
     let result = undefined;
+
+    if (event.eventType === "theaterCreated") {
+      result = `Theater created: ${await model.createOperations()}`
+    }
 
     if (event.eventType === "theaterAddedMovie") {
       result = `Theater added movie: ${await model.updateOperations()}`
@@ -16,8 +20,8 @@ export const respondToEvent = async (req: Request, res: Response) => {
       result = `Theater removed movie: ${await model.deleteOperations()}`
     }
 
-    if (event.eventType === "theaterCreated") {
-      result = `Theater created: ${await model.createOperations()}`
+    if (event.eventType === "theaterDeleted") {
+      result = `Theater created: ${await model.deleteTheaterOperations()}`
     }
 
     if (result === undefined) {

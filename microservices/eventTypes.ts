@@ -1,46 +1,72 @@
+import { PaymentModel } from "./payments/src/models/paymentModel.js"
 export interface SubscribeRequest {
     url: string,
     events: string[]
 }
-
 export interface PublishRequest {
     eventType: string,
     eventData: object
 }
 
-export type movieCreatedEvent = {
-    eventType: string;
+// Publisher: Movies Service
+// Subscribers: Theaters Service
+export type movieCreated = {
+    eventType: "movieCreatedEvent";
     eventData: {
         movie_id: number;
     }
 }
 
-export type movieDeletedEvent = {
-    eventType: string;
+// Publisher: Movies Service
+// Subscribers: Theaters Service
+export type movieDeleted = {
+    eventType: "movieDeletedEvent";
     eventData: {
         movie_id: number;
     }
 }
 
+// Publisher: Theater Service
+// Subscribers: Moviesops Service
 export type theaterAddedMovie = {
-    eventType: string;
+    eventType: "theaterAddedMovie";
     eventData: {
         theater_id: string;
         movie_id: number;
     }
 }
 
+// Publisher: Theater Service
+// Subscribers: Moviesops Service
 export type theaterRemovedMovie = {
-    eventType: string;
+    eventType: "theaterRemovedMovie";
     eventData: {
         theater_id: string;
         movie_id: number;
     }
 }
 
+// Publisher: Theater Service
+// Subscribers: Moviesops Service
 export type theaterCreated = {
-    eventType: string;
+    eventType: "theaterCreated";
     eventData: {
         theater_id: string;
     }
+}
+
+// Publisher: Theater Admin Service
+// Subscribers: Moviesops Service, Theater Service
+export type theaterDeleted = {
+    eventType: "theaterDeleted";
+    eventData: {
+        theater_id: string;
+    }
+}
+
+// Publisher: Payment Service
+// Subscribers: Theater Admin Service, Confirmations Service
+export type paymentCreated = {
+    eventType: "paymentCreated";
+    eventData: PaymentModel;
 }

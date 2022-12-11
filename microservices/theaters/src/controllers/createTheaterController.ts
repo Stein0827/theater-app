@@ -8,10 +8,10 @@ export const createTheater = async (req: Request, res: Response) => {
   try {
     const data: TheaterRequest = req.body;
     const theaterModel = new TheaterModel(data);
-    const newTheater = await theaterModel.createTheater();
+    const theaterId = await theaterModel.createTheater();
     
-    await publishEvent("theaterCreated", newTheater);
-    res.status(200).send(newTheater);
+    await publishEvent("theaterCreated", {theater_id: theaterId});
+    res.status(200).send(theaterId);
   } catch (err) {
     res.status(400).send(err);
   }    
