@@ -11,8 +11,9 @@ app.use(cors());
 app.use(router)
 
 export const db = startupDB();
-let res = await subscribeToEventbus().catch((err) => {throw err});
-console.log("**TEMP**: Movies Subscribed to Event Bus", res?.data);
+
+// Movies doesn't receive any events but it does publish
+// await subscribeToEventbus().catch((err) => {throw err}); 
 
 app.listen(4004, () => {
   console.log('Listening on 4004');

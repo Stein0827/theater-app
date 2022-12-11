@@ -13,13 +13,13 @@ export class OperationsModel {
     }
 
     async createOperations() { // should be easy to insert
-        validateRequest(this, ["theater_id", "movie_id", "operations"]);
+        validateRequest(this, ["theater_id"]);
         const res = await dbe.createMovieops(this);
         return res;
     }
 
     async updateOperations() {
-        validateRequest(this, ["movie_id", "theater_id", "operations"]);
+        validateRequest(this, ["movie_id", "theater_id"]);
         await validateOperationsExists(this).catch((err) => {throw err});
         const doc = await dbe.getOperations(this);
 
@@ -42,6 +42,10 @@ export class OperationsModel {
         })
 
         if (!hasMovie) {
+            if (this.operations === undefined) {
+                this.operations === {};
+            }
+            
             docoperations.push({movie_id: this.movie_id, logistics: this.operations})
         }
 

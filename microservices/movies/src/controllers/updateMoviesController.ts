@@ -9,8 +9,6 @@ export const updateMovie = async (req: Request, res: Response) => {
         const data: MovieRequest = req.body;
         const movieModel = new MovieModel(data);
         const result = await movieModel.updateMovie();
-
-        await publishEvent("movieUpdated", movieModel);
         
         res.status(200).send(result);
     } catch (err) {

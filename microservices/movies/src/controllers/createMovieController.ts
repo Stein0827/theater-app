@@ -10,7 +10,7 @@ export const createMovie = async (req: Request, res: Response) => {
     const movieModel = new MovieModel(data);
     const newMovie: MovieModel = await movieModel.createMovie().catch((err)=> {throw err});
 
-    await publishEvent("movieCreated", newMovie);
+    await publishEvent("movieCreated", {movie_id: newMovie.id});
     
     res.status(200).send(newMovie);
   } catch (err) {

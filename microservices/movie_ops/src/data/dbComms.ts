@@ -8,7 +8,7 @@ export async function createMovieops(model: OperationsModel) { //create operatio
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
     const movieops = db.collection('movieops');
-    const obj = { "theater_id": model.theater_id, "operations": [{movie_id: model.movie_id, logistics: model.operations}]};
+    const obj = { "theater_id": model.theater_id, "operations": []};
     const res = await movieops.insertOne(obj);
     await mongo.close();
     return res;
