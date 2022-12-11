@@ -1,44 +1,77 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.hasMovie = exports.getallMovies = exports.getNewID = exports.getMovie = exports.deleteMovie = exports.updateMovie = exports.createMovie = void 0;
-// These will be the querying functions
-const dbInit_js_1 = require("./dbInit.js");
-// These functions will contain actual queries in them
-function createMovie(model) {
-    dbInit_js_1.db[model.id] = model;
-    return model;
+import { db } from '../index.js';
+export function createMovie(model) {
+    const values = [model.name, model.desc, model.length, model.rating, model.thumbnail, model.trailer];
+    console.log("values", values);
+    return new Promise((resolve, reject) => {
+        db.query("INSERT INTO Movies (name,`desc`,length,rating,thumbnail,trailer) VALUES (?);", [values], (error, result) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            model.id = result.insertId;
+            resolve(model);
+        });
+    });
 }
-exports.createMovie = createMovie;
-function updateMovie(model) {
-    dbInit_js_1.db[model.id] = model;
-    return model;
-    // This will look different with sql in how to update 
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
+export function updateMovie(model) {
+    const updateVariablesString = model.getUpdateString();
+    return new Promise((resolve, reject) => {
+        db.query("UPDATE Movies SET " + updateVariablesString + " WHERE movie_id = " + model.id + ";", (error, result) => {
+            console.log(error);
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(result);
+        });
+    });
 }
-exports.updateMovie = updateMovie;
-function deleteMovie(id) {
-    delete dbInit_js_1.db[id];
-    return true;
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
+export function deleteMovie(id) {
+    return new Promise((resolve, reject) => {
+        db.query("DELETE FROM Movies WHERE movie_id=?;", [id], (error) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(true);
+        });
+    });
 }
-exports.deleteMovie = deleteMovie;
-function getMovie(id) {
-    return dbInit_js_1.db[id];
+export function getMovie(id) {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT * FROM Movies WHERE movie_id=?;", [id], (error, results) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(results[0]);
+        });
+    });
 }
-exports.getMovie = getMovie;
-function getNewID() {
-    const newid = Date.now().toString();
-    return newid;
+export function getallMovies() {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT * FROM Movies;", (error, results) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            resolve(results);
+        });
+    });
 }
-exports.getNewID = getNewID;
-function getallMovies() {
-    return dbInit_js_1.db;
+export function hasMovie(id) {
+    return new Promise((resolve, reject) => {
+        db.query("SELECT * FROM Movies WHERE movie_id=?;", [id], (error, results) => {
+            if (error) {
+                reject(new DatabaseException(error.message));
+            }
+            if (results.length === 0) {
+                resolve(false);
+            }
+            else {
+                resolve(true);
+            }
+        });
+    });
 }
-exports.getallMovies = getallMovies;
-function hasMovie(id) {
-    if (id in dbInit_js_1.db) {
-        return true;
+class DatabaseException {
+    constructor(message) {
+        this.name = "Database Exception";
+        this.message = message;
     }
-    return false;
 }
-exports.hasMovie = hasMovie;

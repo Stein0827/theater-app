@@ -1,52 +1,41 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.startupDB = exports.db = void 0;
-const mysql_1 = __importDefault(require("mysql"));
-require("dotenv/config");
-try {
-    const database = mysql_1.default.createConnection({
-        host: process.env.DATABASE_URL,
-        port: Number(process.env.MYSQL_PORT),
-        user: process.env.MYSQL_USER,
-        password: process.env.MYSQL_PASSWORD,
-        database: process.env.MYSQL_DATABASE
+import mysql from 'mysql2';
+import 'dotenv/config';
+import * as query from './queries';
+function connectDB() {
+    try {
+        const database = mysql.createConnection({
+            host: process.env.MYSQL_URL,
+            port: Number(process.env.MYSQL_PORT),
+            user: process.env.MYSQL_USER,
+            password: process.env.MYSQL_PASSWORD,
+            database: process.env.MYSQL_DATABASE
+        });
+        console.log("SUCCESS: DB CONNECTION CREATED");
+        return database;
+    }
+    catch (err) {
+        console.log("Error: Issue connecting to the database");
+    }
+}
+function initDB(db) {
+    if (db === undefined) {
+        throw console.log("ERROR: DB UNDEFINED");
+    }
+    db.query(query.create_table, (error, results) => {
+        if (error) {
+            return console.log("Create Table Error:", error.message);
+        }
+        console.log("Create Table:", results);
     });
-    const sqlQuery = 'CREATE TABLE IF NOT EXISTS emails(id int AUTO_INCREMENT, firstname VARCHAR(50), lastname VARCHAR(50), email VARCHAR(50), PRIMARY KEY(id))';
-    database.query(sqlQuery, (err) => {
-        if (err)
-            throw err;
-        console.log('Table created!');
+    db.query(query.insert, [query.insert_values], (error, results) => {
+        if (error) {
+            return console.log("Insert Values Error: ", error);
+        }
+        console.log("Insert Values:", results);
     });
 }
-catch (err) {
-    console.log("PLEASE BITCH");
+export function startupDB() {
+    const db = connectDB();
+    initDB(db);
+    return db;
 }
-exports.db = {};
-function initDB() {
-    exports.db["1"] = {
-        id: "1",
-        name: "Harry Potter and the Chamber of Comp. Sci.",
-        desc: "An ancient prophecy seems to be coming true  when a mysterious presence begins stalking the corridors of a school of magic and leaving its victims paralyzed.",
-        length: "2h 41m",
-        rating: "PG",
-        //thumbnail: new File(["foo"], "foo.txt"),
-        trailer: "https://www.youtube.com/watch?v=NtMvNh0WFVM"
-    };
-    exports.db["2"] = {
-        id: "2",
-        name: "test",
-        desc: "heros journey",
-        length: "2h 41m",
-        rating: "PG",
-        //thumbnail: new File(["foo"], "foo.txt"),
-        trailer: "https://www.youtube.com/watch?v=NtMvNh0WFVM"
-    };
-}
-function startupDB() {
-    // connect to db
-    initDB();
-}
-exports.startupDB = startupDB;

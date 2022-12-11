@@ -1,6 +1,6 @@
 import mysql from 'mysql2';
 import 'dotenv/config';
-import * as query from './queries';
+import * as query from './queries.js';
 
 function connectDB() {
     try {
