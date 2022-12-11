@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-movies
+  name: mysql-movies
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mysql-movies
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.27.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql-movies
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: db
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_TCP_PORT
+              value: "5004"
+          image: mysql:latest
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            failureThreshold: 4
+            timeoutSeconds: 5
+          name: mysql-movies
+          ports:
+            - containerPort: 5004
+          resources: {}
+          volumeMounts:
+            - mountPath: /data/db
+              name: mysql-movies-data
+      restartPolicy: Always
+      volumes:
+        - name: mysql-movies-data
+          persistentVolumeClaim:
+            claimName: mysql-movies-data
+status: {}
