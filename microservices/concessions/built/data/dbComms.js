@@ -1,34 +1,103 @@
-// These will be the querying functions
-import { db } from './dbInit.js';
-// These functions will contain actual queries in them
-export function createConcession(model) {
-    db[model.id] = model;
-    return model;
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.hasConcession = exports.getAllConcessions = exports.getConcession = exports.deleteConcession = exports.updateConcession = exports.createConcession = void 0;
+const dbInit_js_1 = require("./dbInit.js");
+const mongodb_1 = require("mongodb");
+function createConcession(model) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const mongo = yield (0, dbInit_js_1.connectDB)();
+        const db = mongo.db();
+        const concessions = db.collection('concessions');
+        const obj = { "name": model.name, "type": model.type, "price": model.price, "image": model.image };
+        const res = yield concessions.insertOne(obj);
+        yield mongo.close();
+        return res;
+    });
 }
-export function updateConcession(model) {
-    db[model.id] = model;
-    return model;
-    // This will look different with sql in how to update 
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
+exports.createConcession = createConcession;
+function updateConcession(model) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const objectId = new mongodb_1.ObjectId(model.id);
+        const mongo = yield (0, dbInit_js_1.connectDB)();
+        const db = mongo.db();
+        const concessions = db.collection('concessions');
+        const _id = { "_id": objectId };
+        const obj = { "name": model.name, "type": model.type, "price": model.price, "image": model.image };
+        for (const property in obj) {
+            if (obj[property] === undefined) {
+                delete obj[property];
+            }
+        }
+        yield concessions.updateOne(_id, { '$set': obj });
+        yield mongo.close();
+        return model;
+    });
 }
-export function deleteConcession(id) {
-    delete db[id];
-    return true;
-    // With actual db, we want to first check if the movie exists in the model layer, and then delete
+exports.updateConcession = updateConcession;
+function deleteConcession(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const objectId = new mongodb_1.ObjectId(id);
+        const mongo = yield (0, dbInit_js_1.connectDB)();
+        const db = mongo.db();
+        const concessions = db.collection('concessions');
+        const res = yield concessions.deleteOne({ "_id": objectId });
+        yield mongo.close();
+        return res;
+    });
 }
-export function getConcession(id) {
-    return db[id];
+exports.deleteConcession = deleteConcession;
+function getConcession(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const objectId = new mongodb_1.ObjectId(id);
+        const mongo = yield (0, dbInit_js_1.connectDB)();
+        const db = mongo.db();
+        const concessions = db.collection('concessions');
+        const res = yield concessions.findOne({ "_id": objectId });
+        yield mongo.close();
+        return res;
+    });
 }
-export function getNewID() {
-    const newid = Date.now().toString();
-    return newid;
+exports.getConcession = getConcession;
+function getAllConcessions() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const mongo = yield (0, dbInit_js_1.connectDB)();
+        const db = mongo.db();
+        const concessions = db.collection('concessions');
+        const cursor = concessions.find();
+        const res = [];
+        yield cursor.forEach(mydoc => {
+            res.push(mydoc);
+        });
+        yield mongo.close();
+        return res;
+    });
 }
-export function getAllConcessions() {
-    return db;
+exports.getAllConcessions = getAllConcessions;
+function hasConcession(id) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const mongo = yield (0, dbInit_js_1.connectDB)();
+        const db = mongo.db();
+        const concessions = db.collection('concessions');
+        try {
+            const objectId = new mongodb_1.ObjectId(id);
+            const result = yield concessions.findOne({ _id: objectId });
+            yield mongo.close();
+            return result !== null;
+        }
+        catch (err) {
+            console.log(err);
+            yield mongo.close();
+            return false;
+        }
+    });
 }
-export function hasConcession(id) {
-    if (id in db) {
-        return true;
-    }
-    return false;
-}
+exports.hasConcession = hasConcession;

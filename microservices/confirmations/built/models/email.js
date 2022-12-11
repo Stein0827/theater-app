@@ -56,7 +56,7 @@ function sendEmail(emailAddr, id, price, addr) {
             subject: 'test test',
             text: 'im a barbie girl',
         };
-        yield transporter.sendMail(mailOptions, function (error, info) {
+        transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             }

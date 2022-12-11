@@ -11,7 +11,7 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, cors_1.default)());
 app.use(routes_js_1.router);
-(0, dbInit_js_1.startupDB)();
+(0, dbInit_js_1.initDB)();
 app.listen(4002, () => {
     console.log('Listening on 4002');
 });

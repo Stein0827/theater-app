@@ -1,6 +1,6 @@
 import { Request, Response} from 'express';
 import {OperationsRequest } from '../types.js';
-import {OperationsModel} from '../models/operationsModel'
+import {OperationsModel} from '../models/operationsModel.js'
 
 export const deleteOperations = async (req: Request, res: Response) => {
     try {

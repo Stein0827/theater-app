@@ -34,7 +34,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ConfirmationModel = void 0;
 const dbe = __importStar(require("../data/dbComms.js"));
-const email_js_1 = require("./email.js");
 class ConfirmationModel {
     constructor(data) {
         this.id = data.confirmationId;
@@ -48,20 +47,23 @@ class ConfirmationModel {
     createConfirmation() {
         return __awaiter(this, void 0, void 0, function* () {
             validateCreateRequest(this);
-            this.id = dbe.getNewID();
-            yield (0, email_js_1.sendEmail)(this.email, this.id, this.price, this.address);
-            return dbe.createConfirmation(this);
+            const id = yield dbe.createConfirmation(this);
+            return id;
         });
     }
     getConfirmation() {
-        validateConfirmationRequest(this);
-        validateConfirmationExists(this);
-        return dbe.getConfirmation(this.id);
+        return __awaiter(this, void 0, void 0, function* () {
+            yield validateConfirmationRequest(this);
+            yield validateConfirmationExists(this);
+            return yield dbe.getConfirmation(this.id);
+        });
     }
     deleteConfirmation() {
-        validateConfirmationRequest(this);
-        validateConfirmationExists(this);
-        return dbe.deleteConfirmation(this.id);
+        return __awaiter(this, void 0, void 0, function* () {
+            yield validateConfirmationRequest(this);
+            yield validateConfirmationExists(this);
+            return yield dbe.deleteConfirmation(this.id);
+        });
     }
 }
 exports.ConfirmationModel = ConfirmationModel;
@@ -78,14 +80,18 @@ function validateCreateRequest(data) {
     }
 }
 function validateConfirmationRequest(data) {
-    if (data.id === undefined || data.id === "") {
-        throw new ConfirmationException("Error: Invalid ID", [data.id]);
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!(yield dbe.hasConfirmation(data.id))) {
+            throw new ConfirmationException("Error: Confirmation does not exists", [data.id]);
+        }
+    });
 }
 function validateConfirmationExists(data) {
-    if (!(dbe.hasConfirmation(data.id))) {
-        throw new ConfirmationException("Error: Confirmation does not exists", [data.id]);
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!(yield dbe.hasConfirmation(data.id))) {
+            throw new ConfirmationException("Error: Confirmation does not exists", [data.id]);
+        }
+    });
 }
 class ConfirmationException {
     constructor(message, errorList) {

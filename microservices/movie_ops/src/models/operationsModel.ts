@@ -44,7 +44,7 @@ export class OperationsModel {
 
         if (!hasMovie) {
             if (this.operations === undefined) {
-                this.operations === {};
+                this.operations = {};
             }
             
             docoperations.push({movie_id: this.movie_id, logistics: this.operations})

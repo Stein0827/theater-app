@@ -1,5 +1,5 @@
 import express, {Express, Request, Response} from 'express';
-import { theaterAddedMovie, theaterRemovedMovie, theaterCreated, theaterDeleted } from '../../../eventTypes.js';
+import { theaterAddedMovie, theaterRemovedMovie, theaterCreated, theaterDeleted } from '../../eventTypes.js';
 import { OperationsModel } from '../models/operationsModel.js';
 
 export const respondToEvent = async (req: Request, res: Response) => {
