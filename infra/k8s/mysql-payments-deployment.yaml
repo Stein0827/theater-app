@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mysql-payments
+  name: mysql-payments
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mysql-payments
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.27.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mysql-payments
+    spec:
+      containers:
+        - env:
+            - name: MYSQL_DATABASE
+              value: db
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_TCP_PORT
+              value: "5005"
+          image: mysql:latest
+          livenessProbe:
+            exec:
+              command:
+                - mysqladmin
+                - ping
+                - -h
+                - localhost
+            failureThreshold: 4
+            timeoutSeconds: 5
+          name: mysql-payments
+          ports:
+            - containerPort: 5005
+          resources: {}
+          volumeMounts:
+            - mountPath: /data/db
+              name: mysql-payments-data
+      restartPolicy: Always
+      volumes:
+        - name: mysql-payments-data
+          persistentVolumeClaim:
+            claimName: mysql-payments-data
+status: {}

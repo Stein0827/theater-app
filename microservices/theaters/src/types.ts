@@ -5,7 +5,7 @@ type TheaterRequest = {
     zip?: number;
     description?: string;
     theaterImage?: File;
-    movies?: string[];
+    movies?: number[];
 }
   
 type TheaterGetBatchRequest = string[];
