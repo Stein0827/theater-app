@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: theater-location
+  name: theater-location
+spec:
+  ports:
+    - name: "4008"
+      port: 4008
+      targetPort: 4008
+  selector:
+    io.kompose.service: theater-location
+status:
+  loadBalancer: {}

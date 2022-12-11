@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.27.0 (HEAD)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb-container
+  name: mongodb-container
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mongodb-container
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.27.0 (HEAD)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mongodb-container
+    spec:
+      containers:
+        - args:
+            - --quiet
+          env:
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              value: rootpassword
+            - name: MONGO_INITDB_ROOT_USERNAME
+              value: root
+          image: mongo:latest
+          name: mongodb-container
+          resources: {}
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongodb-data-container
+      restartPolicy: Always
+      volumes:
+        - name: mongodb-data-container
+          persistentVolumeClaim:
+            claimName: mongodb-data-container
+status: {}
