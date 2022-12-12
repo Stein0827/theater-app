@@ -4,7 +4,7 @@ type TheaterRequest = {
     address?: string;
     zip?: string;
     description?: string;
-    theaterImage?: File;
+    theaterImage?: string;
     movies?: number[];
 }
   

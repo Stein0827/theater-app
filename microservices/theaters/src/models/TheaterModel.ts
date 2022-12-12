@@ -7,7 +7,7 @@ export class TheaterModel {
     address: string | undefined;
     zip: string | undefined;
     description: string | undefined;
-    image: File | undefined;
+    image: string | undefined;
     movies: number[] | undefined;
 
     constructor(data: TheaterRequest) {
