@@ -6,6 +6,7 @@ export class PaymentModel {
     movie_id: number | undefined;
     theater_id: string | undefined;
     date: Date | undefined;
+    showing: string | undefined
     concession: number | undefined;
     tickets: number | undefined;
     email: string | undefined;
@@ -25,6 +26,7 @@ export class PaymentModel {
         this.movie_id = data.movie_id;
         this.theater_id = data.theater_id;
         this.date = data.date;
+        this.showing = data.showing;
         this.concession = data.concessions
         this.tickets = data.tickets;
         this.fname = data.fname;

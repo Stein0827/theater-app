@@ -12,7 +12,7 @@ const router = Router();
 router.post('/api/v1/event', respondToEvent);
 router.post('/api/v1/operations', createOperations);
 router.put('/api/v1/operations', updateOperations);
-router.get('/api/v1/operations', getOperations);
+router.post('/api/v1/get/operations', getOperations);
 router.get('/api/v1/operations/all', getAllOperations);
 router.delete('/api/v1/operations', deleteOperations);
 router.delete('/api/v1/operations/theater', deleteTheaterOperations);
