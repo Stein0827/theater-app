@@ -105,3 +105,6 @@ dist
 
 # file used to store finder information about the folder
 .DS_Store
+
+# Docker compose Development file
+docker-compose-dev.yml

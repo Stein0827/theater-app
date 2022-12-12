@@ -43,6 +43,7 @@ export class MovieModel {
 
         try {
             const movie = await dbe.getMovie(this.id as number);
+            movie.trailer = movie.trailer.replace("watch?v=", "embed/");
             return movie;
         } catch (err) {
             throw err;

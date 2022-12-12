@@ -25,7 +25,7 @@ export async function initDB() {
     const movieops = db.collection('movieops');
     const result = await movieops.insertMany([
         {
-            "theater_id" : "abcdefg",
+            "theater_id" : "6396a22ad756e00453645f8d",
             "operations": [
                 { "movie_id" : 1, "logistics": {"1:00pm": 30, "1:30pm": 30, "2:00pm": 20} },
                 { "movie_id" : 2, "logistics": {"1:00pm": 30, "1:30pm": 30, "2:00pm": 20} },

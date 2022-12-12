@@ -24,9 +24,9 @@ export async function initDB() {
 
   const theaters = db.collection('theaters');
   const result = await theaters.insertMany([
-    { name: 'bruh', address: 'ehhhasdfklas', zip: 22525, description: "asdgkjsdg", movies: ["asdfa", "lasdlkfs"] },
-    { name: 'assd', address: 'asdfddd', zip: 12321, description: "asdgadsgas", movies: ["dfd", "lasdlfdfdkfs"] },
-    { name: 'dfdfg', address: 'qieke', zip: 22444, description: "asdfdggb", movies: ["dd", "gggg"] },
+    { name: 'bruh', address: 'ehhhasdfklas', zip: 22525, description: "asdgkjsdg", movies: [1, 2, 3] },
+    { name: 'assd', address: 'asdfddd', zip: 12321, description: "asdgadsgas", movies: [1, 2, 3] },
+    { name: 'dfdfg', address: 'qieke', zip: 22444, description: "asdfdggb", movies: [1, 2, 3] },
   ]);
 
   console.log(`Initialized ${result.insertedCount} products`);
