@@ -8,7 +8,7 @@ export const updateMoviesOfTheater = async (req: Request, res: Response) => {
     try {
         const data: TheaterRequest = req.body;
         const theaterModel = new TheaterModel(data);
-        const theater_obj = await theaterModel.updateTheater();
+        const theater_obj = await theaterModel.updateMoviesOfTheater();
         await publishEvent("movieListUpdated", theater_obj);
         res.status(200).send(theater_obj);
     } catch (err) {
