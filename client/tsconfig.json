@@ -22,5 +22,5 @@
   },
   "include": [
     "./src/*"
-  ]
+, "src/Theater/TheaterInfo.tsx", "src/Payment/PaymentCreate.tsx", "src/Operations/OperationsList.tsx", "src/Concessions/ConcessionsAccordion.tsx", "src/Payment/CreditcardAccordion.tsx", "src/Payment/BillingAccordion.tsx", "src/Movies/MovieAdminAdd.tsx"  ]
 }

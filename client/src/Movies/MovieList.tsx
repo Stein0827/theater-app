@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { MovieRequest } from "./types.js"
-import { OperationsModal } from "./OperationsModal"
+import { MovieRequest } from "../types.js"
+import { OperationsModal } from "../Operations/OperationsModal"
 
 export const MovieList = ({theaterId}: {theaterId: string}) => {
 
@@ -24,15 +24,15 @@ export const MovieList = ({theaterId}: {theaterId: string}) => {
         return (
             <div
                 className="card text-white bg-dark mb-3"
-                style={{ width: '70%', height:420, marginBottom: '20px', margin:"auto", top: "50%"}}
+                style={{ boxShadow: 'px 5px 9px #666a68', width: '60%', height:"420px", marginBottom: '20px', margin:"auto", top: "50%", borderRadius: "30px"}}
                 id={(movie.movie_id as number).toString()}
                 key={movie.movie_id}
             >
                 <div 
                     className="card text-white bg-dark mb-3" 
-                    style={{ width: "100%", height:"100%", display: "flex", flexDirection: "row", alignItems: "center"}}
+                    style={{ width: "100%", height:"100%", display: "flex", flexDirection: "row", alignItems: "center", borderRadius: "30px"}}
                 >
-                    <img src={movie.thumbnail} width="250" height="400" style={{padding: "20px"}}/>
+                    <img src={movie.thumbnail}  style={{float: "left", backgroundSize: "cover",  borderRadius: "30px", maxWidth:"280px", height:"420px"}}/>
                     <div className="card-body text-center" style={{margin: "auto"}}>
                         <h3 className="card-title">{movie.name}</h3>
                         <div style={{display: "flex", flexDirection: "row", justifyContent:"space-evenly", padding: "15px 10% 15px 10%"}}>
