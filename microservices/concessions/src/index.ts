@@ -11,7 +11,7 @@ app.use(cors());
 app.use(router)
 
 initDB();
-await subscribeToEventbus().catch((err) => {throw err});
+// await subscribeToEventbus().catch((err) => {throw err});
 
 
 app.listen(4002, () => {

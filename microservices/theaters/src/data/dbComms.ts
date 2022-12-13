@@ -7,7 +7,8 @@ export async function createTheater(model: TheaterModel) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const obj = {"name": model.name, "address": model.address, "zip": model.zip, "description": model.description, "movies": model.movies};
-    const res = await theaters.insertOne(obj);
+    const id = (await theaters.insertOne(obj)).insertedId;
+    const res = {"id": id, "zip": model.zip};
     await mongo.close();
     return res;
 }
@@ -40,7 +41,7 @@ export async function deleteTheater(id: string) {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
     const theaters = db.collection('theaters');
-    const res = await theaters.deleteOne({"_id": objectId});
+    const res = await theaters.findOneAndDelete({"_id": objectId});
     await mongo.close();
     return res;
 }

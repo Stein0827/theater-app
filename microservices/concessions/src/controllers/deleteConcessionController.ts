@@ -1,6 +1,6 @@
 import express, {Express, Request, Response} from 'express';
 import { ConcessionRequest} from '../types.js';
-import {ConcessionModel} from '../models/ConcessionModel'
+import {ConcessionModel} from '../models/ConcessionModel.js'
 import * as dbe from '../data/dbComms.js';
 import { publishEvent } from '../events/publishEvent.js';
 

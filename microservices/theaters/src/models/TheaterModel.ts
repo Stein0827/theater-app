@@ -22,8 +22,8 @@ export class TheaterModel {
 
     async createTheater() {
         validateCreateRequest(this);
-        const id = await dbe.createTheater(this);
-        return id.insertedId;
+        const theater = await dbe.createTheater(this);
+        return theater;
     }
 
     async getTheater() {
