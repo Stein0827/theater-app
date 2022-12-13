@@ -1,6 +1,6 @@
 import express, {Express, Request, Response} from 'express';
 import { TheaterRequest } from '../types.js';
-import { TheaterModel } from '../models/TheaterModel'
+import { TheaterModel } from '../models/TheaterModel.js'
 
 export const respondToEvent = async (req: Request, res: Response) => {
   try {
