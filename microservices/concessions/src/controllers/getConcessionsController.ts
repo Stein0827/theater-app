@@ -1,7 +1,7 @@
 import express, {Express, Request, Response} from 'express';
 import { ConcessionGetBatchRequest } from '../types.js';
 import * as dbe from '../data/dbComms.js';
-import { ConcessionModel } from '../models/ConcessionModel';
+import { ConcessionModel } from '../models/ConcessionModel.js';
 
 export async function getConcessions (req: Request, res: Response) {
     const resList: Array<Object | string > = [];

@@ -1,7 +1,7 @@
 
 import express, {Express, Request, Response} from 'express';
 import { ConcessionRequest } from '../types.js';
-import {ConcessionModel} from '../models/ConcessionModel';
+import {ConcessionModel} from '../models/ConcessionModel.js';
 import { publishEvent } from '../events/publishEvent.js';
 
 export const createConcession = async (req: Request, res: Response) => {
