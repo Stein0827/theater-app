@@ -1,67 +1,31 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.initDB1 = exports.connectDB = exports.startupDB = exports.db = void 0;
-exports.db = {};
-function initDB() {
-    exports.db["1"] = {
-        id: "1",
-        name: "brh.",
-        address: "asdfasdf",
-        movies: ["asdf", "brasdf", "aslkdfa"]
-    };
-    exports.db["2"] = {
-        id: "2",
-        name: "brddfdh.",
-        address: "asdfasdf",
-        movies: ["asdf", "brasdf", "aslkdfa"]
-    };
+import { MongoClient, ObjectId } from 'mongodb';
+export async function connectDB() {
+    const uri = process.env.DATABASE_URL;
+    if (uri === undefined) {
+        throw Error('DATABASE_URL environment variable is not specified');
+    }
+    const mongo = new MongoClient(uri);
+    await mongo.connect();
+    return await Promise.resolve(mongo);
 }
-function startupDB() {
-    // connect to db
-    initDB();
+export async function initDB() {
+    console.log("initing db");
+    const mongo = await connectDB();
+    const db = mongo.db();
+    if (await db.listCollections({ name: 'theaters' }).hasNext()) {
+        console.log('Collection already exists. Skipping initialization.');
+        return;
+    }
+    const theaters = db.collection('theaters');
+    const result = await theaters.insertMany([
+        { _id: new ObjectId("00000001639189e929544c75"), name: 'Amherst Cinema', address: '28 Amity St, Amherst, MA', zip: "01002", description: "Cinema screening independent, classic & current films, plus theater, dance & music performances.", movies: [1, 2, 3] },
+        { _id: new ObjectId("00000001639189e929544c76"), name: 'Cinemark at Hampshire Mall and XD', address: '367 Russell St, Hadley, MA', zip: "01035", description: "Chain of movie theaters, some with multiple screens, stadium seats & self-service ticketing kiosks.", movies: [1, 4, 5] },
+        { _id: new ObjectId("00000001639189e929544c77"), name: "South Hadley's Tower Theaters", address: 'The Village Commons, 19 College St, South Hadley, MA', zip: "01075", description: "Movie theater in South Hadley, Massachusetts", movies: [1, 2, 3] },
+        { _id: new ObjectId("00000001639189e929544c78"), name: 'Greenfield Garden Cinemas', address: '361 Main St, Greenfield, MA', zip: "01090", description: "The Garden Theater Block is a historic commercial block and theater at 353-367 Main Street in Greenfield, Massachusetts. The Colonial Revival block was completed in 1929, and is home to the city's largest theatrical performance venue", movies: [1, 4, 5] },
+    ]);
+    console.log(`Initialized ${result.insertedCount} products`);
+    console.log(`Initialized:`);
+    for (let key in result.insertedIds) {
+        console.log(`  Inserted product with ID ${result.insertedIds[key]}`);
+    }
 }
-exports.startupDB = startupDB;
-const mongodb_1 = require("mongodb");
-function connectDB() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const uri = process.env.DATABASE_URL;
-        if (uri === undefined) {
-            throw Error('DATABASE_URL environment variable is not specified');
-        }
-        const mongo = new mongodb_1.MongoClient(uri);
-        yield mongo.connect();
-        return yield Promise.resolve(mongo);
-    });
-}
-exports.connectDB = connectDB;
-function initDB1() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const mongo = yield connectDB();
-        const db = mongo.db();
-        if (yield db.listCollections({ name: 'theaters' }).hasNext()) {
-            console.log('Collection already exists. Skipping initialization.');
-            return;
-        }
-        const theaters = db.collection('theaters');
-        const result = yield theaters.insertMany([
-            { name: 'bruh', address: 'ehhhasdfklas', zip: 22525, description: "asdgkjsdg", movies: ["asdfa", "lasdlkfs"] },
-            { name: 'assd', address: 'asdfddd', zip: 12321, description: "asdgadsgas", movies: ["dfd", "lasdlfdfdkfs"] },
-            { name: 'dfdfg', address: 'qieke', zip: 22444, description: "asdfdggb", movies: ["dd", "gggg"] },
-        ]);
-        console.log(`Initialized ${result.insertedCount} products`);
-        console.log(`Initialized:`);
-        for (let key in result.insertedIds) {
-            console.log(`  Inserted product with ID ${result.insertedIds[key]}`);
-        }
-    });
-}
-exports.initDB1 = initDB1;
