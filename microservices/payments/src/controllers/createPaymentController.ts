@@ -1,15 +1,19 @@
 import express, {Express, Request, Response} from 'express';
 import {PaymentRequest } from '../types.js';
-import {PaymentModel} from '../models/paymentModel.js'
+import {PaymentModel} from '../models/paymentModel.js';
+import { publishEvent } from '../events/publishEvent.js';
+
 
 export const createPayment = async (req: Request, res: Response) => {
-  const data: PaymentRequest = req.body;
-
   try {
+    const data: PaymentRequest = req.body;
     const paymentModel = new PaymentModel(data);
-    const payment = paymentModel.createPayment();
-    res.status(200).send(payment);
+    const newPayment:PaymentModel = await paymentModel.createPayment().catch((err)=> {throw err});
+    
+    await publishEvent("paymentCreated", newPayment);
+    
+    res.status(200).send(newPayment);
   } catch (err) {
-    res.status(400).send("Error: error creating movie in database");
-  }    
+    res.status(400).send(err);
+  }       
 }

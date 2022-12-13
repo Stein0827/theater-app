@@ -18,6 +18,11 @@ export async function updateTheater(model: TheaterModel) {
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const _id = {"_id": objectId}
+    /*
+    get original doc including original movie ids array
+    find movie that has been added or deleted to the original movies array
+    publish event for either delete or update
+    */
     const obj = {"name": model.name, "address": model.address, "zip": model.zip, "description": model.description, "movies": model.movies};
     for (const property in obj) {
         if (obj[property as keyof typeof obj] === undefined) {
@@ -50,15 +55,58 @@ export async function getTheater(id: string) {
     return res;
 }
 
+export async function getTheatersByZip(zip: number) {
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const theaters = db.collection('theaters');
+    const cursor = theaters.find({"zip": zip});
+    const res: any = [];
+    await cursor.forEach( mydoc => {
+        res.push(mydoc);
+    });
+    await mongo.close();
+    return res;
+}
+
+
 export async function getAllTheaters() {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
     const theaters = db.collection('theaters');
     const cursor = theaters.find();
-    const res: any = []
+    const res: any = [];
     await cursor.forEach( mydoc => {
         res.push(mydoc);
     });
+    await mongo.close();
+    return res;
+}
+
+export async function updateMoviesOfTheater(model: TheaterModel) {
+    const objectId = new ObjectId(model.id);
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const theaters = db.collection('theaters');
+    const _id = {"_id": objectId};
+    const curr_movie = await getTheater(model.id as string);
+    const res = {"movieAdded": false, "id": 0};
+    let iterable = new Set(curr_movie!.movies as number[]);
+    let comparable = new Set(model!.movies as number[]);
+
+    if (curr_movie!.movies.length < model.movies!.length) {
+        res.movieAdded = true;
+        iterable = new Set(model!.movies as number[]);
+        comparable = new Set(curr_movie!.movies as number[]);
+    }
+    
+    iterable.forEach((movie) => {
+        if (!comparable.has(movie)) {
+            res.id = movie;
+        }
+    });
+
+    const obj = {"movies": model.movies};
+    await theaters.updateOne(_id, {'$set': obj});
     await mongo.close();
     return res;
 }

@@ -15,7 +15,7 @@ const createConfirmation = (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const data = req.body;
         const confirmationModel = new ConfirmationModel_1.ConfirmationModel(data);
-        const newConfirmation = confirmationModel.createConfirmation();
+        const newConfirmation = yield confirmationModel.createConfirmation();
         res.status(200).send(newConfirmation);
     }
     catch (err) {

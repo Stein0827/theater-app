@@ -1,0 +1,241 @@
+{
+	"info": {
+		"_postman_id": "f187465c-3d7b-4cf8-a387-c84dc8a0d844",
+		"name": "497s Milestone - movieops",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22927573"
+	},
+	"item": [
+		{
+			"name": "Fail: Create operations - Doesn't include required attributes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefg\",\n    \"movie_id\": 1\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Success: Create operations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefgh\",\n    \"movie_id\": 1,\n    \"operations\": {\"1:00pm\": 10}\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fail: Update operations",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefg\",\n    \"movie_id\": 1\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				},
+				"description": "test: theater id doesnt exist, is empty string, is num. and doesn't exists in database"
+			},
+			"response": []
+		},
+		{
+			"name": "Suc: Update movie operation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefg\",\n    \"movie_id\": 1,\n    \"operations\": {\"5:00pm\": 10}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				},
+				"description": "test: movie id doesnt exist, is empty string, is num. and doesn't exists in database"
+			},
+			"response": []
+		},
+		{
+			"name": "Suc: Add movie operation",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefgh\",\n    \"movie_id\": 2,\n    \"operations\": {\"1:00pm\": 10}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				},
+				"description": "test: movie id doesnt exist, is empty string, is num. and doesn't exists in database"
+			},
+			"response": []
+		},
+		{
+			"name": "get operation",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefg\",\n    \"movie_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				},
+				"description": "This requests includes successful movie id objects, invalid movies ids, and movie ids that dont exists."
+			},
+			"response": []
+		},
+		{
+			"name": "get all operations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:4003/api/v1/operations/all",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:4009/api/v1/concession",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"theater_id\": \"abcdefgh\",\n    \"movie_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4003/api/v1/operations",
+					"host": [
+						"localhost"
+					],
+					"port": "4003",
+					"path": [
+						"api",
+						"v1",
+						"operations"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

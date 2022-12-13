@@ -1,12 +1,18 @@
 version: '3.9'
 services:
-  movies_app:
+  eventbus:
+    build: ./microservices/eventbus
+    ports:
+      - "4000:4000"
+  
+  movies:
+    build: ./microservices/movies
     ports:
       - "4004:4004"
     depends_on:
       mysql_movies:
-        condition: service_healthy
-    build: ./microservices/movies
+        condition: "service_healthy"
+      
     links:
       - "mysql_movies"
     environment:
@@ -15,30 +21,71 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: password
       MYSQL_DATABASE: db
-      
-  mysql_movies:
-    image: mysql:latest
-    environment:
-      MYSQL_DATABASE: db
-      MYSQL_ROOT_PASSWORD: password # Password for root access
-      MYSQL_TCP_PORT: 5004
-    ports:
-      - '5004:5004' # <Port exposed> : < MySQL Port running inside container>
-    expose:
-      - '5004' # Opens port 5004 on the container
-    volumes: # Where our data will be persisted
-      - mysql_movies_data:/data/db
-    healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
-      timeout: 5s
-      retries: 4
 
+  payments:
+    build: ./microservices/payments
+    ports:
+      - "4005:4005"
+    depends_on:
+      mysql_payments:
+        condition: service_healthy
+      
+    links:
+      - "mysql_payments"
+    environment:
+      MYSQL_URL: mysql_payments
+      MYSQL_PORT: 5005
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: db
+
+  movie_ops:
+    build: ./microservices/movie_ops
+    ports:
+      - "4003:4003"
+    depends_on:
+      - mongodb_container
+      - eventbus
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+      
   theaters:
     build: ./microservices/theaters
     ports:
       - "4009:4009"
     depends_on:
       - mongodb_container
+      - eventbus
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+      
+  theater_admin:
+    build: ./microservices/theater_admin
+    ports:
+      - "4006:4006"
+    depends_on:
+      - mongodb_container
+      - eventbus
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+  
+  theater_location:
+    build: ./microservices/theater_location
+    ports:
+      - "4008:4008"
+    depends_on:
+      - mongodb_container
+      - eventbus
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+  
+  theater_identity:
+    build: ./microservices/theater_identity
+    ports:
+      - "4007:4007"
+    depends_on:
+      - mongodb_container
+      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
       
@@ -57,6 +104,7 @@ services:
       - "4001:4001"
     depends_on:
       - mongodb_container
+      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
 
@@ -66,6 +114,7 @@ services:
       - "4002:4002"
     depends_on:
       - mongodb_container
+      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
       EMAIL: ts5588881@gmail.com
@@ -79,6 +128,42 @@ services:
     volumes:
       - mongodb_data_container:/data/db
     command: --quiet
+
+  mysql_payments:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: password # Password for root access
+      MYSQL_TCP_PORT: 5005
+    ports:
+      - '5005:5005' # <Port exposed> : < MySQL Port running inside container>
+    expose:
+      - '5005' # Opens port 5004 on the container
+    volumes: # Where our data will be persisted
+      - mysql_payments_data:/data/db
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 4
+
+  mysql_movies:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: db
+      MYSQL_ROOT_PASSWORD: password # Password for root access
+      MYSQL_TCP_PORT: 5004
+    ports:
+      - '5004:5004' # <Port exposed> : < MySQL Port running inside container>
+    expose:
+      - '5004' # Opens port 5004 on the container
+    volumes: # Where our data will be persisted
+      - mysql_movies_data:/data/db
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 4
+
 volumes:
   mongodb_data_container:
   mysql_movies_data:
+  mysql_payments_data:

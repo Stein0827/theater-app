@@ -2,8 +2,8 @@
   "name": "moderator",
   "version": "1.0.0",
   "description": "",
-  "main": "./built/index.js",
   "type": "module",
+  "main": "./built/src/index.js",
   "scripts": {
     "start": "npx tsc && nodemon index.js"
   },
@@ -14,6 +14,7 @@
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
+    "mongodb": "^4.12.1",
     "nodemon": "^2.0.20",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.3"

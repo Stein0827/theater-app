@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.router = void 0;
+const express_1 = require("express");
+const subscriptionController_1 = require("../controllers/subscriptionController");
+const publishController_1 = require("../controllers/publishController");
+const router = (0, express_1.Router)();
+exports.router = router;
+router.post('/api/v1/subscribe', subscriptionController_1.subscribeService);
+router.post('/api/v1/publish', publishController_1.publishService);

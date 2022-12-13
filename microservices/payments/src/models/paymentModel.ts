@@ -1,12 +1,13 @@
 import { PaymentRequest } from '../types.js';
 import * as dbe from '../data/dbComms.js';
-import { validateLocaleAndSetLanguage } from '../../node_modules/typescript/lib/typescript.js';
 
 export class PaymentModel {
-    movie_id: string | undefined;
+    payment_id: number | undefined;
+    movie_id: number | undefined;
     theater_id: string | undefined;
-    time: string | undefined;
-    price: string | undefined;
+    date: Date | undefined;
+    concession: number | undefined;
+    tickets: number | undefined;
     email: string | undefined;
     fname: string | undefined;
     lname: string | undefined;
@@ -20,12 +21,15 @@ export class PaymentModel {
     zip: string | undefined;
 
     constructor(data: PaymentRequest) {
+        this.payment_id = data.payment_id;
         this.movie_id = data.movie_id;
         this.theater_id = data.theater_id;
-        this.time = data.time;
-        this.price = data.price;
+        this.date = data.date;
+        this.concession = data.concessions
+        this.tickets = data.tickets;
         this.fname = data.fname;
         this.lname = data.lname;
+        this.email = data.email;
         this.cardnum = data.cardnum;
         this.seccode = data.seccode;
         this.cardexp = data.cardexp;
@@ -36,34 +40,79 @@ export class PaymentModel {
         this.zip = data.zip;
     }
 
-    createPayment() {
-        const invalidAttributes: string[] = getInvalidRequestAttributes(this);
-        if (invalidAttributes.length === 0) {
-            dbe.createPayment(this);
-        } else {
-            throw new PaymentException(invalidAttributes)
+    async createPayment(): Promise<PaymentModel> {
+        validateCreateRequest(this);
+
+        try {
+            const payment = await dbe.createPayment(this);
+            return payment;
+        } catch (err) {
+            throw err;
         }
-    }    
+    }
+    
+    async getPayment() {
+        validatePaymentRequest(this);
+
+        try {
+            await validatePaymentExists(this);
+        } catch (err) {
+            throw err;
+        }
+
+        try {
+            const movie = await dbe.getPayment(this.payment_id as number);
+            return movie;
+        } catch (err) {
+            throw err;
+        }
+    }
 }
 
-function getInvalidRequestAttributes(model: PaymentModel) {
-    let invalidList : string[] = [];
-    const required_attributes = new Set(Object.getOwnPropertyNames(model));
-    
+function validateCreateRequest(data: PaymentModel) {
+    let invalidAttributes: string[] = [];
+
+    let attributes = Object.keys(data);
+    attributes.shift();
+
+    const required_attributes = new Set(attributes);
+
     required_attributes.forEach(attribute => {
-        if (!(attribute in model) || model[attribute as keyof typeof model] === "" || model[attribute as keyof typeof model] === undefined) {
-           invalidList.push(attribute)
+        if (!(attribute in data) || data[attribute as keyof typeof data] === "" || data[attribute as keyof typeof data] === undefined) {
+            invalidAttributes.push(attribute);
         }
     });
 
-    return invalidList;
+    if (invalidAttributes.length !== 0) {
+        throw new PaymentException("Error: Invalid Attributes", invalidAttributes);
+    }
 }
 
-class PaymentException extends Error {
-    list: string[];
+function validatePaymentRequest(data: PaymentModel) {
+    if (data.payment_id === undefined || typeof data.payment_id !== "number") {
+        throw new PaymentException("Error: Invalid ID", [(data.payment_id as unknown as number).toString()]);
+    }
+}
 
-    constructor (errorList: string[]) {
-        super("Invalid attributes");
+async function validatePaymentExists(data: PaymentModel) {
+    try {
+        const hasMovie = await dbe.hasPayment(data.payment_id as number);
+        if (!(hasMovie)) {
+            throw new PaymentException("Error: Payment does not exists", [(data.payment_id as unknown as number).toString()]);
+        }
+    } catch (err) {
+        throw err;
+    }
+}
+
+class PaymentException {
+    list: string[];
+    name: string;
+    message: string;
+
+    constructor (message:string, errorList: string[]) {
+        this.name = "Payment Exception";
+        this.message = message;
         this.list = errorList;
     }
 }

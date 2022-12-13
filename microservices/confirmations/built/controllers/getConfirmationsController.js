@@ -13,17 +13,17 @@ exports.getConfirmations = void 0;
 const ConfirmationModel_js_1 = require("../models/ConfirmationModel.js");
 const getConfirmations = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let resList = [];
-    try {
-        const data = req.body;
-        data.forEach(id => {
+    const data = req.body;
+    for (const id of data) {
+        try {
             let data_input = { confirmationId: id };
             const confirmationModel = new ConfirmationModel_js_1.ConfirmationModel(data_input);
-            const confirmation = confirmationModel.getConfirmation();
+            const confirmation = yield confirmationModel.getConfirmation();
             resList.push(confirmation);
-        });
-    }
-    catch (err) {
-        resList.push(err);
+        }
+        catch (err) {
+            resList.push(err);
+        }
     }
     res.status(202).send(resList);
 });

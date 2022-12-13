@@ -1,6 +1,5 @@
 import express, {Express, Request, Response} from 'express';
 import {MovieGetBatchRequest } from '../types.js';
-import * as dbe from '../data/dbComms.js';
 import { MovieModel } from '../models/movieModel.js';
 
 export const getMovies = async (req: Request, res: Response) => {
@@ -20,4 +19,4 @@ export const getMovies = async (req: Request, res: Response) => {
     }
 
     res.status(202).send(resList);  
-  }
+}

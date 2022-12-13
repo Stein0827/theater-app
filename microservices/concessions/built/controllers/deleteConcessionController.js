@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,15 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { ConcessionModel } from '../models/ConcessionModel.js';
-export const deleteConcession = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteConcession = void 0;
+const ConcessionModel_1 = require("../models/ConcessionModel");
+const deleteConcession = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const data = req.body;
-        const concessionModel = new ConcessionModel(data);
-        concessionModel.deleteConcession();
-        res.status(200).send("Success: Movie Deleted");
+        const concessionModel = new ConcessionModel_1.ConcessionModel(data);
+        console.log(concessionModel);
+        const ack = yield concessionModel.deleteConcession();
+        res.status(200).send(ack);
     }
     catch (err) {
         res.status(400).send(err);
     }
 });
+exports.deleteConcession = deleteConcession;

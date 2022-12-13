@@ -1,0 +1,101 @@
+{
+	"info": {
+		"_postman_id": "fddb8629-4c58-4bd2-9dec-8dd841dc0642",
+		"name": "497s Milestone - Payments",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22927573"
+	},
+	"item": [
+		{
+			"name": "Fail: Create Payment - Doesn't include required attributes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"movie_id\": 1,\n    \"time\": \"2:30pm\",\n    \"price\": \"$50\",\n    \"email\": \"asdf\",\n    \"fname\": \"string\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4005/api/v1/payment",
+					"host": [
+						"localhost"
+					],
+					"port": "4005",
+					"path": [
+						"api",
+						"v1",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Success: Create Payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"movie_id\": 1,\n    \"theater_id\": 1,\n    \"time\": \"2:30pm\",\n    \"price\": \"$50\",\n    \"email\": \"2001acastillo@gmail\",\n    \"fname\": \"alan\",\n    \"lname\": \"castillo\",\n    \"cardnum\": \"123456789\",\n    \"seccode\": \"111\",\n    \"cardexp\": \"04/27\",\n    \"bstreet\": \"11 apple st\",\n    \"bunit\": \"1\",\n    \"bstate\": \"MA\",\n    \"bcountry\": \"United States\",\n    \"zip\": \"01002\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4005/api/v1/payment",
+					"host": [
+						"localhost"
+					],
+					"port": "4005",
+					"path": [
+						"api",
+						"v1",
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Payment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payment_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4005/api/v1/payment",
+					"host": [
+						"localhost"
+					],
+					"port": "4005",
+					"path": [
+						"api",
+						"v1",
+						"payment"
+					]
+				},
+				"description": "This requests includes successful movie id objects, invalid movies ids, and movie ids that dont exists."
+			},
+			"response": []
+		}
+	]
+}

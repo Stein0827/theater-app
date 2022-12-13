@@ -8,7 +8,7 @@ export class TheaterModel {
     zip: number | undefined;
     description: string | undefined;
     image: File | undefined;
-    movies: string[] | undefined;
+    movies: number[] | undefined;
 
     constructor(data: TheaterRequest) {
         this.id = data.theaterId;
@@ -36,6 +36,12 @@ export class TheaterModel {
         validateTheaterRequest(this);
         await validateTheaterExists(this);
         return await dbe.updateTheater(this);
+    }
+
+    async updateMoviesOfTheater() {
+        validateTheaterRequest(this);
+        await validateTheaterExists(this);
+        return await dbe.updateMoviesOfTheater(this);
     }
 
     async deleteTheater() {

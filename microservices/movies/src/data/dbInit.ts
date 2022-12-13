@@ -1,6 +1,6 @@
 import mysql from 'mysql2';
 import 'dotenv/config';
-import * as query from './queries';
+import * as query from './queries.js';
 
 function connectDB() {
     try {
@@ -27,14 +27,12 @@ function initDB(db: mysql.Connection | undefined) {
         if (error) {
             return console.log("Create Table Error:", error.message);
         }
-        console.log("Create Table:", results);
     });
 
     db.query(query.insert, [query.insert_values], (error, results) => {
         if (error) {
           return console.log("Insert Values Error: ", error);
         }
-        console.log("Insert Values:", results);
     });
 }
 
