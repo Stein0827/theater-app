@@ -46,10 +46,10 @@ export class TheaterLocationModel {
         let ret: any;
 
         switch(eventType) {
-            case 'TheaterCreated':
+            case 'theaterCreated':
                 ret = await dbe.addTheaterZipcode(eventData as TheaterData);
                 break;
-            case 'TheaterDeleted':
+            case 'theaterDeleted':
                 ret = await dbe.removeTheaterZipcode(eventData as DeletionData);
                 break;
             default:
