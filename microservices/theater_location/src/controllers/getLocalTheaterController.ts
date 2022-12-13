@@ -1,5 +1,4 @@
-
-import express, {Express, Request, Response} from 'express';
+import {Request, Response} from 'express';
 import {MovieLocationRequest } from '../types.js';
 import { TheaterLocationModel} from '../models/theaterLocationModel.js'
 
@@ -10,7 +9,7 @@ export const getLocalTheaters = async (req: Request, res: Response) => {
         let resList = await theaterLocationModel.getLocalTheaters();
         res.status(200).send(resList);
     } catch (err: any) {
-        res.status(400).send(`${err.name}: ${err.message} with zipcode: ${err.list[0]}`);
+        res.status(400).send(`${err.name}: ${err.message}: ${err.list[0]}`);
     }
 }
 
