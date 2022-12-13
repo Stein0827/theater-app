@@ -3,6 +3,7 @@ import { MovieList } from "./Movies/MovieList";
 import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { MovieRequest } from "./types.js"
+import { Signin }  from "./user/signin";
 
 const tempMovieEx = {
   "movie_id": 1,
@@ -21,9 +22,10 @@ export const App = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/paymentCreate" />} />
+      <Route path="/" element={<Navigate to="/signin" />} />
       <Route path="/moviesList" element={<MovieList theaterId={theaterId} />} />
       <Route path="/paymentCreate" element={<PaymentCreate movie={movie} theaterId={theaterId} showingTime={showing}/>} />
+      <Route path="/signin" element={<Signin />} />
     </Routes>
   );
 };
