@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "./built/index.js",
+  "type": "module",
   "scripts": {
     "start": "npx tsc && nodemon index.js"
   },

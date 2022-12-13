@@ -1,10 +1,10 @@
-import { MovieLocationRequest, theaterList } from '../types.js';
 import * as dbe from '../data/dbComms.js';
+import { MovieLocationRequest, Event, TheaterData, DeletionData } from '../types.js';
 
 export class TheaterLocationModel {
     zipcode: string
 
-    constructor(data: MovieLocationRequest) {
+    constructor(data: MovieLocationRequest = {zipcode: ""}) {
         this.zipcode = data.zipcode;
     }
 
@@ -12,8 +12,7 @@ export class TheaterLocationModel {
         this.validateRequest()
         // if the zipcode is not in the database, then ask the theater service for the theaters with that zipcode
         if (!(await this.validateZipCodeExists())) {
-            //TODO: send event to theater service to get local theaters and update dbe
-            throw new TheaterLocateException("zipcode does not exist", [this.zipcode as string]); 
+            throw new TheaterLocateException("zipcode does not exist", [`${this.zipcode}`]); 
         }
         return await dbe.getTheaters(this.zipcode);
     }
@@ -26,6 +25,37 @@ export class TheaterLocationModel {
 
     async validateZipCodeExists() {
         return await dbe.hasZipCode(this.zipcode);
+    }
+
+    validateEventRequest(data: Event) {
+        const eventType = data.eventType;
+        const eventData = data.eventData;
+        if (!eventType || typeof eventType !== 'string'|| !eventData) {
+            return false;
+        }
+        return true;
+    }
+
+    async processEvent(data: Event) {
+        if (!this.validateEventRequest(data)) {
+            throw new TheaterLocateException("Invalid Event", [JSON.stringify(data.eventData)]);
+        }
+
+        const eventType = data.eventType;
+        const eventData = data.eventData;
+        let ret: any;
+
+        switch(eventType) {
+            case 'TheaterCreated':
+                ret = await dbe.addTheaterZipcode(eventData as TheaterData);
+                break;
+            case 'TheaterDeleted':
+                ret = await dbe.removeTheaterZipcode(eventData as DeletionData);
+                break;
+            default:
+                throw new TheaterLocateException("Invalid event type", [eventType]);
+        }
+        return ret;
     }
 }
 
