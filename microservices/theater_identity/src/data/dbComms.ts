@@ -3,6 +3,7 @@ import { connectDB } from './dbInit.js';
 import { MongoClient} from 'mongodb';
 import { LoginException } from '../models/loginModel.js';
 import { User } from '../types.js';
+import { theaterCreated, theaterDeleted } from '../../eventTypes.js';
 
 export async function findUser(username: string) {
     // connect to db
@@ -81,4 +82,45 @@ export async function deleteUser(username: string) {
     const deleteAck = await theaterLogin.deleteOne({"username": username});
     await mongo.close();
     return deleteAck;
+}
+
+export async function addTheaterId(data: theaterCreated) {
+    // connect to db
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const theaterLogin = db.collection('theaterLogin');
+
+    const username = data.eventData.username;
+    const theaterId = data.eventData.theater_id;
+
+    // check if user exists
+    if (!(await userExists(username))) {
+        throw new LoginException("Can not add theater: user does not exist", [username as string]);
+    }
+
+    const user = await theaterLogin.findOne({username: username});
+    user!.theaterId = theaterId;
+
+    const res = await theaterLogin.updateOne({username: username}, {'$set': user});
+    
+    await mongo.close();
+    return res;
+}
+
+export async function deleteTheater(data: theaterDeleted) {
+    // connect to db
+    const mongo: MongoClient = await connectDB();
+    const db = mongo.db();
+    const theaterLogin = db.collection('theaterLogin');
+
+    const theaterId = data.eventData.theater_id;
+    
+    const res = await theaterLogin.deleteOne({"theaterId": theaterId});
+
+    if (res.deletedCount === 0) {
+        throw new LoginException("Deleted 0 items for theaterId:", [theaterId]);                
+    }
+
+    await mongo.close();
+    return res;
 }

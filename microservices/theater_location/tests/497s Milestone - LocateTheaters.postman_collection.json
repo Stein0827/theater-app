@@ -29,7 +29,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"zipcode\": \"01907\"\n}",
+					"raw": "{\n    \"zipcode\": \"12345\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -37,11 +37,11 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:4004/api/theaters/locate",
+					"raw": "localhost:4008/api/theaters/locate",
 					"host": [
 						"localhost"
 					],
-					"port": "4004",
+					"port": "4008",
 					"path": [
 						"api",
 						"theaters",
@@ -82,15 +82,73 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:4004/api/theaters/locate",
+					"raw": "localhost:4008/api/theaters/locate",
 					"host": [
 						"localhost"
 					],
-					"port": "4004",
+					"port": "4008",
 					"path": [
 						"api",
 						"theaters",
 						"locate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Theater Created Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventType\": \"TheaterCreated\",\n    \"eventData\": {\n        \"theaterId\": \"9999\",\n        \"zip\": \"10234\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4008/api/v1/events",
+					"host": [
+						"localhost"
+					],
+					"port": "4008",
+					"path": [
+						"api",
+						"v1",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Theater Deleted Event",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventType\": \"TheaterCreated\",\n    \"eventData\": {\n        \"theaterId\": \"9999\",\n        \"zip\": \"10234\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4008/api/v1/events",
+					"host": [
+						"localhost"
+					],
+					"port": "4008",
+					"path": [
+						"api",
+						"v1",
+						"events"
 					]
 				}
 			},

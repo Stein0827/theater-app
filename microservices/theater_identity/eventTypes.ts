@@ -50,7 +50,8 @@ export type theaterRemovedMovie = {
 export type theaterCreated = {
     eventType: "theaterCreated";
     eventData: {
-        theater_id: string;
+        username: string,
+        theater_id: string
     }
 }
 
@@ -62,3 +63,18 @@ export type theaterDeleted = {
         theater_id: string;
     }
 }
+
+// Publisher: Theater Login Service
+// Subscribers: Theater Service
+export type userCreated = {
+    eventType: "userCreated",
+    eventData: {
+        username: string,
+        name: string,
+        address: string,
+        zip: string,
+        description: string,
+        image: string,
+    }
+}
+
