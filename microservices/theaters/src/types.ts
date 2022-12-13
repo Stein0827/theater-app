@@ -2,9 +2,9 @@ type TheaterRequest = {
     theaterId?: string;
     name?: string;
     address?: string;
-    zip?: number;
+    zip?: string;
     description?: string;
-    theaterImage?: File;
+    theaterImage?: string;
     movies?: number[];
 }
   

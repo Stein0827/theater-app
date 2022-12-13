@@ -13,7 +13,7 @@ const router = Router();
 router.post('/api/v1/event', respondToEvent);
 router.post('/api/v1/theater', createTheater);
 router.put('/api/v1/theater', updateTheater);
-router.get('/api/v1/theaters', getTheaters);
+router.post('/api/v1/theaters', getTheaters);
 router.get('/api/v1/theaters/all', getAllTheaters);
 router.delete('/api/v1/theater', deleteTheaters);
 router.put('/api/v1/theater', updateMoviesOfTheater);

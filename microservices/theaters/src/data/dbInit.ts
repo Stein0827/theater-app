@@ -24,9 +24,10 @@ export async function initDB() {
 
   const theaters = db.collection('theaters');
   const result = await theaters.insertMany([
-    { name: 'bruh', address: 'ehhhasdfklas', zip: 22525, description: "asdgkjsdg", movies: ["asdfa", "lasdlkfs"] },
-    { name: 'assd', address: 'asdfddd', zip: 12321, description: "asdgadsgas", movies: ["dfd", "lasdlfdfdkfs"] },
-    { name: 'dfdfg', address: 'qieke', zip: 22444, description: "asdfdggb", movies: ["dd", "gggg"] },
+    { name: 'Amherst Cinema', address: '28 Amity St, Amherst, MA', zip: "01002", description: "Cinema screening independent, classic & current films, plus theater, dance & music performances.", movies: [1, 2, 3] },
+    { name: 'Cinemark at Hampshire Mall and XD', address: '367 Russell St, Hadley, MA', zip: "01035", description: "Chain of movie theaters, some with multiple screens, stadium seats & self-service ticketing kiosks.", movies: [1, 4, 5] },
+    { name: "South Hadley's Tower Theaters", address: 'The Village Commons, 19 College St, South Hadley, MA', zip: "01075", description: "Movie theater in South Hadley, Massachusetts", movies: [1, 2, 3] },
+    { name: 'Greenfield Garden Cinemas', address: '361 Main St, Greenfield, MA', zip: "01090", description: "The Garden Theater Block is a historic commercial block and theater at 353-367 Main Street in Greenfield, Massachusetts. The Colonial Revival block was completed in 1929, and is home to the city's largest theatrical performance venue", movies: [1, 4, 5] },
   ]);
 
   console.log(`Initialized ${result.insertedCount} products`);
