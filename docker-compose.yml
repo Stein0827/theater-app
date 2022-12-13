@@ -72,7 +72,6 @@ services:
       - "4006:4006"
     depends_on:
       - mongodb_container
-      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
   
