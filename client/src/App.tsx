@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { MovieList } from "./Movies/MovieList";
 import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { MovieRequest } from "./types.js"
+import { MovieResponse } from "./types.js"
 import { Signin }  from "./user/signin";
 import { GetTheaterByZip } from './Theater/GetTheaterByZip';
 import { TheaterDetail } from './Theater/TheaterDetail';
@@ -18,7 +18,8 @@ const tempMovieEx = {
 }
 
 export const App = () => {
-  const [theaterId, setTheaterId] = useState("00000001639189e929544c75");
+  const [theaterId, setTheaterId] = useState("6397c2ab1807fc13262ee0f8");
+  //const [theaterId, setTheaterId] = useState("00000001639189e929544c75");
   const [movie, setMovie] = useState(tempMovieEx);
   const [showing, setShowing] = useState("1:30PM");
   const [zipcode, setZipcode] = useState({"zip": "01090"});

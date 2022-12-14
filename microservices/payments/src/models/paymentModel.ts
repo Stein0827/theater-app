@@ -9,6 +9,7 @@ export class PaymentModel {
     showing: string | undefined
     concession: number | undefined;
     tickets: number | undefined;
+    
     email: string | undefined;
     fname: string | undefined;
     lname: string | undefined;

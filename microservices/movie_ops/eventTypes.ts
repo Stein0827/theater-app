@@ -51,6 +51,7 @@ export type theaterCreated = {
     eventType: "theaterCreated";
     eventData: {
         theater_id: string;
+        zip: string;
     }
 }
 
@@ -60,5 +61,6 @@ export type theaterDeleted = {
     eventType: "theaterDeleted";
     eventData: {
         theater_id: string;
+        zip: string;
     }
 }

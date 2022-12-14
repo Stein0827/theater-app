@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import { MovieRequest } from "../types.js"
+import { MovieResponse } from "../types.js"
 import { OperationsList } from "./OperationsList"
 
 
-export const OperationsModal = ({movie, theaterId}: {movie: MovieRequest, theaterId: string}) => {
+export const OperationsModal = ({movie, theaterId}: {movie: MovieResponse, theaterId: string}) => {
     const [show, setShow] = useState(false);
     const [showing, setShowing] = useState("");
     const [disable, setDisable] = React.useState(true);
