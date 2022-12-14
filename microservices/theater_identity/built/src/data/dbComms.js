@@ -80,9 +80,7 @@ export async function addTheaterId(data) {
         throw new LoginException("Can not add theater: user does not exist", [username]);
     }
     const user = await theaterLogin.findOne({ username: username });
-    if (user) {
-        user.theaterId = theaterId;
-    }
+    user.theaterId = theaterId;
     const res = await theaterLogin.updateOne({ username: username }, { '$set': user });
     await mongo.close();
     return res;

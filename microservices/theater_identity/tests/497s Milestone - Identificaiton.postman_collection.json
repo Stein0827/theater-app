@@ -16,7 +16,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"bob\",\n    \"password\": \"dylan\"\n}",
+					"raw": "{\n    \"username\": \"amherstCinemaAdmin\",\n    \"password\": \"pindrus\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"

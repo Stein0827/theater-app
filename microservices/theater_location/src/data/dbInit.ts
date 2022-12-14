@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 export async function connectDB(): Promise<MongoClient> {
   const uri = process.env.DATABASE_URL;
@@ -24,9 +24,10 @@ export async function initDB() {
 
   const theaterLocations = db.collection('theaterLocations');
   const result = await theaterLocations.insertMany([
-    { zipcode: "12345", theaters: ["abcdef", "ghijklm"] },
-    { zipcode: "12363", theaters: ["wwwwww", "yyyyyyy"] },
-    { zipcode: "16587", theaters: ["zzzzzz", "aaaaaaa"] },
+    { zipcode: "01002", theaters: [new ObjectId("00000001639189e929544c75").toString()] },
+    { zipcode: "01035", theaters: [new ObjectId("00000001639189e929544c76").toString()] },
+    { zipcode: "01075", theaters: [new ObjectId("00000001639189e929544c77").toString()] },
+    { zipcode: "01090", theaters: [new ObjectId("00000001639189e929544c78").toString()] },
   ]);
 
   console.log(`Initialized ${result.insertedCount} products`);

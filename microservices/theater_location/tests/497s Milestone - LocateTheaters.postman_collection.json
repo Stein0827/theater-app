@@ -29,7 +29,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"zipcode\": \"12345\"\n}",
+					"raw": "{\n    \"zipcode\": \"01035\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -74,7 +74,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"zipcode\": \"12345\"\n}",
+					"raw": "{\n    \"zipcode\": \"asdfasdf\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -103,7 +103,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"eventType\": \"TheaterCreated\",\n    \"eventData\": {\n        \"theaterId\": \"9999\",\n        \"zip\": \"10234\"\n    }\n}",
+					"raw": "{\n    \"eventType\": \"theaterCreated\",\n    \"eventData\": {\n        \"theaterId\": \"9999\",\n        \"zip\": \"10234\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -132,7 +132,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"eventType\": \"TheaterCreated\",\n    \"eventData\": {\n        \"theaterId\": \"9999\",\n        \"zip\": \"10234\"\n    }\n}",
+					"raw": "{\n    \"eventType\": \"theaterDeleted\",\n    \"eventData\": {\n        \"id\": \"9999\",\n        \"zip\": \"10234\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"

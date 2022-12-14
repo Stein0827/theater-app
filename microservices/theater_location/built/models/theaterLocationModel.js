@@ -1,6 +1,6 @@
 import * as dbe from '../data/dbComms.js';
 export class TheaterLocationModel {
-    constructor(data) {
+    constructor(data = { zipcode: "" }) {
         this.zipcode = data.zipcode;
     }
     async getLocalTheaters() {
@@ -12,8 +12,8 @@ export class TheaterLocationModel {
         return await dbe.getTheaters(this.zipcode);
     }
     validateRequest() {
-        if (!this.zipcode || typeof this.zipcode !== "number") {
-            throw new TheaterLocateException("Invalid zipcode", [`${this.zipcode}`]);
+        if (this.zipcode === undefined || typeof this.zipcode !== "string" || this.zipcode === "") {
+            throw new TheaterLocateException("Invalid zipcode", [this.zipcode]);
         }
     }
     async validateZipCodeExists() {
@@ -35,10 +35,10 @@ export class TheaterLocationModel {
         const eventData = data.eventData;
         let ret;
         switch (eventType) {
-            case 'TheaterCreated':
-                await dbe.addTheaterZipcode(eventData);
+            case 'theaterCreated':
+                ret = await dbe.addTheaterZipcode(eventData);
                 break;
-            case 'TheaterDeleted':
+            case 'theaterDeleted':
                 ret = await dbe.removeTheaterZipcode(eventData);
                 break;
             default:
