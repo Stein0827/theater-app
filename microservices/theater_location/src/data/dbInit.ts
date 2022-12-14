@@ -25,7 +25,7 @@ export async function initDB() {
   const theaterLocations = db.collection('theaterLocations');
   const result = await theaterLocations.insertMany([
     { zipcode: "12345", theaters: ["abcdef", "ghijklm"] },
-    { zipcode: "67890", theaters: ["wwwwww", "yyyyyyy"] },
+    { zipcode: "12363", theaters: ["wwwwww", "yyyyyyy"] },
     { zipcode: "16587", theaters: ["zzzzzz", "aaaaaaa"] },
   ]);
 
