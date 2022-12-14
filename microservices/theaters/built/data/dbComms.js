@@ -49,18 +49,6 @@ export async function getTheater(id) {
     await mongo.close();
     return res;
 }
-export async function getTheatersByZip(zip) {
-    const mongo = await connectDB();
-    const db = mongo.db();
-    const theaters = db.collection('theaters');
-    const cursor = theaters.find({ "zip": zip });
-    const res = [];
-    await cursor.forEach(mydoc => {
-        res.push(mydoc);
-    });
-    await mongo.close();
-    return res;
-}
 export async function getAllTheaters() {
     const mongo = await connectDB();
     const db = mongo.db();

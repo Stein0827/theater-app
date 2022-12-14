@@ -56,21 +56,6 @@ export async function getTheater(id: string) {
     return res;
 }
 
-export async function getTheatersByZip(zip: number) {
-    const mongo: MongoClient = await connectDB();
-    const db = mongo.db();
-    const theaters = db.collection('theaters');
-    const cursor = theaters.find();
-    const res: any = [];
-    await cursor.forEach( mydoc => {
-        if (Math.abs(+zip - +mydoc.zip) <= 75)
-            res.push(mydoc)
-    });
-    await mongo.close();
-    return res;
-}
-
-
 export async function getAllTheaters() {
     const mongo: MongoClient = await connectDB();
     const db = mongo.db();
