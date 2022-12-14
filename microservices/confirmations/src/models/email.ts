@@ -16,8 +16,8 @@ export async function sendEmail(emailAddr: string | undefined, id: string | unde
   const mailOptions = {
     from: 'ts5588881@gmail.com',
     to: emailAddr,
-    subject: 'test test',
-    text: 'im a barbie girl',
+    subject: `Ticket purchased ID: ${id}`,
+    text: `Dear Customer, \n\nThis is the confirmation of your order.\ntotal price: ${price}\npurhcase Address: ${addr}\n\nThank you`,
   };
 
   transporter.sendMail(mailOptions, function(error: any, info: any){
