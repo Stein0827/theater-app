@@ -11,9 +11,6 @@ export class TheaterLocationModel {
     async getLocalTheaters() {
         this.validateRequest()
         // if the zipcode is not in the database, then ask the theater service for the theaters with that zipcode
-        if (!(await this.validateZipCodeExists())) {
-            throw new TheaterLocateException("zipcode does not exist", [`${this.zipcode}`]); 
-        }
         return await dbe.getTheaters(this.zipcode);
     }
 
