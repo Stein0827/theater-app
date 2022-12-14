@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import { AdminModel } from '../models/adminModel';
+import { AdminModel } from '../models/adminModel.js';
 import { SalesRequest } from '../types';
 
 export const getSales = async (req: Request, res: Response) => {

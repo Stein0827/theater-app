@@ -1,7 +1,7 @@
 
 import express, {Express, Request, Response} from 'express';
 import { ConfirmationRequest } from '../types.js';
-import {ConfirmationModel} from '../models/ConfirmationModel'
+import {ConfirmationModel} from '../models/ConfirmationModel.js'
 
 export const createConfirmation = async (req: Request, res: Response) => {
   try {

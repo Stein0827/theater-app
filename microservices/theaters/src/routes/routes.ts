@@ -17,6 +17,6 @@ router.post('/api/v1/theaters', getTheaters);
 router.get('/api/v1/theaters/all', getAllTheaters);
 router.delete('/api/v1/theater', deleteTheaters);
 router.put('/api/v1/theater', updateMoviesOfTheater);
-router.get('/api/v1/theaters', getTheatersByZip);
+router.post('/api/v1/theaters/zip', getTheatersByZip);
 
 export {router};

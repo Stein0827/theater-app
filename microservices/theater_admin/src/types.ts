@@ -8,3 +8,7 @@ export interface TheaterRevenue {
 export interface SalesRequest {
     theaterId: string
 }
+export interface Event {
+    eventType: string,
+    eventData: object
+}

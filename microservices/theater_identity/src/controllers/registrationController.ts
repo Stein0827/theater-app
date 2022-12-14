@@ -1,6 +1,6 @@
 import {Request, Response} from 'express';
-import { LoginModel } from '../models/loginModel';
-import { RegistrationRequest } from '../types';
+import { LoginModel } from '../models/loginModel.js';
+import { RegistrationRequest } from '../types.js';
 import jwt from 'jsonwebtoken';
 
 

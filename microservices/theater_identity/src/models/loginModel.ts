@@ -1,12 +1,15 @@
-import { LoginRequest } from '../types.js';
+import { LoginRequest, registerUserData } from '../types.js';
 import * as dbe from '../data/dbComms.js';
+import { Event } from '../types.js';
+import { theaterCreated, theaterDeleted } from '../../eventTypes.js';
+import { publishEvent } from '../events/publishEvent.js';
 
 export class LoginModel {
     theaterId: string;
     username: string;
     password: string;
     
-    constructor(data: LoginRequest) {
+    constructor(data: LoginRequest = {username: "", password: ""}) {
         this.username = data.username;
         this.password = data.password;
         this.theaterId = "";
@@ -47,7 +50,51 @@ export class LoginModel {
             throw new LoginException("Username is invalid", [username])
         }
     }
+
+    async processEvent(data: Event) {        
+        if (!this.validateEventRequest(data)) {
+            throw new LoginException("Invalid Event", [JSON.stringify(data.eventData)]);
+        }
+        let res: any;
+
+        const eventType = data.eventType;
+
+        switch(eventType) {
+            case 'theaterCreated':
+                res = await dbe.addTheaterId(data as theaterCreated);  
+                break;
+            case 'theaterDeleted':
+                res = await dbe.deleteTheater(data as theaterDeleted);
+                break;
+            default:
+                throw new LoginException("Invalid event type", [eventType]);                
+        }
+
+        return res;
+    }
+
+    validateEventRequest(data: Event) {
+        const eventType = data.eventType;
+        const eventData = data.eventData;
+        if (!eventType || typeof eventType !== 'string'|| !eventData) {
+            return false;
+        }
+        return true;
+    }
+
+    async registerUser(data: registerUserData) {
+        this.username = data.username;
+        this.password = data.password!;
+
+        const user = await this.register();
+        
+        //remove the password from the data object
+        delete data.password
+        
+        publishEvent("userCreated", data);
+    }
 }
+
 
 export class LoginException {
     list: string[];

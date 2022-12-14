@@ -62,3 +62,29 @@ export type theaterDeleted = {
         theater_id: string;
     }
 }
+
+// Publisher: Payment Service
+// Subscribers: Theater Admin Service, Confirmations Service
+export type paymentCreated = {
+    eventType: "paymentCreated";
+    eventData: {
+        payment_id: number | undefined;
+        movie_id: number | undefined;
+        theater_id: string | undefined;
+        date: Date | undefined;
+        showing: string | undefined
+        concession: number | undefined;
+        tickets: number | undefined;
+        email: string | undefined;
+        fname: string | undefined;
+        lname: string | undefined;
+        cardnum: string | undefined;
+        seccode: string | undefined;
+        cardexp: string | undefined;
+        bstreet: string | undefined;
+        bunit: string | undefined;
+        bstate: string | undefined;
+        bcountry: string | undefined;
+        zip: string | undefined;
+    };
+}

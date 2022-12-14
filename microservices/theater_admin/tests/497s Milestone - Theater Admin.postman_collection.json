@@ -12,6 +12,9 @@
 				"disableBodyPruning": true
 			},
 			"request": {
+				"auth": {
+					"type": "noauth"
+				},
 				"method": "GET",
 				"header": [],
 				"body": {
@@ -63,6 +66,128 @@
 					"path": [
 						"api",
 						"revenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Theater Admin Event paymentCreated",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let current_timestamp = new Date();",
+							"current_timestamp.setDate(current_timestamp.getDate() + 2);",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventType\": \"paymentCreated\",\n    \"eventData\": {\n        \"payment_id\": 123,\n        \"movie_id\": 123,\n        \"theater_id\": \"abc\",\n        \"date\": \"{{current_timestamp}}\",\n        \"showing\": \"aaa\",\n        \"concession\": 10,\n        \"tickets\": 10,\n        \"email\": \"aaa\",\n        \"fname\": \"aaa\",\n        \"lname\": \"aaa\",\n        \"cardnum\": \"abc\",\n        \"seccode\": \"abc\",\n        \"cardexp\": \"abc\",\n        \"bstreet\": \"abc\",\n        \"bunit\": \"abc\",\n        \"bstate\": \"abc\",\n        \"bcountry\": \"abc\",\n        \"zip\": \"12345\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4006/api/v1/events",
+					"host": [
+						"localhost"
+					],
+					"port": "4006",
+					"path": [
+						"api",
+						"v1",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Theater Admin Event createTheater",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventType\": \"theaterCreated\",\n    \"eventData\": {\n        \"theater_id\": \"078\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4006/api/v1/events",
+					"host": [
+						"localhost"
+					],
+					"port": "4006",
+					"path": [
+						"api",
+						"v1",
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Theater Admin Event deleteTheater",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"eventType\": \"theaterDeleted\",\n    \"eventData\": {\n        \"theater_id\": \"078\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:4006/api/v1/events",
+					"host": [
+						"localhost"
+					],
+					"port": "4006",
+					"path": [
+						"api",
+						"v1",
+						"events"
 					]
 				}
 			},

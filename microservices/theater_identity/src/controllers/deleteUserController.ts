@@ -1,5 +1,5 @@
 import {Request, Response} from 'express';
-import { LoginModel } from '../models/loginModel';
+import { LoginModel } from '../models/loginModel.js';
 
 
 export const deleteUser = async (req: Request, res: Response) => {

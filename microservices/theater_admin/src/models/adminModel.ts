@@ -1,11 +1,12 @@
-import { SalesRequest } from '../types';
-import * as dbe from '../data/dbComms';
-import { TheaterRevenue } from '../types'
+import { SalesRequest } from '../types.js';
+import * as dbe from '../data/dbComms.js';
+import { TheaterRevenue, Event } from '../types.js';
+import { paymentCreated, theaterCreated, theaterDeleted } from '../../eventTypes.js';
 
 export class AdminModel {
     theaterId: string;
 
-    constructor(data: SalesRequest) {
+    constructor(data: SalesRequest = {theaterId: ""}) {
         this.theaterId = data.theaterId;
     }
 
@@ -46,6 +47,40 @@ export class AdminModel {
             rev.date = new Date(rev.date);
         }
         return revObj;
+    }
+
+    async processEvent(data: Event) {        
+        if (!this.validateEventRequest(data)) {
+            throw new AdminException("Invalid Event", [JSON.stringify(data.eventData)]);
+        }
+        let res: any;
+
+        const eventType = data.eventType;
+
+        switch(eventType) {
+            case 'paymentCreated':
+                res = await dbe.addRevenue(data as paymentCreated);
+                break;
+            case 'theaterCreated':
+                res = await dbe.createTheaterRev(data as theaterCreated)  ;  
+                break;
+            case 'theaterDeleted':
+                res = await dbe.deleteTheaterRev(data as theaterDeleted)
+                break;
+            default:
+                throw new AdminException("Invalid event type", [eventType]);                
+        }
+
+        return res;
+    }
+
+    validateEventRequest(data: Event) {
+        const eventType = data.eventType;
+        const eventData = data.eventData;
+        if (!eventType || typeof eventType !== 'string'|| !eventData) {
+            return false;
+        }
+        return true;
     }
 }
 

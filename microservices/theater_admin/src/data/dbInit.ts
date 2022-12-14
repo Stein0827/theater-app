@@ -23,13 +23,20 @@ export async function initDB() {
   }
 
   const theaterAdmin = db.collection('theaterAdmin');
+  
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  
   const result = await theaterAdmin.insertMany([
     { theaterId: "abc", revenue: [
-        {ticketRevenue: 10000, concessionsRevenue: 20000, date: new Date()},
+        {ticketRevenue: 10000, concessionsRevenue: 20000, date: yesterday},
         {ticketRevenue: 30000, concessionsRevenue: 40000, date: new Date()}
     ]},
     { theaterId: "def", revenue: [
-        {ticketRevenue: 50000, concessionsRevenue: 60000, date: new Date()}
+        {ticketRevenue: 50000, concessionsRevenue: 60000, date: tomorrow}
     ]},
   ]);
 

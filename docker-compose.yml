@@ -72,17 +72,6 @@ services:
       - "4006:4006"
     depends_on:
       - mongodb_container
-      - eventbus
-    environment:
-      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
-  
-  theater_location:
-    build: ./microservices/theater_location
-    ports:
-      - "4008:4008"
-    depends_on:
-      - mongodb_container
-      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
   
@@ -92,12 +81,20 @@ services:
       - "4007:4007"
     depends_on:
       - mongodb_container
-      - eventbus
     environment:
       DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
-
-  sions:
-    build: ./micconcesroservices/concessions
+      
+  theater_location:
+    build: ./microservices/theater_location
+    ports:
+      - "4008:4008"
+    depends_on:
+      - mongodb_container
+    environment:
+      DATABASE_URL: mongodb://root:rootpassword@mongodb_container:27017/mydb?directConnection=true&authSource=admin
+  
+  concessions:
+    build: ./microservices/concessions
     ports:
       - "4001:4001"
     depends_on:

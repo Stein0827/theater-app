@@ -1,5 +1,5 @@
 import { connectDB } from './dbInit.js';
-import { ConcessionModel } from '../models/ConcessionModel';
+import { ConcessionModel } from '../models/ConcessionModel.js';
 import { MongoClient, ObjectId } from 'mongodb';
 
 export async function createConcession(model: ConcessionModel) {

@@ -14,7 +14,7 @@ export type TheaterResponse = {
     address: string | undefined;
     zip: number | undefined;
     description: string | undefined;
-    image: File | undefined;
+    image: string | undefined;
     movies: number[] | undefined;
 }
 

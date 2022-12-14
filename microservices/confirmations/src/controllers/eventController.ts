@@ -1,6 +1,6 @@
 import express, {Express, Request, Response} from 'express';
 import { theaterAddedMovie, theaterRemovedMovie, theaterCreated, theaterDeleted } from '../../eventTypes.js';
-import { ConfirmationModel } from '../models/ConfirmationModel';
+import { ConfirmationModel } from '../models/ConfirmationModel.js';
 
 export const respondToEvent = async (req: Request, res: Response) => {
   try {

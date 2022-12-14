@@ -2,27 +2,49 @@ import * as dbe from '../data/dbComms.js';
 export class TheaterLocationModel {
     constructor(data) {
         this.zipcode = data.zipcode;
-        this.localTheatersList = [];
     }
-    getLocalTheaters() {
+    async getLocalTheaters() {
         this.validateRequest();
         // if the zipcode is not in the database, then ask the theater service for the theaters with that zipcode
-        if (!this.validateZipCodeExists()) {
-            //TODO: send event to theater service to get local theaters and update dbe
-            throw new TheaterLocateException("zipcode does not exist", [this.zipcode]);
+        if (!(await this.validateZipCodeExists())) {
+            throw new TheaterLocateException("zipcode does not exist", [`${this.zipcode}`]);
         }
-        else {
-            this.localTheatersList = dbe.getTheaters(this.zipcode);
-        }
-        return this;
+        return await dbe.getTheaters(this.zipcode);
     }
     validateRequest() {
-        if (this.zipcode === undefined || typeof this.zipcode !== "string" || this.zipcode === "") {
-            throw new TheaterLocateException("Invalid zipcode", [this.zipcode]);
+        if (!this.zipcode || typeof this.zipcode !== "number") {
+            throw new TheaterLocateException("Invalid zipcode", [`${this.zipcode}`]);
         }
     }
-    validateZipCodeExists() {
-        return dbe.hasZipCode(this.zipcode);
+    async validateZipCodeExists() {
+        return await dbe.hasZipCode(this.zipcode);
+    }
+    validateEventRequest(data) {
+        const eventType = data.eventType;
+        const eventData = data.eventData;
+        if (!eventType || typeof eventType !== 'string' || !eventData) {
+            return false;
+        }
+        return true;
+    }
+    async processEvent(data) {
+        if (!this.validateEventRequest(data)) {
+            throw new TheaterLocateException("Invalid Event", [JSON.stringify(data.eventData)]);
+        }
+        const eventType = data.eventType;
+        const eventData = data.eventData;
+        let ret;
+        switch (eventType) {
+            case 'TheaterCreated':
+                await dbe.addTheaterZipcode(eventData);
+                break;
+            case 'TheaterDeleted':
+                ret = await dbe.removeTheaterZipcode(eventData);
+                break;
+            default:
+                throw new TheaterLocateException("Invalid event type", [eventType]);
+        }
+        return ret;
     }
 }
 export class TheaterLocateException {
