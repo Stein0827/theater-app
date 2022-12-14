@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
+import { useLocation } from "react-router-dom";
 import { MovieResponse } from "../types.js"
 import { AccordionItems } from "./AccordianItems"
 import { PaymentInfoDisplay } from "./PaymentInfoDisplay"
 import { ConcessionsList } from "../Concessions/ConcessionsList"
 import { PayConfirmationModal } from "./PayConfirmationModal"
 
-export const PaymentCreate = ({movie, theaterId, showingTime}: {movie: MovieResponse, theaterId: string, showingTime: string}) => {
+export const PaymentCreate = () => {
+    const { state } = useLocation();
+    const { movie, theaterId, showingTime } = state;
+
     const [tickets, setTickets] = useState("1")
     const [concessionCosts, setConcessionCosts] = useState("0.00") 
     const [hasConcessions, setHasConcessions] = useState("none")

@@ -24,6 +24,7 @@ export class ConfirmationModel {
     async createConfirmation() {
         validateCreateRequest(this);
         const id = await dbe.createConfirmation(this);
+        await sendEmail(this.email, this.id, this.price, this.address);
         return id;
     }
 

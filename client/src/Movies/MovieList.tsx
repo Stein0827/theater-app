@@ -22,7 +22,7 @@ export const MovieList = ({theater}: {theater: TheaterResponse | undefined}) => 
         return (
             <div
                 className="card text-white bg-dark mb-3"
-                style={{ boxShadow: '5x 5px 9px #666a68', width: '60%', height:"420px", marginBottom: '20px', margin:"auto", top: "50%", borderRadius: "30px"}}
+                style={{ boxShadow: '5x 5px 9px #666a68', width: '70%', height:"420px", marginBottom: '20px', margin:"auto", top: "50%", borderRadius: "30px"}}
                 id={(movie.movie_id as number).toString()}
                 key={movie.movie_id}
             >
@@ -38,7 +38,8 @@ export const MovieList = ({theater}: {theater: TheaterResponse | undefined}) => 
                             <h6 className="card-subtitle mb-2 text-muted">Rating: {movie.rating}</h6>
                         </div>
                         <p>{movie.desc}</p>
-                        <OperationsModal movie={movie} theaterId={theater!.id as string}/>
+                        {/* @ts-ignore */}
+                        <OperationsModal movie={movie} theaterId={theater._id}/>
                     </div> 
                 </div>
             </div>

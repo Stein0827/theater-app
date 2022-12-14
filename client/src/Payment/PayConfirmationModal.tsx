@@ -5,16 +5,22 @@ import { useNavigate} from "react-router-dom";
 import axios from 'axios';
 
 export const PayConfirmationModal = ({movie, theaterId, showingTime, concessionCosts, tickets}: any) => {
+  let navigate = useNavigate();
+  const routeChange = () =>{ 
+      let path = `/`;
+      navigate(path);
+  }
+
   const [show, setShow] = useState(false);
   const [errors, setErrors] = useState([]);
-  const [responseStatus, setResponseStatus] = useState(200);
+  const [responseStatus, setResponseStatus] = useState(200);  
 
   const handleClose = () => {
-    if (responseStatus===400) setShow(false);
+    if (responseStatus===400) {
+      setShow(false);
+    }
     else {
-      let navigate = useNavigate();
-      let path = "/";
-      navigate(path);
+      routeChange();
     }
   }
 
@@ -39,9 +45,7 @@ export const PayConfirmationModal = ({movie, theaterId, showingTime, concessionC
       zip: (document.getElementById("inputZip")as HTMLInputElement).value
     };
 
-    try {
-      console.log(paymentRequest);
-      
+    try {      
       await axios.post('http://localhost:4005/api/v1/payment', paymentRequest)
       setResponseStatus(200)
       setShow(true)

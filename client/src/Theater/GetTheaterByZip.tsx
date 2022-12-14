@@ -37,7 +37,7 @@ export const GetTheaterByZip = () => {
 
     return (
         <div className="mb-3">
-            <h1 className="text-center">Find Theaters By Zip</h1>
+            <h1 className="text-center" style={{marginTop:"7%"}}>Find Theaters By Zip</h1>
             <InputGroup className="m-3 mx-auto" style={{ alignItems:"center", display:"flex", flexDirection: "row", width: "19%" }}>
                 <Form.Control
                     placeholder="zip code"

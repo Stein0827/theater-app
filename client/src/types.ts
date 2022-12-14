@@ -9,7 +9,7 @@ export type MovieResponse = {
 }
 
 export type TheaterResponse = {
-    id: string | undefined;
+    _id: string | undefined;
     name: string | undefined;
     address: string | undefined;
     zip: string | undefined;
