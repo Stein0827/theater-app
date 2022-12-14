@@ -12,8 +12,9 @@ export function createPayment(model: PaymentModel): Promise<PaymentModel> {
     return new Promise((resolve, reject) => {
         (db as Connection).query<OkPacket>(insert, [values], 
             (error, result) => {       
-            console.log(error)         
+                   
             if (error) {
+                console.log("error", error)  
                 reject(new DatabaseException(error.message));
             }
             

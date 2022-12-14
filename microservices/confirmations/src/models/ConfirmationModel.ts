@@ -4,7 +4,7 @@ import { sendEmail } from './email.js';
 
 export class ConfirmationModel {
     id: string | undefined;
-    movieId: string | undefined;
+    movieId: number | undefined;
     theaterId: string | undefined;
     creditCard: string | undefined;
     address: string | undefined;

@@ -91,7 +91,7 @@ export async function updateMoviesOfTheater(model: TheaterModel) {
     const theaters = db.collection('theaters');
     const _id = {"_id": objectId};
     const curr_movie = await getTheater(model.id as string);
-    const res = {"movieAdded": false, "id": 0};
+    const res = {"movieAdded": false, "movie_id": 0, "theater_id": objectId};
     let iterable = new Set(curr_movie!.movies as number[]);
     let comparable = new Set(model!.movies as number[]);
 
@@ -103,7 +103,7 @@ export async function updateMoviesOfTheater(model: TheaterModel) {
     
     iterable.forEach((movie) => {
         if (!comparable.has(movie)) {
-            res.id = movie;
+            res.movie_id = movie;
         }
     });
 

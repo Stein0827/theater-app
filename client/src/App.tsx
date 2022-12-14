@@ -18,16 +18,10 @@ const tempMovieEx = {
 }
 
 export const App = () => {
-  const [theaterId, setTheaterId] = useState("6397c2ab1807fc13262ee0f8");
-  //const [theaterId, setTheaterId] = useState("00000001639189e929544c75");
-  const [movie, setMovie] = useState(tempMovieEx);
-  const [showing, setShowing] = useState("1:30PM");
-  const [zipcode, setZipcode] = useState({"zip": "01090"});
-
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/findTheaters" />} />
-      <Route path="/paymentCreate" element={<PaymentCreate movie={movie} theaterId={theaterId} showingTime={showing}/>} />
+      <Route path="/paymentCreate" element={<PaymentCreate movie={tempMovieEx} theaterId={"00000001639189e929544c75"} showingTime={"1:30PM"}/>} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/findTheaters" element={<GetTheaterByZip />} />
       <Route path="/theaterDetail" element={<TheaterDetail />}/>

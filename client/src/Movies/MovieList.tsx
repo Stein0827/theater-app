@@ -39,7 +39,7 @@ export const MovieList = ({theater}: {theater: TheaterResponse | undefined}) => 
                         </div>
                         <p>{movie.desc}</p>
                         <OperationsModal movie={movie} theaterId={theater!.id as string}/>
-                    </div>
+                    </div> 
                 </div>
             </div>
         );

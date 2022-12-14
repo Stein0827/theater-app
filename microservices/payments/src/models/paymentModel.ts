@@ -7,9 +7,8 @@ export class PaymentModel {
     theater_id: string | undefined;
     date: Date | undefined;
     showing: string | undefined
-    concession: number | undefined;
+    concessions: number | undefined;
     tickets: number | undefined;
-    
     email: string | undefined;
     fname: string | undefined;
     lname: string | undefined;
@@ -28,7 +27,7 @@ export class PaymentModel {
         this.theater_id = data.theater_id;
         this.date = data.date;
         this.showing = data.showing;
-        this.concession = data.concessions
+        this.concessions = data.concessions
         this.tickets = data.tickets;
         this.fname = data.fname;
         this.lname = data.lname;
@@ -43,7 +42,7 @@ export class PaymentModel {
         this.zip = data.zip;
     }
 
-    async createPayment(): Promise<PaymentModel> {
+    async createPayment(): Promise<PaymentModel> {        
         validateCreateRequest(this);
 
         try {
@@ -81,7 +80,7 @@ function validateCreateRequest(data: PaymentModel) {
     const required_attributes = new Set(attributes);
 
     required_attributes.forEach(attribute => {
-        if (!(attribute in data) || data[attribute as keyof typeof data] === "" || data[attribute as keyof typeof data] === undefined) {
+        if (attribute !== "concessions" && (!(attribute in data) || data[attribute as keyof typeof data] === "" || data[attribute as keyof typeof data] === undefined)) {
             invalidAttributes.push(attribute);
         }
     });

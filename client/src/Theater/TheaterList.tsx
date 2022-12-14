@@ -1,8 +1,8 @@
-import { TheaterModel } from '../types';
+import { TheaterResponse } from '../types';
 import { TheaterDisplay } from './TheaterDisplay';
 import React, { useEffect, useState } from 'react';
 
-export const TheaterList = ({theaters}: {theaters: TheaterModel[]}) => {
+export const TheaterList = ({theaters}: {theaters: TheaterResponse[]}) => {
     if (theaters.length > 0) {
         const renderedTheaters = theaters.map((currTheater) => {
             return (

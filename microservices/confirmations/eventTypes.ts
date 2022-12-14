@@ -62,3 +62,29 @@ export type theaterDeleted = {
         theater_id: string;
     }
 }
+
+export type paymentCreated = {
+    eventType: "paymentCreated";
+    eventData: PaymentModel;
+}
+
+export type PaymentModel = {
+    payment_id: number | undefined;
+    movie_id: number | undefined;
+    theater_id: string | undefined;
+    date: Date | undefined;
+    showing: string | undefined
+    concessions: number | undefined;
+    tickets: number | undefined;
+    email: string | undefined;
+    fname: string | undefined;
+    lname: string | undefined;
+    cardnum: string | undefined;
+    seccode: string | undefined;
+    cardexp: string | undefined;
+    bstreet: string | undefined;
+    bunit: string | undefined;
+    bstate: string | undefined;
+    bcountry: string | undefined;
+    zip: string | undefined;
+}

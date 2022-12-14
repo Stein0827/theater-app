@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TheaterModel } from '../types';
+import { TheaterResponse } from '../types';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
@@ -10,7 +10,7 @@ import { TheaterList } from './TheaterList'
 
 
 export const GetTheaterByZip = () => {
-    const [theaters, setTheater] = useState([] as TheaterModel[]);
+    const [theaters, setTheater] = useState([] as TheaterResponse[]);
     const [text, setText] = useState("");
     const [clicked, setClicked] = useState(false);
 
