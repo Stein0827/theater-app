@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { MovieRequest } from "../types.js"
-import { OperationsModal } from "../Operations/OperationsModal"
+import { MovieRequest } from "../types.js";
+import { OperationsModal } from "../Operations/OperationsModal";
+import { TheaterModel } from '../types';
 
-export const MovieList = ({theaterId}: {theaterId: string}) => {
+export const MovieList = ({theater}: {theater: TheaterModel | undefined}) => {
 
     const [movies, setMovies] = useState<MovieRequest[]>([]);
 
     const fetchMovies = async () => {
-        const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters', [theaterId]);
-        const theater = (theaterRes.data)[0];
-
-        const movieIdArr = theater.movies;
+        const movieIdArr = theater!.movies;
         const moviesRes = await axios.post('http://localhost:4004/api/v1/movies', movieIdArr);
         setMovies(moviesRes.data);
     };
@@ -40,7 +38,7 @@ export const MovieList = ({theaterId}: {theaterId: string}) => {
                             <h6 className="card-subtitle mb-2 text-muted">Rating: {movie.rating}</h6>
                         </div>
                         <p>{movie.desc}</p>
-                        <OperationsModal movie={movie} theaterId={theaterId}/>
+                        <OperationsModal movie={movie} theaterId={theater!.id as string}/>
                     </div>
                 </div>
             </div>

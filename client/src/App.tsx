@@ -4,6 +4,8 @@ import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { MovieRequest } from "./types.js"
 import { Signin }  from "./user/signin";
+import { GetTheaterByZip } from './Theater/GetTheaterByZip';
+import { TheaterDetail } from './Theater/TheaterDetail';
 
 const tempMovieEx = {
   "movie_id": 1,
@@ -16,16 +18,18 @@ const tempMovieEx = {
 }
 
 export const App = () => {
-  const [theaterId, setTheaterId] = useState("6396a22ad756e00453645f8d");
+  const [theaterId, setTheaterId] = useState("00000001639189e929544c75");
   const [movie, setMovie] = useState(tempMovieEx);
   const [showing, setShowing] = useState("1:30PM");
+  const [zipcode, setZipcode] = useState({"zip": "01090"});
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/signin" />} />
-      <Route path="/moviesList" element={<MovieList theaterId={theaterId} />} />
+      <Route path="/" element={<Navigate to="/findTheaters" />} />
       <Route path="/paymentCreate" element={<PaymentCreate movie={movie} theaterId={theaterId} showingTime={showing}/>} />
       <Route path="/signin" element={<Signin />} />
+      <Route path="/findTheaters" element={<GetTheaterByZip />} />
+      <Route path="/theaterDetail" element={<TheaterDetail />}/>
     </Routes>
   );
 };
