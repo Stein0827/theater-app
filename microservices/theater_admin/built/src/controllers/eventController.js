@@ -7,6 +7,6 @@ export const eventController = async (req, res) => {
         res.status(200).send(ret);
     }
     catch (err) {
-        res.status(400).send(`${err.name}: ${err.message}: ${err.list[0]}`);
+        res.status(400).send(`${err.name}: ${err.message}`);
     }
 };

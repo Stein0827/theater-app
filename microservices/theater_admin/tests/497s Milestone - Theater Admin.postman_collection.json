@@ -19,7 +19,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"theaterId\": \"abc\"\n}",
+					"raw": "{\n    \"theaterId\": \"00000001639189e929544c75\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -91,7 +91,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"eventType\": \"paymentCreated\",\n    \"eventData\": {\n        \"payment_id\": 123,\n        \"movie_id\": 123,\n        \"theater_id\": \"abc\",\n        \"date\": \"{{current_timestamp}}\",\n        \"showing\": \"aaa\",\n        \"concession\": 10,\n        \"tickets\": 10,\n        \"email\": \"aaa\",\n        \"fname\": \"aaa\",\n        \"lname\": \"aaa\",\n        \"cardnum\": \"abc\",\n        \"seccode\": \"abc\",\n        \"cardexp\": \"abc\",\n        \"bstreet\": \"abc\",\n        \"bunit\": \"abc\",\n        \"bstate\": \"abc\",\n        \"bcountry\": \"abc\",\n        \"zip\": \"12345\"\n    }\n}",
+					"raw": "{\n    \"eventType\": \"paymentCreated\",\n    \"eventData\": {\n        \"payment_id\": 123,\n        \"movie_id\": 123,\n        \"theater_id\": \"00000001639189e929544c75\",\n        \"date\": \"{{current_timestamp}}\",\n        \"showing\": \"aaa\",\n        \"concession\": 10,\n        \"tickets\": 10,\n        \"email\": \"aaa\",\n        \"fname\": \"aaa\",\n        \"lname\": \"aaa\",\n        \"cardnum\": \"abc\",\n        \"seccode\": \"abc\",\n        \"cardexp\": \"abc\",\n        \"bstreet\": \"abc\",\n        \"bunit\": \"abc\",\n        \"bstate\": \"abc\",\n        \"bcountry\": \"abc\",\n        \"zip\": \"12345\"\n    }\n}",
 					"options": {
 						"raw": {
 							"language": "json"

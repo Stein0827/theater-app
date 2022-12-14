@@ -5,7 +5,6 @@ import { deleteTheaters } from '../controllers/deleteTheaterController.js';
 import { getTheaters } from '../controllers/getTheatersController.js';
 import { updateTheater } from '../controllers/updateTheatersController.js';
 import { getAllTheaters } from '../controllers/getAllTheatersController.js';
-import { getTheatersByZip } from '../controllers/getTheatersByZip.js';
 import { updateMoviesOfTheater } from '../controllers/updateMoviesOfTheater.js';
 
 const router = Router();
@@ -17,6 +16,5 @@ router.post('/api/v1/theaters', getTheaters);
 router.get('/api/v1/theaters/all', getAllTheaters);
 router.delete('/api/v1/theater', deleteTheaters);
 router.put('/api/v1/theater', updateMoviesOfTheater);
-router.post('/api/v1/theaters/zip', getTheatersByZip);
 
 export {router};

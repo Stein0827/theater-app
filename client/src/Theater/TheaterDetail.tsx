@@ -12,10 +12,10 @@ export const TheaterDetail = () => {
     return (
         <div
             className='card bg-transparent'
-            style={{ color: "#1f4e37", width: "75%", height:"75%", display: "flex", flexDirection: "column", alignItems: "center", borderRadius: "30px", margin:"auto"}}
+            style={{ color: "#1f4e37", width: "75%", height:"75%", display: "flex", flexDirection: "column", alignItems: "center", borderRadius: "30px", margin:"auto" }}
         >
             <img src={theater!.image} style={{float: "left", backgroundSize: "cover",  borderRadius: "50px", maxWidth:"500px", height:"100%"}}/>
-            <div className="card-body text-center" style={{margin: "auto"}}>
+            <div className="card-body text-center md-3" style={{margin: "4%", borderBottom: "0.5px solid #194d33"}}>
                 <h3 className="card-title">{theater!.name}</h3>
                 <p>{theater!.description}</p>
                 <p>{theater!.address}</p>

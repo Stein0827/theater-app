@@ -42,7 +42,6 @@ export async function addRevenue(revenue) {
         revObj.ticketRevenue += ticketRev;
         revObj.concessionsRevenue += concessionRev;
         theaterRev[revObjIndex] = revObj;
-        console.log(`OBJ FND: ${JSON.stringify(theaterRev)}`);
     }
     else {
         const revEntry = {
@@ -51,13 +50,17 @@ export async function addRevenue(revenue) {
             date: date
         };
         theaterRev.push(revEntry);
-        console.log(`OBJ !FND: ${JSON.stringify(theaterRev)}`);
     }
     theaterObj.revenue = theaterRev;
-    const res = await theaterAdmin.updateOne({ theaterId: theaterId }, theaterObj);
+    const res = await theaterAdmin.updateOne({ "theaterId": theaterId }, { '$set': theaterObj });
+    await mongo.close();
     return res;
 }
 export async function createTheaterRev(theaterData) {
+    // check if theater exists
+    if ((await theaterExists(theaterData.eventData.theater_id))) {
+        throw new AdminException("Can not create theater: theater already exists", [theaterData.eventData.theater_id]);
+    }
     // connect to db
     const mongo = await connectDB();
     const db = mongo.db();
@@ -67,8 +70,8 @@ export async function createTheaterRev(theaterData) {
         theaterId,
         revenue: []
     };
-    console.log(`THEATER CREATED: ${JSON.stringify(theaterRevEntry)}`);
     const res = await theaterAdmin.insertOne(theaterRevEntry);
+    await mongo.close();
     return res;
 }
 export async function deleteTheaterRev(theaterData) {
@@ -77,7 +80,7 @@ export async function deleteTheaterRev(theaterData) {
     const db = mongo.db();
     const theaterAdmin = db.collection('theaterAdmin');
     const theaterId = theaterData.eventData.theater_id;
-    console.log(`THEATER DELETED: ${JSON.stringify(theaterId)}`);
     const res = await theaterAdmin.deleteOne({ theaterId: theaterId });
+    await mongo.close();
     return res;
 }

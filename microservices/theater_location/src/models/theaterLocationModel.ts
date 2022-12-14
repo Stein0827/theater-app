@@ -1,5 +1,5 @@
 import * as dbe from '../data/dbComms.js';
-import { MovieLocationRequest, Event, TheaterData, DeletionData } from '../types.js';
+import { MovieLocationRequest, Event, TheaterData, TheaterModel } from '../types.js';
 
 export class TheaterLocationModel {
     zipcode: string
@@ -11,9 +11,6 @@ export class TheaterLocationModel {
     async getLocalTheaters() {
         this.validateRequest()
         // if the zipcode is not in the database, then ask the theater service for the theaters with that zipcode
-        if (!(await this.validateZipCodeExists())) {
-            throw new TheaterLocateException("zipcode does not exist", [`${this.zipcode}`]); 
-        }
         return await dbe.getTheaters(this.zipcode);
     }
 
@@ -50,7 +47,7 @@ export class TheaterLocationModel {
                 ret = await dbe.addTheaterZipcode(eventData as TheaterData);
                 break;
             case 'theaterDeleted':
-                ret = await dbe.removeTheaterZipcode(eventData as DeletionData);
+                ret = await dbe.removeTheaterZipcode(eventData as TheaterModel);
                 break;
             default:
                 throw new TheaterLocateException("Invalid event type", [eventType]);
@@ -59,7 +56,7 @@ export class TheaterLocationModel {
     }
 }
 
-export class TheaterLocateException{
+export class TheaterLocateException {
     list: string[];
     name: string;
     message: string;

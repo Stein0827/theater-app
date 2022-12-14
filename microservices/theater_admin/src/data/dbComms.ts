@@ -87,8 +87,6 @@ export async function createTheaterRev(theaterData: theaterCreated) {
         revenue: []
     }
 
-    console.log(`THEATER CREATED: ${JSON.stringify(theaterRevEntry)}`);
-
     const res = await theaterAdmin.insertOne(theaterRevEntry);
     await mongo.close();
     return res;
@@ -101,9 +99,6 @@ export async function deleteTheaterRev(theaterData: theaterDeleted) {
     const theaterAdmin = db.collection('theaterAdmin');
 
     const theaterId = theaterData.eventData.theater_id;
-
-    console.log(`THEATER DELETED: ${JSON.stringify(theaterId)}`);
-
 
     const res = await theaterAdmin.deleteOne({theaterId: theaterId});
     await mongo.close();
