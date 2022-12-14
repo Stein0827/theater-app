@@ -45,7 +45,7 @@ export const TheaterDisplay = ({theater}: {theater: TheaterResponse}) => {
             onMouseLeave={NotHover}
             id="hovermenu"
         >
-            <img src={theater.image as string} style={{float: "left", backgroundSize: "cover",  borderRadius: "30px", width:"350px", height:"100%"}}/>
+            <img src={theater.image as string} style={{float: "left", backgroundSize: "cover",  borderRadius: "30px", width:"50%", height:"100%"}}/>
             <div className="card-body text-center" style={{margin: "auto"}}>
                 <h3 className="card-title">{theater.name}</h3>
                 <p>{theater.description}</p>

@@ -27,21 +27,12 @@ export type movieDeleted = {
 
 // Publisher: Theater Service
 // Subscribers: Moviesops Service
-export type theaterAddedMovie = {
-    eventType: "theaterAddedMovie";
+export type movieListUpdated = {
+    eventType: "movieListUpdated";
     eventData: {
-        theater_id: string;
+        movieAdded: boolean;
         movie_id: number;
-    }
-}
-
-// Publisher: Theater Service
-// Subscribers: Moviesops Service
-export type theaterRemovedMovie = {
-    eventType: "theaterRemovedMovie";
-    eventData: {
         theater_id: string;
-        movie_id: number;
     }
 }
 
@@ -51,7 +42,7 @@ export type theaterCreated = {
     eventType: "theaterCreated";
     eventData: {
         theater_id: string;
-        zip: string;
+        zip: string | undefined;
     }
 }
 

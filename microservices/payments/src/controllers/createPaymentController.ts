@@ -10,6 +10,7 @@ export const createPayment = async (req: Request, res: Response) => {
     const paymentModel = new PaymentModel(data);
     const newPayment:PaymentModel = await paymentModel.createPayment().catch((err)=> {throw err});
     
+    console.log("Payment Object Created", newPayment)
     await publishEvent("paymentCreated", newPayment);
     
     res.status(200).send(newPayment);
