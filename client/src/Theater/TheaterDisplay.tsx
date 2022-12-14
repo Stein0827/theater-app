@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { TheaterModel } from '../types';
+import { TheaterResponse } from '../types';
 import { useNavigate, Link } from "react-router-dom";
 
 
-export const TheaterDisplay = ({theater}: {theater: TheaterModel}) => {
+export const TheaterDisplay = ({theater}: {theater: TheaterResponse}) => {
     let navigate = useNavigate();
     const routeChange = () =>{ 
         let path = `/theaterDetail`;

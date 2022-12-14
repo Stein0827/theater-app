@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TheaterModel } from '../types';
+import { TheaterResponse } from '../types';
 import { MovieList } from '../Movies/MovieList';
 import { useLocation } from "react-router-dom";
 
@@ -20,7 +20,7 @@ export const TheaterDetail = () => {
                 <p>{theater!.description}</p>
                 <p>{theater!.address}</p>
             </div>
-            <MovieList theater={theater as TheaterModel} />
+            <MovieList theater={theater as TheaterResponse} />
         </div>
     );
 };

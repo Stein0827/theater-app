@@ -25,3 +25,5 @@ export type ConcessionResponse = {
     price: number | undefined;
     image: string | undefined;
 }
+
+export type updateTheaterIdFunc  = (theaterId: string) => void;
