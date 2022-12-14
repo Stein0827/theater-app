@@ -15,7 +15,10 @@ export const GetTheaterByZip = () => {
     const [clicked, setClicked] = useState(false);
 
     const fetchTheaters = async () => {
-        const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters/zip', {"zip": text});
+        const theaterIdRes = await axios.post('http://localhost:4008/api/theaters/locate', {"zipcode":text});
+        console.log(theaterIdRes.data);
+        const foundTheaterIds = theaterIdRes.data;
+        const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters', foundTheaterIds);
         const foundTheaters = theaterRes.data;
         setTheater(foundTheaters);
         setClicked(true);
