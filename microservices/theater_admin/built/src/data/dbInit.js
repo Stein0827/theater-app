@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 export async function connectDB() {
     const uri = process.env.DATABASE_URL;
     if (uri === undefined) {
@@ -19,16 +19,25 @@ export async function initDB() {
     const theaterAdmin = db.collection('theaterAdmin');
     const yesterday = new Date();
     yesterday.setDate(yesterday.getDate() - 1);
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
+    const yesterday2 = new Date();
+    yesterday2.setDate(yesterday2.getDate() - 2);
     const result = await theaterAdmin.insertMany([
-        { theaterId: "abc", revenue: [
-                { ticketRevenue: 10000, concessionsRevenue: 20000, date: yesterday },
-                { ticketRevenue: 30000, concessionsRevenue: 40000, date: new Date() }
-            ] },
-        { theaterId: "def", revenue: [
-                { ticketRevenue: 50000, concessionsRevenue: 60000, date: tomorrow }
-            ] },
+        {
+            theaterId: new ObjectId("00000001639189e929544c75").toString(),
+            revenue: [
+                { ticketRevenue: 1061, concessionsRevenue: 632, date: yesterday2 },
+                { ticketRevenue: 786, concessionsRevenue: 473, date: yesterday },
+                { ticketRevenue: 690, concessionsRevenue: 326, date: new Date() }
+            ]
+        },
+        {
+            theaterId: new ObjectId("00000001639189e929544c76").toString(),
+            revenue: [
+                { ticketRevenue: 931, concessionsRevenue: 582, date: yesterday2 },
+                { ticketRevenue: 942, concessionsRevenue: 549, date: yesterday },
+                { ticketRevenue: 833, concessionsRevenue: 456, date: new Date() }
+            ]
+        },
     ]);
     console.log(`Initialized ${result.insertedCount} products`);
     console.log(`Initialized:`);

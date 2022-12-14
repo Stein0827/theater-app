@@ -1,4 +1,5 @@
 import { MongoClient } from 'mongodb';
+import { ObjectId } from 'mongodb';
 export async function connectDB() {
     const uri = process.env.DATABASE_URL;
     if (uri === undefined) {
@@ -16,16 +17,16 @@ export async function initDB() {
         console.log('Collection already exists. Skipping initialization.');
         return;
     }
-    const theaters = db.collection('theaterLocations');
-    const result = await theaters.insertMany([
-        { zipcode: "12345", theaters: ["abcdef", "ghijklm"] },
-        { zipcode: "67890", theaters: ["wwwwww", "yyyyyyy"] },
-        { zipcode: "1a2b3", theaters: ["zzzzzz", "aaaaaaa"] },
+    const theaterLocations = db.collection('theaterLocations');
+    const result = await theaterLocations.insertMany([
+        { zipcode: "01002", theaters: [new ObjectId("00000001639189e929544c75").toString()] },
+        { zipcode: "01035", theaters: [new ObjectId("00000001639189e929544c76").toString()] },
+        { zipcode: "01075", theaters: [new ObjectId("00000001639189e929544c77").toString()] },
+        { zipcode: "01090", theaters: [new ObjectId("00000001639189e929544c78").toString()] },
     ]);
     console.log(`Initialized ${result.insertedCount} products`);
     console.log(`Initialized:`);
     for (let key in result.insertedIds) {
         console.log(`  Inserted product with ID ${result.insertedIds[key]}`);
     }
-    return db;
 }

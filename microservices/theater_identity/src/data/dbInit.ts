@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 export async function connectDB(): Promise<MongoClient> {
   const uri = process.env.DATABASE_URL;
@@ -24,8 +24,8 @@ export async function initDB() {
 
   const theaterLogin = db.collection('theaterLogin');
   const result = await theaterLogin.insertMany([
-    { username: "ilya", password: "$2a$10$wN1d.QZzEUV08jymXs.Am.V/l5g0Lpa8r5J4BZXRxCJmLUgmXjxJ2", theaterId: "abcdefg"},
-    { username: "bob", password: "$2a$10$yoxw/adZkv5prX3VkWimveVVzHQ3SNj5jkHFbrV7Tzk5urtpDmG62", theaterId: "123456"},
+    { username: "amherstCinemaAdmin", password: "$2a$10$wN1d.QZzEUV08jymXs.Am.V/l5g0Lpa8r5J4BZXRxCJmLUgmXjxJ2", theaterId: new ObjectId("00000001639189e929544c75").toString()}, // password: pindrus
+    { username: "cinemarkAdmin", password: "$2a$10$yoxw/adZkv5prX3VkWimveVVzHQ3SNj5jkHFbrV7Tzk5urtpDmG62", theaterId: new ObjectId("00000001639189e929544c76").toString()}, // password: dylan
   ]);
 
   console.log(`Initialized ${result.insertedCount} products`);

@@ -27,16 +27,15 @@ export class AdminModel {
         }
         let res;
         const eventType = data.eventType;
-        const eventData = data.eventData;
         switch (eventType) {
             case 'paymentCreated':
-                res = await dbe.addRevenue(eventData);
+                res = await dbe.addRevenue(data);
                 break;
             case 'theaterCreated':
-                res = await dbe.createTheaterRev(eventData);
+                res = await dbe.createTheaterRev(data);
                 break;
             case 'theaterDeleted':
-                res = await dbe.deleteTheaterRev(eventData);
+                res = await dbe.deleteTheaterRev(data);
                 break;
             default:
                 throw new AdminException("Invalid event type", [eventType]);

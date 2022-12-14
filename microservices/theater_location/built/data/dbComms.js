@@ -5,10 +5,22 @@ export async function getTheaters(zipcode) {
     const mongo = await connectDB();
     const db = mongo.db();
     const theaterLocations = db.collection('theaterLocations');
-    //TODO: test if findOne does not find element
-    const theaters = await theaterLocations.findOne({ "zipcode": zipcode });
+    let distance = process.env.ZIPCODE_PROXIMITY;
+    if (distance === undefined) {
+        distance = "75";
+    }
+    distance = parseInt(distance);
+    const cursor = theaterLocations.find();
+    const res = [];
+    await cursor.forEach(mydoc => {
+        if (Math.abs(+zipcode - +mydoc.zipcode) <= distance) {
+            mydoc.theaters.forEach(function (theaterId) {
+                res.push(theaterId);
+            });
+        }
+    });
     await mongo.close();
-    return theaters === null || theaters === void 0 ? void 0 : theaters.theaters;
+    return res;
 }
 export async function hasZipCode(zipcode) {
     // connect to db
@@ -25,13 +37,17 @@ export async function addTheaterZipcode(theater) {
     const db = mongo.db();
     const theaterLocations = db.collection('theaterLocations');
     const zipcode = theater["zip"];
+    let ret;
     const theaterWithZip = await theaterLocations.findOne({ zipcode: zipcode });
     if (theaterWithZip) {
         theaterWithZip.theaters = theaterWithZip.theaters.push(zipcode);
+        ret = zipcode;
     }
     else {
-        await createZipEntry(zipcode, theater.id);
+        ret = await createZipEntry(zipcode, theater.id);
     }
+    await mongo.close();
+    return ret;
 }
 export async function createZipEntry(zipcode, theaterId) {
     // connect to db
@@ -43,21 +59,22 @@ export async function createZipEntry(zipcode, theaterId) {
         theaters: [theaterId]
     };
     const res = await theaterLocations.insertOne(entry);
-    await mongo.close();
     if (!res.acknowledged) {
-        throw new TheaterLocateException("Failed to insert theater zipcode", [`${zipcode}`]);
+        throw new TheaterLocateException("Failed to insert theater zipcode", [zipcode]);
     }
+    await mongo.close();
+    return res.insertedId;
 }
-export async function removeTheaterZipcode(data) {
+export async function removeTheaterZipcode(theater) {
     // connect to db
     const mongo = await connectDB();
     const db = mongo.db();
     const theaterLocations = db.collection('theaterLocations');
-    const zipcode = data.zip;
-    const theaterId = data.theaterId;
+    const zipcode = theater.zip;
+    const theaterId = theater.id;
     const theatersWithZip = await theaterLocations.findOne({ zipcode: zipcode });
     if (!theatersWithZip) {
-        throw new TheaterLocateException("Failed to delete theater, zipcode does not exist", [`${zipcode}`]);
+        throw new TheaterLocateException("Failed to delete theater, zipcode does not exist", [zipcode]);
     }
     const theaterIds = theatersWithZip.theaters;
     // remove theaterId from list

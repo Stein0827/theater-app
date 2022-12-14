@@ -7,6 +7,6 @@ export const getLocalTheaters = async (req, res) => {
         res.status(200).send(resList);
     }
     catch (err) {
-        res.status(400).send(`${err.name}: ${err.message} with zipcode: ${err.list[0]}`);
+        res.status(400).send(`${err.name}: ${err.message}: ${err.list[0]}`);
     }
 };
