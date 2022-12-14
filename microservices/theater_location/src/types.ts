@@ -6,11 +6,16 @@ export interface Event {
     eventData: object
 }
 export interface TheaterData {
-    theaterId: string,
+    id: string,
     zip: string,
 }
 
-export interface DeletionData {
-    zip: string,
-    theaterId: string
+export type TheaterModel = {
+    id: string | undefined;
+    name: string | undefined;
+    address: string | undefined;
+    zip: string | undefined;
+    description: string | undefined;
+    image: string | undefined;
+    movies: number[] | undefined;
 }
