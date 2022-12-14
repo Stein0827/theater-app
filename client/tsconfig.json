@@ -5,7 +5,6 @@
     "module": "esnext",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "skipLibCheck": true,
     "allowJs": true,
     "outDir": "./built",
@@ -18,9 +17,17 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true
+    "noEmit": true,
+    "strict": true
   },
   "include": [
-    "./src/*"
-, "src/Theater/TheaterInfo.tsx", "src/Payment/PaymentCreate.tsx", "src/Operations/OperationsList.tsx", "src/Concessions/ConcessionsAccordion.tsx", "src/Payment/CreditcardAccordion.tsx", "src/Payment/BillingAccordion.tsx", "src/Movies/MovieAdminAdd.tsx"  ]
+    "./src/*",
+    "src/Theater/TheaterInfo.tsx",
+    "src/Payment/PaymentCreate.tsx",
+    "src/Operations/OperationsList.tsx",
+    "src/Concessions/ConcessionsList.tsx",
+    "src/Payment/CreditcardForm.tsx",
+    "src/Payment/BillingForm.tsx",
+    "src/Movies/MovieAdminAdd.tsx"
+  ]
 }

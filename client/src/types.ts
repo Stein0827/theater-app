@@ -1,4 +1,4 @@
-export type MovieRequest = {
+export type MovieResponse = {
     movie_id: number | undefined;
     name: string | undefined;
     desc: string | undefined;
@@ -8,7 +8,7 @@ export type MovieRequest = {
     trailer: string | undefined;
 }
 
-export type TheaterModel = {
+export type TheaterResponse = {
     id: string | undefined;
     name: string | undefined;
     address: string | undefined;
@@ -18,8 +18,8 @@ export type TheaterModel = {
     movies: number[] | undefined;
 }
 
-export type ConcessionModel = {
-    id: string | undefined;
+export type ConcessionResponse = {
+    _id: string | undefined;
     name: string | undefined;
     type: string | undefined;
     price: number | undefined;

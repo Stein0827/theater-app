@@ -11,9 +11,9 @@ app.use(cors());
 app.use(router)
 
 initDB();
-await subscribeToEventbus().catch((err) => {throw err});
+// await subscribeToEventbus().catch((err) => {throw err});
 
 
-app.listen(4002, () => {
-  console.log('Listening on 4002');
+app.listen(4001, () => {
+  console.log('Listening on 4001');
 });

@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { MovieList } from "./Movies/MovieList";
 import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { MovieRequest } from "./types.js"
+import { MovieResponse  } from "./types.js"
 
 const tempMovieEx = {
   "movie_id": 1,
@@ -15,7 +15,7 @@ const tempMovieEx = {
 }
 
 export const App = () => {
-  const [theaterId, setTheaterId] = useState("6396a22ad756e00453645f8d");
+  const [theaterId, setTheaterId] = useState("6397c2ab1807fc13262ee0f8");
   const [movie, setMovie] = useState(tempMovieEx);
   const [showing, setShowing] = useState("1:30PM");
 

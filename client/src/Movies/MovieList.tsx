@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { MovieRequest } from "../types.js"
+import { MovieResponse } from "../types.js"
 import { OperationsModal } from "../Operations/OperationsModal"
 
 export const MovieList = ({theaterId}: {theaterId: string}) => {
 
-    const [movies, setMovies] = useState<MovieRequest[]>([]);
+    const [movies, setMovies] = useState<MovieResponse[]>([]);
 
     const fetchMovies = async () => {
         const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters', [theaterId]);
@@ -24,7 +24,7 @@ export const MovieList = ({theaterId}: {theaterId: string}) => {
         return (
             <div
                 className="card text-white bg-dark mb-3"
-                style={{ boxShadow: 'px 5px 9px #666a68', width: '60%', height:"420px", marginBottom: '20px', margin:"auto", top: "50%", borderRadius: "30px"}}
+                style={{ boxShadow: '5x 5px 9px #666a68', width: '60%', height:"420px", marginBottom: '20px', margin:"auto", top: "50%", borderRadius: "30px"}}
                 id={(movie.movie_id as number).toString()}
                 key={movie.movie_id}
             >
