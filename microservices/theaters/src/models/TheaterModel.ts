@@ -1,5 +1,6 @@
 import { TheaterRequest } from '../types.js';
 import * as dbe from '../data/dbComms.js';
+import { publishEvent } from '../events/publishEvent.js';
 
 export class TheaterModel {
     id: string | undefined;
@@ -23,6 +24,7 @@ export class TheaterModel {
     async createTheater() {
         validateCreateRequest(this);
         const theater = await dbe.createTheater(this);
+        await publishEvent("theaterCreated", theater);
         return theater;
     }
 
