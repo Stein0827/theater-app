@@ -1,7 +1,7 @@
 import React from 'react';
 import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Signin }  from "./user/Signin";
+import { Signin }  from "../src/user/signin";
 import { GetTheaterByZip } from './Theater/GetTheaterByZip';
 import { TheaterDetail } from './Theater/TheaterDetail';
 import { Admin } from "./Admin/Admin"

@@ -15,6 +15,6 @@ router.put('/api/v1/theater', updateTheater);
 router.post('/api/v1/theaters', getTheaters);
 router.get('/api/v1/theaters/all', getAllTheaters);
 router.delete('/api/v1/theater', deleteTheaters);
-router.put('/api/v1/theater', updateMoviesOfTheater);
+router.put('/api/v1/theater/movies', updateMoviesOfTheater);
 
 export {router};
