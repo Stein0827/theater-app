@@ -10,9 +10,7 @@ export const MutableMoviesList = ({theater}: {theater: TheaterResponse | undefin
 
     const fetchMovies = async () => {
         const movieIdArr = theater!.movies;
-        console.log(movieIdArr)
         const moviesRes = await axios.post('http://localhost:4004/api/v1/movies', movieIdArr);
-        console.log(moviesRes)
         setMovies(moviesRes.data);
     };
 
@@ -21,10 +19,18 @@ export const MutableMoviesList = ({theater}: {theater: TheaterResponse | undefin
     }, []);
 
     async function handleDeleteClick(movieId: number) {
-        console.log(movieId)
-
         try {
-            await axios.post("localhost:4004/api/v1/movie", {"movie_id": movieId})
+            const filterMovies = movies.filter((movie) => {
+                return (movie.movie_id as number) !== movieId
+            })
+            
+            await axios.put("http://localhost:4009/api/v1/theater/movies", {
+                // @ts-ignore
+                theaterId: theater._id,
+                movies: filterMovies.map((movie) => {return movie.movie_id})
+            });
+            setMovies(filterMovies)
+            console.log("new movies state", movies)
         } catch (err) {
             console.log(err)
         }
@@ -44,7 +50,6 @@ export const MutableMoviesList = ({theater}: {theater: TheaterResponse | undefin
                     <ShowingEditModal callbacks={[theater!._id, movie.movie_id]}/>
                     <Button variant="danger" onClick={(e) => handleDeleteClick(movie.movie_id as number)}>Remove</Button>
                 </div>
-                
             </div>
         );
     })

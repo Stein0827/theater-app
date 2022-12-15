@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Signin }  from "./User/SignIn";
 import { GetTheaterByZip } from './Theater/GetTheaterByZip';
 import { TheaterDetail } from './Theater/TheaterDetail';
-import { Signup } from './User/SignUp';
+import { Signup } from './User/Signup';
 import { Admin } from "./Admin/Admin"
 
 export const App = () => {
@@ -16,8 +16,8 @@ export const App = () => {
       <Route path="/" element={<Navigate to="/findTheaters" />} />
       <Route path="/admin" element={<Admin theaterId={"00000001639189e929544c75"}/>} />
       <Route path="/paymentCreate" element={<PaymentCreate />} />
-      <Route path="/signin" element={<Signin updateTheaterId={updateTheaterId}/>} />
-      <Route path='/signup' element={<Signup />} />
+      {/* <Route path="/signin" element={<Signin updateTheaterId={updateTheaterId}/>} />
+      <Route path='/signup' element={<Signup />} /> */}
       <Route path="/findTheaters" element={<GetTheaterByZip />} />
       <Route path="/theaterDetail" element={<TheaterDetail />}/>
     </Routes>

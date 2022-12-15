@@ -22,7 +22,7 @@ export const PaymentCreate = () => {
             justifyContent:"space-evenly", margin:"auto", paddingTop: "50px"
         }}>
             <div style={{
-                position: "sticky", top: "0", backgroundColor: "white", zIndex:"999"
+                backgroundColor: "white", zIndex:"999"
             }}>
                 <PaymentInfoDisplay parentCallbacks={[tickets, setTickets, concessionCosts, hasConcessions, theaterId, movie, showingTime]}/>
                 <ConcessionsList parentCallbacks={[concessionCosts, setConcessionCosts, setHasConcessions, setAccordianKey, accordianKey]}/>
