@@ -4,6 +4,7 @@ import { eventBus } from '../models/eventBusModel';
 
 export const publishService = async (req: Request, res: Response) => {
     try {
+        console.log(eventBus)
         const data = req.body;
         console.log("this is eventbus data: " + data);
         const urlList = await eventBus.publish(data);
@@ -11,6 +12,6 @@ export const publishService = async (req: Request, res: Response) => {
         res.status(200).send(`Success: Eventbus published data: ${data} to subscribers ${urlList}`);
     } catch (err: any) {
         console.log("ERROR: EVENTBUS PUBLISH CONTROLLER ERR:", err)
-        res.status(400).send(`${err.name}: ${err.message}`);
+        res.status(400).send(err);
     }
 }
