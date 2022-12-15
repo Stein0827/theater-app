@@ -16,8 +16,8 @@ export const App = () => {
       <Route path="/" element={<Navigate to="/findTheaters" />} />
       <Route path="/admin" element={<Admin theaterId={"00000001639189e929544c75"}/>} />
       <Route path="/paymentCreate" element={<PaymentCreate />} />
-      {/* <Route path="/signin" element={<Signin updateTheaterId={updateTheaterId}/>} />
-      <Route path='/signup' element={<Signup />} /> */}
+      <Route path="/signin" element={<Signin updateTheaterId={updateTheaterId}/>} />
+      <Route path='/signup' element={<Signup />} />
       <Route path="/findTheaters" element={<GetTheaterByZip />} />
       <Route path="/theaterDetail" element={<TheaterDetail />}/>
     </Routes>
