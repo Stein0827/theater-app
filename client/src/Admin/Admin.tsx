@@ -5,6 +5,7 @@ import axios from 'axios';
 // import { AdminRevenue } from "./AdminRevenue"
 import { TheaterDisplayWrapper } from "./TheaterDisplayWrapper"
 import { MutableMoviesList } from "./MutableMoviesList"
+import { MovieAdd } from "./MovieAdd";
 
 export const Admin = ({ theaterId }: { theaterId: string }) => {
     const [theater, setTheater] = useState()
@@ -33,7 +34,7 @@ export const Admin = ({ theaterId }: { theaterId: string }) => {
                 {/* <AdminRevenue /> */}
                 <TheaterDisplayWrapper theater={theater} setTheater={setTheater}/>
                 <MutableMoviesList theater={theater}/>
-                {/* <MovieAdd /> */}
+                <MovieAdd theater={theater}/>
             </div>
         );
     }
