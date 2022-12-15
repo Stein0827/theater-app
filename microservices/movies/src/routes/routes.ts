@@ -13,6 +13,6 @@ router.post('/api/v1/movie', createMovie);
 router.put('/api/v1/movie', updateMovie);
 router.post('/api/v1/movies', getMovies);
 router.get('/api/v1/movies/all', getAllMovies);
-router.delete('/api/v1/movie', deleteMovie);
+router.post('/api/v1/movie', deleteMovie);
 
 export {router};

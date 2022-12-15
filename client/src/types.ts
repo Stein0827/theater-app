@@ -25,3 +25,13 @@ export type ConcessionResponse = {
     price: number | undefined;
     image: string | undefined;
 }
+
+export type TheaterRequest = {
+    theaterId?: string;
+    name?: string;
+    address?: string;
+    zip?: string;
+    description?: string;
+    theaterImage?: string;
+    movies?: number[];
+}

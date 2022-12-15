@@ -34,7 +34,6 @@ export const TheaterDisplay = ({theater}: {theater: TheaterResponse}) => {
             e.target.parentElement.style.transform = 'scale(1)';
         }
     }
-    console.log(theater);
 
     return (
         <div
@@ -48,6 +47,7 @@ export const TheaterDisplay = ({theater}: {theater: TheaterResponse}) => {
             <img src={theater.image as string} style={{float: "left", backgroundSize: "cover",  borderRadius: "30px", width:"50%", height:"100%"}}/>
             <div className="card-body text-center" style={{margin: "auto"}}>
                 <h3 className="card-title">{theater.name}</h3>
+                <h6>{theater.address} {theater.zip}</h6>
                 <p>{theater.description}</p>
             </div>
         </div>

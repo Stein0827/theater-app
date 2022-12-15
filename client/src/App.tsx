@@ -1,14 +1,16 @@
 import React from 'react';
 import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
-import { Signin }  from "./user/signin";
+import { Signin }  from "./user/Signin";
 import { GetTheaterByZip } from './Theater/GetTheaterByZip';
 import { TheaterDetail } from './Theater/TheaterDetail';
+import { Admin } from "./Admin/Admin"
 
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Navigate to="/findTheaters" />} />
+      <Route path="/admin" element={<Admin theaterId={"00000001639189e929544c75"}/>} />
       <Route path="/paymentCreate" element={<PaymentCreate />} />
       <Route path="/signin" element={<Signin />} />
       <Route path="/findTheaters" element={<GetTheaterByZip />} />

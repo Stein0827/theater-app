@@ -7,16 +7,20 @@ export const getMovies = async (req: Request, res: Response) => {
 
     const data: MovieGetBatchRequest = req.body;
 
-    for (const id of data) {
-        let data_input = {movie_id: id};
-        const movieModel = new MovieModel(data_input);
-        try {
-            const result = await movieModel.getMovie();
-            resList.push(result);
-        } catch (err: any) {
-            resList.push(err);
+    try {
+        for (const id of data) {
+            let data_input = {movie_id: id};
+            const movieModel = new MovieModel(data_input);
+            try {
+                const result = await movieModel.getMovie();
+                resList.push(result);
+            } catch (err: any) {
+                resList.push(err);
+            }
         }
+    
+        res.status(202).send(resList);  
+    } catch (err) {
+        console.log("ERROR", err)
     }
-
-    res.status(202).send(resList);  
 }
