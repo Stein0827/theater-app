@@ -9,6 +9,7 @@ const app: Express = express();
 app.use(express.json());
 app.use(cors());
 app.use(router)
+await subscribeToEventbus().catch((err) => {throw err});
 
 initDB();
 await subscribeToEventbus().catch((err) => {throw err});

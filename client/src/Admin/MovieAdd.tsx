@@ -13,6 +13,7 @@ export const MovieAdd = ({theater}: {theater: TheaterResponse}) => {
     const handleClose = () => {
         setShow(false);
         fetchMovies();
+        window.location.reload();
     }
     const handleShow = () => {
         setShow(true);
@@ -53,7 +54,7 @@ export const MovieAdd = ({theater}: {theater: TheaterResponse}) => {
     const EditButton = ({movie}: {movie: MovieResponse}) => {
         let text = "remove";
         let color = 'red';
-        if (theaterSet.has(movie.movie_id as number)) {
+        if (!theaterSet.has(movie.movie_id as number)) {
             text = "add";
             color = 'blue';
         }
@@ -98,7 +99,7 @@ export const MovieAdd = ({theater}: {theater: TheaterResponse}) => {
 
     return (
         <>
-            <Button variant="light" onClick={handleShow} style={{display: 'flex', justifyContent: 'center', width:"200px", marginBottom:"20px", marginTop:"20px", color: "brown"}}>
+            <Button variant="light" onClick={handleShow} style={{margin:"auto", display: 'flex', justifyContent: 'center', width:"200px", marginBottom:"20px", marginTop:"20px", color: "brown"}}>
                 Add/Remove movies
             </Button>
 

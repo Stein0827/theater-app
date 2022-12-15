@@ -34,6 +34,7 @@ class EventBusModel {
 
     async publishEvent(data: PublishRequest) {
         const eventType = data.eventType;
+        console.log("this is eventtype: " + eventType);
         const urlList = this.eventbus[eventType];
         for(const url of urlList) {
             await axios.post(url, data).catch((err: Error) => {
