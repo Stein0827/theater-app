@@ -15,7 +15,7 @@ export const Signup = () => {
     let validSignup = false;
 
     let navigate = useNavigate();
-    const routeChange = (path: string) =>{ 
+    const routeChange = (path: string) => { 
         navigate(path);
     }
     
@@ -34,7 +34,7 @@ export const Signup = () => {
                     password
                 }
 
-                const res = await axios.post('http://localhost:4007/api/register', data);
+                let res = await axios.post('http://127.0.0.1:4007/api/register', data);
                 validSignup = res.data.acknowledged;
 
               } catch(err: any) {
@@ -56,7 +56,6 @@ export const Signup = () => {
         if (validSignup) {
             routeChange("/admin");
         }
-        
     }
 
     return (
@@ -104,7 +103,7 @@ export const Signup = () => {
 
                 <div style={{display: "flex", justifyContent: "center"}}>
                     <Button className="m-3" size="lg" variant="primary" type="submit" onClick={handleSignup}>
-                        Signup
+                        Sign up
                     </Button>
                 </div>
                 

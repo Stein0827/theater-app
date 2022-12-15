@@ -12,6 +12,8 @@ app.use(router)
 await subscribeToEventbus().catch((err) => {throw err});
 
 initDB();
+await subscribeToEventbus().catch((err) => {throw err});
+
 
 app.listen(4009, () => {
   console.log('Listening on 4009');
