@@ -9,7 +9,7 @@ class EventBusModel {
     }
 
     publish(data: PublishRequest) {
-        this.validatePublishRequest(data);
+        //this.validatePublishRequest(data);
         const success = this.publishEvent(data);
         return success;
     }

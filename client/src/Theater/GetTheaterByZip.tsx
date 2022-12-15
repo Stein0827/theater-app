@@ -7,8 +7,6 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import { TheaterList } from './TheaterList'
 
-
-
 export const GetTheaterByZip = () => {
     const [theaters, setTheater] = useState([] as TheaterResponse[]);
     const [text, setText] = useState("");
@@ -30,8 +28,8 @@ export const GetTheaterByZip = () => {
 
     let navigate = useNavigate();
     const routeChange = () =>{ 
-        let path = `/signin`; 
-        navigate(path);
+        let path = `/admin`; 
+        navigate(path, );
     }
     document.body.style.backgroundColor = "#4D6C71";
 
@@ -52,7 +50,7 @@ export const GetTheaterByZip = () => {
                 className='m-3 mx-auto text-center'
                 style={{ color: "#1f4e37", backgroundColor: "#aeaaa6", display:"flex" }}
                 onClick={routeChange}
-            >sign up your theater</Button>
+            >sign into your theater</Button>
             {clicked && <TheaterList theaters={theaters} />}
         </div>
     );
