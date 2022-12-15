@@ -3,9 +3,10 @@ import { MovieList } from "./Movies/MovieList";
 import { PaymentCreate } from "./Payment/PaymentCreate";
 import { Route, Routes, Navigate } from "react-router-dom";
 import { MovieResponse } from "./types.js"
-import { Signin }  from "./user/signin";
+import { Signin }  from "./User/SignIn";
 import { GetTheaterByZip } from './Theater/GetTheaterByZip';
 import { TheaterDetail } from './Theater/TheaterDetail';
+import { Signup } from './User/SignUp';
 
 const tempMovieEx = {
   "movie_id": 1,
@@ -30,6 +31,7 @@ export const App = () => {
       <Route path="/" element={<Navigate to="/findTheaters" />} />
       <Route path="/paymentCreate" element={<PaymentCreate movie={movie} theaterId={theaterId} showingTime={showing}/>} />
       <Route path="/signin" element={<Signin updateTheaterId={updateTheaterId}/>} />
+      <Route path='/signup' element={<Signup />} />
       <Route path="/findTheaters" element={<GetTheaterByZip />} />
       <Route path="/theaterDetail" element={<TheaterDetail />}/>
     </Routes>

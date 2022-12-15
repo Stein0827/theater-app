@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import { Card, Form, FormControl, Button } from 'react-bootstrap';
+import { Card, Form, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 
 
@@ -11,12 +11,11 @@ export const Signin = (updateTheaterId: {updateTheaterId: (theaterId: string) =>
   let theaterId = "";
 
   let navigate = useNavigate();
-    const routeChange = () =>{ 
-        let path = "/theaterInfo";
-        navigate(path);
-    }
+  const routeChange = (path: string) =>{ 
+    navigate(path);
+  }
 
-  const submitHandler = async (event: React.FormEvent) => {
+  const handleLogin = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try{
@@ -27,21 +26,23 @@ export const Signin = (updateTheaterId: {updateTheaterId: (theaterId: string) =>
       alert(err.response.data);
     }
 
-    console.log(theaterId);
     updateTheaterId.updateTheaterId(theaterId as string);
 
     setUsername('');
     setPassword('');
 
     if (validLogin) {
-      console.log(theaterId);
-      //routeChange();
+      routeChange("/admin");
     }
+  }
+
+  const handleSignup = async (event: React.FormEvent) => {
+    routeChange("/signup");
   }
 
   return (
     <Card className="mx-auto mt-5" style={{ width: '50rem' }}>
-        <Form onSubmit={submitHandler}>
+        <Form>
             <Form.Group className="m-3" controlId="formBasicEmail">
             <Form.Label>User Name</Form.Label>
             <Form.Control type="text" value={username} placeholder="Enter user name" onChange={(e) => setUsername(e.target.value)}/>
@@ -51,12 +52,15 @@ export const Signin = (updateTheaterId: {updateTheaterId: (theaterId: string) =>
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
             </Form.Group>
-            <Button className="m-3" variant="primary" type="submit">
-            Login
-            </Button>
-            <Button className="m-3" variant="secondary" type="submit">
-              Signup
-            </Button>
+            
+            <div style={{display: "flex", justifyContent: "center"}}>
+                    <Button className="m-3" size="lg" variant="primary" type="submit" onClick={handleLogin}>
+                        Login
+                    </Button>
+                    <Button className="m-3" size="lg" variant="secondary" type="submit" onClick={handleSignup}>
+                        Signup
+                    </Button>
+                </div>
         </Form>
     </Card>
   );
