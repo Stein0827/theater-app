@@ -6,6 +6,7 @@ import axios from 'axios';
 import { TheaterDisplayWrapper } from "./TheaterDisplayWrapper"
 import { MutableMoviesList } from "./MutableMoviesList"
 import { MovieAdd } from "./MovieAdd";
+import { GenerateChart } from './AdminRevenue';
 
 export const Admin = ({ theaterId }: { theaterId: string }) => {
     const [theater, setTheater] = useState()
@@ -31,7 +32,7 @@ export const Admin = ({ theaterId }: { theaterId: string }) => {
             <div style={{
                 width:"75%", margin: "auto", display:"flex", flexDirection:"column"
             }}>
-                {/* <AdminRevenue /> */}
+                <GenerateChart theaterId={theaterId}/>
                 <TheaterDisplayWrapper theater={theater} setTheater={setTheater}/>
                 <MutableMoviesList theater={theater}/>
                 <MovieAdd theater={theater}/>

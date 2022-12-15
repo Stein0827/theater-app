@@ -36,3 +36,7 @@ export type TheaterRequest = {
     theaterImage?: string;
     movies?: number[];
 }
+
+export interface theaterRevResponse {
+    [key: string]: Array<object> | number
+}
