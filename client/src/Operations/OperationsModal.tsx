@@ -6,15 +6,15 @@ import { OperationsList } from "./OperationsList"
 
 
 export const OperationsModal = ({movie, theaterId}: {movie: MovieResponse, theaterId: string}) => {
-    const [show, setShow] = useState(false);
-    const [showing, setShowing] = useState("");
-    const [disable, setDisable] = React.useState(true);
+  const [show, setShow] = useState(false);
+  const [showing, setShowing] = useState("");
+  const [disable, setDisable] = React.useState(true);
 
-    const handleClose = () => {
-        setShow(false)
-        setDisable(true)
-    };
-    const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false)
+    setDisable(true)
+  };
+  const handleShow = () => setShow(true);
 
   return (
     <>

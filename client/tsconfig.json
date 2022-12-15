@@ -27,7 +27,6 @@
     "src/Operations/OperationsList.tsx",
     "src/Concessions/ConcessionsList.tsx",
     "src/Payment/CreditcardForm.tsx",
-    "src/Payment/BillingForm.tsx",
-    "src/Movies/MovieAdminAdd.tsx"
+    "src/Payment/BillingForm.tsx"
   ]
 }

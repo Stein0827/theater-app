@@ -9,7 +9,7 @@ export const TheaterList = ({theaters}: {theaters: TheaterResponse[]}) => {
                 <div
                     className="card mb-3"
                     style={{ backgroundColor: "#8FA298", boxShadow: '5px 5px 9px #666a68', width: '60%', height:"420px", marginBottom: '20px', margin:"auto", top: "50%", borderRadius: "30px"}}
-                    id={(currTheater.id as string)}
+                    id={(currTheater._id as string)}
                     key={currTheater.name as string}
                 >
                     <TheaterDisplay theater={currTheater}/>

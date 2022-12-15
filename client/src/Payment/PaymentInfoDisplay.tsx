@@ -1,16 +1,17 @@
 import React, {useState} from "react";
 import { TheaterInfo } from "../Theater/TheaterInfo"
 import { TicketModeratorButton } from "../Operations/TicketModeratorButton"
+import { PayConfirmationModal } from "./PayConfirmationModal"
 
 export const PaymentInfoDisplay = ({parentCallbacks}: {parentCallbacks: any[]}) => {
-    const [tickets, setTickets, concessionCosts, hasConcessions, theaterId, movieName, showingTime, handlePayment] = parentCallbacks;
+    const [tickets, setTickets, concessionCosts, hasConcessions, theaterId, movie, showingTime, handlePayment] = parentCallbacks;
 
     const ticketPrice = "19";
 
     return (
         <div style={{
             display: "flex", flexDirection:"row", justifyContent:"space-between", 
-            padding: "20px 0 20px 0", alignItems:"center"
+            paddingTop: "20px", alignItems:"center"
         }}>
             {/* <img src={movie.thumbnail} style={{maxWidth:"220px", height:"350px", borderRadius: "20px"}}/> */}
             <div style={{paddingLeft:"10%", minWidth:"200px"}}>
@@ -20,14 +21,12 @@ export const PaymentInfoDisplay = ({parentCallbacks}: {parentCallbacks: any[]}) 
                 <div>Ticket Costs: ${(parseFloat(tickets) *  parseFloat(ticketPrice)).toFixed(2)}</div>
                 <div style={{display: hasConcessions}}>Concession Costs: ${concessionCosts}</div>
                 <h2>Total: ${((parseFloat(tickets) *  parseFloat(ticketPrice)) + parseFloat(concessionCosts)).toFixed(2)}</h2>
-                <button className="btn btn-success" onClick={handlePayment} style={{
-                    width: "150px", marginLeft:"5%"
-                }}>Pay</button>
+                <PayConfirmationModal movie={movie} theaterId={theaterId} showingTime={showingTime} concessionCosts={concessionCosts} tickets={tickets}/>
             </div>
             <div className="text-center" style={{display: "flex", flexDirection:"column", justifyContent:"right", alignContent:"flex-end" }}>
                 <TheaterInfo theaterId={theaterId}/>
                 <div>
-                    <h4>{movieName}</h4>
+                    <h4>{movie.name}</h4>
                     <h2 style={{color: "#194d33"}}>Time: {showingTime} Today</h2>
                 </div>
             </div>

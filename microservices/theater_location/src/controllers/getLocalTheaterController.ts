@@ -4,6 +4,7 @@ import { TheaterLocationModel} from '../models/theaterLocationModel.js'
 
 export const getLocalTheaters = async (req: Request, res: Response) => {
     try {
+        console.log(req.body);
         const data: MovieLocationRequest = req.body;
         const theaterLocationModel = new TheaterLocationModel(data);
         let resList = await theaterLocationModel.getLocalTheaters();

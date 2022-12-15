@@ -9,10 +9,10 @@ export type MovieResponse = {
 }
 
 export type TheaterResponse = {
-    id: string | undefined;
+    _id: string | undefined;
     name: string | undefined;
     address: string | undefined;
-    zip: number | undefined;
+    zip: string | undefined;
     description: string | undefined;
     image: string | undefined;
     movies: number[] | undefined;
@@ -27,3 +27,12 @@ export type ConcessionResponse = {
 }
 
 export type updateTheaterIdFunc  = (theaterId: string) => void;
+export type TheaterRequest = {
+    theaterId?: string;
+    name?: string;
+    address?: string;
+    zip?: string;
+    description?: string;
+    theaterImage?: string;
+    movies?: number[];
+}

@@ -8,6 +8,7 @@ export const eventController = async (req: Request, res: Response) => {
         const ret = await adminModel.processEvent(data);
         res.status(200).send(ret);
     } catch (err: any) {
+        console.log("ERROR: Theater admin error", err);
         res.status(400).send(`${err.name}: ${err.message}`);
     }
 }

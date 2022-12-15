@@ -7,15 +7,16 @@ import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
 import { TheaterList } from './TheaterList'
 
-
-
 export const GetTheaterByZip = () => {
     const [theaters, setTheater] = useState([] as TheaterResponse[]);
     const [text, setText] = useState("");
     const [clicked, setClicked] = useState(false);
 
     const fetchTheaters = async () => {
-        const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters/zip', {"zip": text});
+        const theaterIdRes = await axios.post('http://localhost:4008/api/theaters/locate', {"zipcode":text});
+        console.log(theaterIdRes.data);
+        const foundTheaterIds = theaterIdRes.data;
+        const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters', foundTheaterIds);
         const foundTheaters = theaterRes.data;
         setTheater(foundTheaters);
         setClicked(true);
@@ -27,14 +28,14 @@ export const GetTheaterByZip = () => {
 
     let navigate = useNavigate();
     const routeChange = () =>{ 
-        let path = `/signin`; 
-        navigate(path);
+        let path = `/admin`; 
+        navigate(path, );
     }
     document.body.style.backgroundColor = "#4D6C71";
 
     return (
         <div className="mb-3">
-            <h1 className="text-center">Find Theaters By Zip</h1>
+            <h1 className="text-center" style={{marginTop:"7%"}}>Find Theaters By Zip</h1>
             <InputGroup className="m-3 mx-auto" style={{ alignItems:"center", display:"flex", flexDirection: "row", width: "19%" }}>
                 <Form.Control
                     placeholder="zip code"
@@ -49,7 +50,7 @@ export const GetTheaterByZip = () => {
                 className='m-3 mx-auto text-center'
                 style={{ color: "#1f4e37", backgroundColor: "#aeaaa6", display:"flex" }}
                 onClick={routeChange}
-            >sign up your theater</Button>
+            >sign into your theater</Button>
             {clicked && <TheaterList theaters={theaters} />}
         </div>
     );

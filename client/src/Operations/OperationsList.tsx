@@ -9,13 +9,18 @@ export const OperationsList = ({parentCallbacks, movieId, theaterId}: {parentCal
     const [radioValue, setRadioValue] = useState("");
 
     const fetchOperations = async () => {
-        const operationsRes = await axios.post('http://localhost:4003/api/v1/get/operations', {
-            movie_id: movieId,
-            theater_id: theaterId
-        });
-        const operations = (operationsRes.data);
-        console.log("operations", operations);
-        setOperations(operations)
+        try {
+            console.log(movieId, theaterId)
+            const operationsRes = await axios.post('http://localhost:4003/api/v1/get/operations', {
+                movie_id: movieId,
+                theater_id: theaterId
+            });
+            const operations = (operationsRes.data);
+            console.log("operations", operations);
+            setOperations(operations)
+        } catch (err) {
+            console.log(err)
+        }
     };
 
     useEffect(() => {
