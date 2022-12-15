@@ -12,6 +12,7 @@ export const Admin = ({ theaterId }: { theaterId: string }) => {
     const [theater, setTheater] = useState()
     // const { state } = useLocation();
     // const { theaterId } = state;
+    document.body.style.backgroundColor = "#FFFFFF";
 
     const fetchTheater = async () => {
         const theaterRes = await axios.post('http://localhost:4009/api/v1/theaters', [

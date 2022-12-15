@@ -17,24 +17,6 @@ export const MutableMoviesList = ({theater}: {theater: TheaterResponse | undefin
     useEffect(() => {
         fetchMovies();
     }, []);
-
-    async function handleDeleteClick(movieId: number) {
-        try {
-            const filterMovies = movies.filter((movie) => {
-                return (movie.movie_id as number) !== movieId
-            })
-            
-            await axios.put("http://localhost:4009/api/v1/theater/movies", {
-                // @ts-ignore
-                theaterId: theater._id,
-                movies: filterMovies.map((movie) => {return movie.movie_id})
-            });
-            setMovies(filterMovies)
-            console.log("new movies state", movies)
-        } catch (err) {
-            console.log(err)
-        }
-    }
     
     const renderedMovies = movies.map((movie) => {
         return (
@@ -48,7 +30,6 @@ export const MutableMoviesList = ({theater}: {theater: TheaterResponse | undefin
                     width: "100px", display:"flex", flexDirection:"column", justifyContent:"space-evenly"
                 }}>
                     <ShowingEditModal callbacks={[theater!._id, movie.movie_id]}/>
-                    <Button variant="danger" onClick={(e) => handleDeleteClick(movie.movie_id as number)}>Remove</Button>
                 </div>
             </div>
         );

@@ -12,7 +12,6 @@ services:
     depends_on:
       mysql_movies:
         condition: "service_healthy"
-      
     links:
       - "mysql_movies"
     environment:

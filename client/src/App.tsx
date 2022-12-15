@@ -4,7 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import { Signin }  from "./User/SignIn";
 import { GetTheaterByZip } from './Theater/GetTheaterByZip';
 import { TheaterDetail } from './Theater/TheaterDetail';
-import { Signup } from './User/Signup';
+import { Signup } from './User/SignUp';
 import { Admin } from "./Admin/Admin"
 
 export const App = () => {
