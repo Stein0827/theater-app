@@ -28,7 +28,7 @@ export const GetTheaterByZip = () => {
 
     let navigate = useNavigate();
     const routeChange = () =>{ 
-        let path = `/admin`; 
+        let path = `/signin`; 
         navigate(path, );
     }
     document.body.style.backgroundColor = "#4D6C71";

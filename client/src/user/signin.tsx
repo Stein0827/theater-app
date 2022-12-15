@@ -9,6 +9,7 @@ export const Signin = (updateTheaterId: {updateTheaterId: (theaterId: string) =>
   const [password, setPassword] = useState('');
   let validLogin = false;
   let theaterId = "";
+  document.body.style.backgroundColor = "#FFFFFF";
 
   let navigate = useNavigate();
   const routeChange = (path: string) =>{ 
@@ -21,7 +22,8 @@ export const Signin = (updateTheaterId: {updateTheaterId: (theaterId: string) =>
     try{
       const res = await axios.post('http://localhost:4007/api/login', {"username": username, "password": password});
       theaterId = res.data;
-      validLogin = true;
+      if (theaterId)
+        validLogin = true;
     } catch(err: any) {
       alert(err.response.data);
     }
