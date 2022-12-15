@@ -9,7 +9,7 @@ class EventBusModel {
     }
 
     publish(data: PublishRequest) {
-        //this.validatePublishRequest(data);
+        this.validatePublishRequest(data);
         const success = this.publishEvent(data);
         return success;
     }
@@ -34,8 +34,8 @@ class EventBusModel {
 
     async publishEvent(data: PublishRequest) {
         const eventType = data.eventType;
+        console.log("this is eventtype: " + eventType);
         const urlList = this.eventbus[eventType];
-
         for(const url of urlList) {
             await axios.post(url, data).catch((err: Error) => {
                 throw new EventBusException("Error: could not publish events to subscribers", [eventType, urlList ,err.message])

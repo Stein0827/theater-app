@@ -29,7 +29,7 @@ export const Admin = ({ theaterId }: { theaterId: string }) => {
     } else {
         return (
             <div style={{
-                width:"75%", margin: "auto"
+                width:"75%", margin: "auto", display:"flex", flexDirection:"column"
             }}>
                 {/* <AdminRevenue /> */}
                 <TheaterDisplayWrapper theater={theater} setTheater={setTheater}/>
