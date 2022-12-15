@@ -10,6 +10,7 @@ class EventBusModel {
 
     publish(data: PublishRequest) {
         //this.validatePublishRequest(data);
+        console.log(data);
         const success = this.publishEvent(data);
         return success;
     }
@@ -34,6 +35,7 @@ class EventBusModel {
 
     async publishEvent(data: PublishRequest) {
         const eventType = data.eventType;
+        console.log("this is eventtype: " + eventType);
         const urlList = this.eventbus[eventType];
 
         for(const url of urlList) {

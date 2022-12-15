@@ -41,7 +41,6 @@ export class TheaterModel {
     }
 
     async updateMoviesOfTheater() {
-        console.log(this);
         validateTheaterRequest(this);
         await validateTheaterExists(this);
         return await dbe.updateMoviesOfTheater(this);
