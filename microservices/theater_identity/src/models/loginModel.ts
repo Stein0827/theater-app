@@ -60,7 +60,7 @@ export class LoginModel {
         const eventType = data.eventType;
 
         switch(eventType) {
-            case 'theaterCreated':
+            case 'theaterWithId':
                 res = await dbe.addTheaterId(data as theaterCreated);  
                 break;
             case 'theaterDeleted':
@@ -92,6 +92,7 @@ export class LoginModel {
         delete data.password
         
         publishEvent("userCreated", data);
+        return user;
     }
 }
 

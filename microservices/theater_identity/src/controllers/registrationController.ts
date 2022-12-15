@@ -1,14 +1,14 @@
 import {Request, Response} from 'express';
 import { LoginModel } from '../models/loginModel.js';
-import { RegistrationRequest } from '../types.js';
+import { registerUserData } from '../types.js';
 import jwt from 'jsonwebtoken';
 
 
 export const registerUser = async (req: Request, res: Response) => {
     try {
-        const data: RegistrationRequest = req.body;
-        const loginModel = new LoginModel(data);
-        const user = await loginModel.register();
+        const data: registerUserData = req.body;
+        const loginModel = new LoginModel();
+        const user = await loginModel.registerUser(data);
 
         const userId = user.insertedId;
         const maxAge = 60 * 60; // 1 hour in seconds
@@ -24,7 +24,7 @@ export const registerUser = async (req: Request, res: Response) => {
 
         //set cookie in browser for later authentication
         res.cookie('jwt', token, {
-            httpOnly: true,
+            httpOnly: false,
             maxAge: maxAge * 1000, // 1 hour in ms
         });
 

@@ -26,6 +26,7 @@ export type ConcessionResponse = {
     image: string | undefined;
 }
 
+export type updateTheaterIdFunc  = (theaterId: string) => void;
 export type TheaterRequest = {
     theaterId?: string;
     name?: string;
