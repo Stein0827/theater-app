@@ -2,7 +2,7 @@
 ## Alan Castillo (#59078415 - aacastillo)
 
 ### Description
-The Movies Microservice is responsible for handling all the data for movies. This includes the movie name, description, thumbnail, trailer, rating, and length. It deals with update these attributes, craeting new movies, getting all available movies in the database and getting specific movies based on ID.
+The Movies Microservice is responsible for handling all the data for movies. This includes the movie name, description, thumbnail, trailer, rating, and length. It deals with update these attributes, creating new movies, getting all available movies in the database and getting specific movies based on ID.
 
 ### Interactions
 The Movies Microservice interacts with the Theaters Microservices and the Movie Operations Microservice. Each theater in the Theater Microservice has a list of movie IDs that the theater is showing. The Theater Microservice, calls the Movie Microservice to get the data of each of the movies. Furthermore, the Movie Operations microservice provides data about the showings time for a specific movie at a specific theater, using movie IDs.
@@ -47,7 +47,7 @@ MovieError: {
 
 #### 2. Update Movie - PUT movies:4004/api/v1/movie
 ##### Description: 
-Update the movie in the databse when given a valid Id
+Update the movie in the database when given a valid Id
 
 ##### Requests:
 ```js
@@ -72,7 +72,7 @@ OkPacket: {
 	serverStatus: number;
 	warningCount: number;
 	message: string;
-	procotol41: boolean;
+	protocol: boolean;
 }
 or
 MovieError: {
@@ -105,7 +105,7 @@ MovieError: {
 }
 ```
 
-#### 4. Get All Movies - GET movies:4004/api/v1/movies/all
+#### 4. Get All Movies - POST movies:4004/api/v1/movies/all
 ##### Description: 
 Return all the movies in the movie database
 
