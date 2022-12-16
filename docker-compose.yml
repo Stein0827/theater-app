@@ -115,7 +115,8 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
     volumes:
       - mongodb_data_container:/data/db
-    command: --quiet
+    command: mongod --quiet --logpath /dev/null 
+
 
   mysql_payments:
     image: mysql:latest
