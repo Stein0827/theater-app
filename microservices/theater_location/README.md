@@ -2,7 +2,7 @@
 ## Ilya Pindrus (#56616694 - ilya-pindrus) 
 
 ### Description
-The Theater Location Service functions as a cache when locating theaters within a specified zipcode. When a query for locale theaters is made, the service returns all the theaterIds within a specified radius. The Theater Location service is also responsible for updating the database when theaters are created and deleted to always hold up to date information. 
+The Theater Location Service functions as a cache when locating theaters within a specified zipcode. When a query for locale theaters is made, the service returns all the theaterIds within a specified radius. The Theater Location service is also responsible for updating the database when theaters are created and deleted to always hold up to date information. The service exceeds expectations becuase it utilizes a MVC architecture for better isolation of tasks and mimics the design of a professional code base.
 
 ### Interactions
 The Theater Location service interacts with the Theater Service. The Theater Location's database is updated when the Theater service sends an event indicating that a theater was either created or deleted.  

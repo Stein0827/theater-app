@@ -1,8 +1,8 @@
+// Ilya Pindrus (ilya-pindrus) Github Id: #56616694
+// Alan Castillo (#59078415)
+
 import React, { useState, useEffect } from 'react';
-import { useLocation } from "react-router-dom";
-import { TheaterResponse } from '../types';
 import axios from 'axios';
-// import { AdminRevenue } from "./AdminRevenue"
 import { TheaterDisplayWrapper } from "./TheaterDisplayWrapper"
 import { MutableMoviesList } from "./MutableMoviesList"
 import { MovieAdd } from "./MovieAdd";
