@@ -190,3 +190,10 @@ Command
 ```bash
 docker compose -f docker-compose-movies.yml up
 ```
+
+### Complexity Brownie Points
+- Used a variation of MVC Architecture
+- Included Validation inside all the endpoints
+- Set up MySQL instead of MongoDB, which was not explained in class
+- Microservice sends out events
+- Used Node Router functionality to make code more readable
