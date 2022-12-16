@@ -40,7 +40,7 @@ export const MutableMoviesList = ({theater}: {theater: TheaterResponse | undefin
     return (
         <div style={{
             display: "grid", gridTemplateColumns: "repeat(3, 300px)", gridGap: "10px", justifyContent:"center",
-            borderBottom: "0.5px solid grey", paddingBottom: "20px"
+            borderBottom: "0.5px solid grey", paddingBottom: "20px", borderTop:"0.5px solid grey", paddingTop: "30px"
         }}>
             {renderedMovies}
         </div>
