@@ -1,9 +1,10 @@
+// Paul Shi (Stein0827) Github Id: #55637086
+
 import React, {useState, useEffect} from "react";
 import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { MovieResponse } from "../types.js";
-import { OperationsModal } from "../Operations/OperationsModal";
 import { TheaterResponse } from '../types';
 
 
