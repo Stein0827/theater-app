@@ -1,3 +1,5 @@
+// Paul Shi (Stein0827) Github Id: #55637086
+
 import { TheaterResponse } from '../types';
 import { TheaterDisplay } from './TheaterDisplay';
 import React, { useEffect, useState } from 'react';
