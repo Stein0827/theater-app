@@ -1,3 +1,5 @@
+// Alan Castillo (#59078415)
+
 import React, { useEffect, useState } from 'react';
 import Accordion from 'react-bootstrap/Accordion';
 import { useLocation } from "react-router-dom";
