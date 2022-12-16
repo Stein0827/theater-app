@@ -1,3 +1,5 @@
+// Alan Castillo (#59078415)
+
 import React, {useState, useEffect} from "react";
 import axios from 'axios';
 import { MovieResponse } from "../types.js";

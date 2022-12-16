@@ -1,3 +1,5 @@
+// Alan Castillo (#59078415)
+
 import React, {useState} from "react";
 import { TheaterInfo } from "../Theater/TheaterInfo"
 import { TicketModeratorButton } from "../Operations/TicketModeratorButton"

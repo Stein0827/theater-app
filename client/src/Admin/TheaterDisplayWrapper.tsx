@@ -1,3 +1,5 @@
+// Alan Castillo (#59078415)
+
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { TheaterDisplay } from '../Theater/TheaterDisplay';
